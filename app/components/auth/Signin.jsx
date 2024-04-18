@@ -26,6 +26,7 @@ const Signin = ({ setAuth }) => {
                 <p className={styles.tabTitle}>Business</p>
                 <p className={styles.tabDesc}>Sign In As a Business</p>
               </div>
+              {/* <Image src='/icons/check.png' className={styles.check} alt="icon" width={15} height={15} /> */}
             </div>
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'employee' ? styles.tabActive : styles.tabInactive}`}

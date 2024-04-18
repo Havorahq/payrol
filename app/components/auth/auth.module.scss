@@ -37,6 +37,7 @@
     gap: 16px;
     border-radius: 4px;
     cursor: pointer;
+    position: relative;
 
     .tabTitle {
         font-size: 13px;
@@ -49,7 +50,13 @@
         font-weight: 400;
         text-align: left;
     }
+
 }
+// .check {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+// }
 
 .tabInactive {
     border: 1px solid #00000040;
@@ -57,7 +64,9 @@
 
 .tabActive {
     border: 2px solid #4039FA;
+
 }
+
 
 .prompt {
     align-self: center;
