@@ -19,7 +19,7 @@ label, input {
   width: 100%;
 }
 
-label {
+label, .label {
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.25px;
@@ -70,12 +70,38 @@ button {
   width: 100%;
 }
 
+.inputContainer {
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  // padding: 12px 16px;
+  input {
+    border: none;
+    outline: none;
+  }
+
+  select {
+    height: inherit;
+    padding: 1em;
+    width: 30%;
+    border: none;
+    outline: none;
+    margin-left: 2px;
+    font-weight: 500;
+  }
+}
+
+
+
 // common styles
 
 .x-axis {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between !important;
 }
 
 .y-axis {

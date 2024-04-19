@@ -6,7 +6,7 @@ import styles from './contractType.module.scss'
 import Button from '../Button'
 
 const RoleDetails = () => {
-    const [activeTab, setActiveTab] = useState("")
+    // const [activeTab, setActiveTab] = useState("")
 
     return (
         <div className={styles.section}>
