@@ -6,15 +6,22 @@ import styles from './contractType.module.scss'
 import Button from '../Button'
 import { FaChevronLeft, FaChevronUp } from 'react-icons/fa'
 
-const Payments = () => {
-    // const [activeTab, setActiveTab] = useState("")
+const Payments = ({ handleNext, handlePrev }) => {
 
     return (
         <div className={styles.section}>
+            <Image 
+                src="/icons/previous.png" 
+                alt="Learn More" 
+                className="cursor"
+                width={71} 
+                height={18}
+                onClick={handlePrev}
+            />
             <div>
                 <h1>Payments Schedule</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_3.png" alt='step' width={540} height={7} />
+                <Image src="/images/step_4.png" alt='step' width={540} height={7} />
             </div>
             <form>
                 <div className="my-half">
@@ -84,7 +91,7 @@ const Payments = () => {
                         </div>
                     </div>
                 </div>
-                <Button label="Continue" />
+                <Button label="Continue" onClick={handleNext} />
             </form>
             {/* <Button label="Continue" style="btn-primary" /> */}
         </div>

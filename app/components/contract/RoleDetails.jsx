@@ -5,11 +5,18 @@ import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../Button'
 
-const RoleDetails = () => {
-    // const [activeTab, setActiveTab] = useState("")
+const RoleDetails = ({ handleNext, handlePrev }) => {
 
     return (
         <div className={styles.section}>
+            <Image 
+                src="/icons/previous.png" 
+                alt="Learn More" 
+                className="cursor"
+                width={71} 
+                height={18}
+                onClick={handlePrev}
+            />
             <div>
                 <h1>Role Details</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
@@ -46,7 +53,7 @@ const RoleDetails = () => {
                         />
                     </div>
                 </div>
-                <Button label="Continue" />
+                <Button label="Continue" onClick={handleNext} />
             </form>
             {/* <Button label="Continue" style="btn-primary" /> */}
         </div>

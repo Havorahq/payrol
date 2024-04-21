@@ -5,11 +5,18 @@ import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../Button'
 
-const Personal = () => {
-    const [activeTab, setActiveTab] = useState("")
+const Personal = ({ handleNext, handlePrev }) => {
 
     return (
         <div className={styles.section}>
+            <Image 
+                src="/icons/previous.png" 
+                alt="Learn More" 
+                className="cursor"
+                width={71} 
+                height={18}
+                onClick={handlePrev}
+            />
             <div>
                 <h1>Personal Details</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
@@ -30,7 +37,7 @@ const Personal = () => {
                         placeholder="Enter Employee Email"
                     />
                 </div>
-                <Button label="Continue" />
+                <Button label="Continue" onClick={handleNext} />
             </form>
             {/* <Button label="Continue" style="btn-primary" /> */}
         </div>
