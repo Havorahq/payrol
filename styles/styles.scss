@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  color: black;
+  font-family: "DM Sans", sans-serif;
+}
+
+label, input {
+  display: block;
+  width: 100%;
+}
+
+label, .label {
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.25px;
+  margin-block: 5px;
+  font-size: 14px;
+}
+
+input, .formcontrol {
+  display: block;
+  padding: 12px 16px;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  width: 100%;
+}
+
+textarea {
+  padding: 12px 16px;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  height: 120px;
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  margin-block: 1em;
+  padding: 18px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #1D1D1F;
+  border: 1px solid #DBE1EB;
+  font-weight: 400;
+}
+
+.line {
+  border-top: 1px solid #DBE1EB;
+  width: 100%;
+}
+
+.inputContainer {
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  // padding: 12px 16px;
+  input {
+    border: none;
+    outline: none;
+  }
+
+  select {
+    height: inherit;
+    padding-inline: .5em;
+    width: 30%;
+    border: none;
+    outline: none;
+    margin-left: 2px;
+    font-weight: 500;
+  }
+}
+
+
+
+// common styles
+
+.x-axis {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.gap-1 {
+  gap: 1em;
+}
+
+.mt-2 {
+  margin-top: 2em;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+.my-half {
+  margin-block: .5em;
+}
+
+.py-half {
+  margin-block: .5em;
+}
+
+.my-1 {
+  margin-block: 1em
+}
+
+.py-1 {
+  padding-block: 1em;
+}
+
+.greyText {
+  color: #8F9299
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-70 {
+  width: 70% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.text-xs {
+  font-size: 8px !important;
+}
+
+.text-small {
+  font-size: 10px !important;
+}
+
+.text-medium {
+  font-size: 12px !important;
+}
+
+.text-normal {
+  font-size: 14px !important;
+}
+
+.text-base {
+  font-size: 16px !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.dialog:hover {
+  padding-inline: .7em;
+  border: 1px solid #a2a6ad18;
+  border-radius: 6px;
+}
