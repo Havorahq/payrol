@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../Button'
-import { FaChevronLeft, FaChevronUp } from 'react-icons/fa'
+import { FaChevronDown, FaChevronLeft, FaChevronUp } from 'react-icons/fa'
 
 const Payments = ({ handleNext, handlePrev }) => {
+    const [mile, setMile] = useState(false)
 
     return (
         <div className={styles.section}>
@@ -21,7 +22,7 @@ const Payments = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Payments Schedule</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_4.png" alt='step' width={540} height={7} />
+                <Image src="/images/step_4.png" alt='step' width={450} height={7} />
             </div>
             <form>
                 <div className="my-half">
@@ -39,58 +40,75 @@ const Payments = ({ handleNext, handlePrev }) => {
                         />
                     </div>
                 </div>
-                <div className="x-axis my-1 dialog justify-between">
+                <div className="x-axis my-1 dialog justify-between cursor" onClick={() => setMile(prev => !prev)}>
                     <p className='label'>Milestones</p>
                     <div>
-                        <FaChevronUp />
+                        {
+                            mile ?
+                            <FaChevronUp color="#717379" /> :
+                            <FaChevronDown color="#717379" />
+                        }
                     </div>
                 </div>
-                <div>
-                    {/* <div className='x-axis justify-between'>
-                        <p className='w-100'>Add Milestone Below</p>
-                        <Button label={"+"} />
-                    </div> */}
-                    <div className="my-half x-axis gap-1">
-                        <div className="w-100">
-                            <label htmlFor="">Title</label>
-                            <input 
-                                type="text" 
-                                placeholder="Start date"
-                            />
+                {
+                    mile ?
+                    <div>
+                        <div className='x-axis justify-between'>
+                            <p className='w-100 text-small'>Add Milestone Below</p>
+                            <p className='text-base cursor'>+</p>
                         </div>
-                        <div className="w-100">
-                            <label htmlFor="">Enter Rate</label>
-                            <div className='inputContainer x-axis w-100'>
-                                <select name="" id="">
-                                    <option value="">
-                                        USDT
-                                    </option>
-                                    <option value="">BTC</option>
-                                </select>
+                        <div className="my-half x-axis gap-1">
+                            <div className="w-100">
+                                <label htmlFor="">Title</label>
                                 <input 
-                                    type='text'
-                                    placeholder='1000'
+                                    type="text" 
+                                    placeholder="Enter Milestone Title"
                                 />
                             </div>
+                            <div className="w-100">
+                                <label htmlFor="">Enter Rate</label>
+                                <div className='inputContainer x-axis w-100'>
+                                    <select name="" id="">
+                                        <option value="">
+                                            USDT
+                                        </option>
+                                        <option value="">BTC</option>
+                                    </select>
+                                    <input 
+                                        type='text'
+                                        placeholder='1000'
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="my-half x-axis gap-1">
-                        <div className="w-100">
-                            <label htmlFor="">Title</label>
-                            <input 
-                                type="text" 
-                                placeholder="Start date"
-                            />
+                        <div className="my-half x-axis gap-1">
+                            <div className="w-100">
+                                <label htmlFor="">Title</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter Milestone Title"
+                                />
+                            </div>
+                            <div className="w-100">
+                                <label htmlFor="">Enter Rate</label>
+                                <div className='inputContainer x-axis w-100'>
+                                    <select name="" id="">
+                                        <option value="">
+                                            USDT
+                                        </option>
+                                        <option value="">BTC</option>
+                                    </select>
+                                    <input 
+                                        type='text'
+                                        placeholder='1000'
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-100">
-                            <label htmlFor="">Enter Rate</label>
-                            <input 
-                                type="text" 
-                                placeholder="End date"
-                            />
-                        </div>
-                    </div>
-                </div>
+                    </div> 
+                    :
+                    null
+                }
                 <Button label="Continue" onClick={handleNext} />
             </form>
             {/* <Button label="Continue" style="btn-primary" /> */}

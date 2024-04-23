@@ -20,7 +20,7 @@ const Personal = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Personal Details</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_2.png" alt='step' width={540} height={7} />
+                <Image src="/images/step_2.png" alt='step' width={450} height={7} />
             </div>
             <form>
                 <div className="my-half">

@@ -21,7 +21,7 @@ const Wallet = ({ handlePrev, handleNext }) => {
             <div>
                 <h1>Wallet and Smart Contracts</h1>
                 <p className={styles.desc}>Connect wallet below</p>
-                <Image src="/images/step_5.png" alt='step' width={540} height={7} />
+                <Image src="/images/step_5.png" alt='step' width={450} height={7} />
             </div>
             <form>
                 <div className="my-half">

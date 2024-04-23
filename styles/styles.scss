@@ -27,11 +27,13 @@ label, .label {
   font-size: 14px;
 }
 
-input {
+input, .formcontrol {
+  display: block;
   padding: 12px 16px;
   gap: 16px;
   border-radius: 4px;
   border: 1px solid #A2A6AD;
+  width: 100%;
 }
 
 textarea {
@@ -81,7 +83,7 @@ button {
 
   select {
     height: inherit;
-    padding: 1em;
+    padding-inline: .5em;
     width: 30%;
     border: none;
     outline: none;
@@ -118,12 +120,24 @@ button {
   margin-top: 2em;
 }
 
+.mt-1 {
+  margin-top: 1em;
+}
+
 .my-half {
+  margin-block: .5em;
+}
+
+.py-half {
   margin-block: .5em;
 }
 
 .my-1 {
   margin-block: 1em
+}
+
+.py-1 {
+  padding-block: 1em;
 }
 
 .greyText {
@@ -132,6 +146,14 @@ button {
 
 .w-100 {
   width: 100% !important;
+}
+
+.w-70 {
+  width: 70% !important;
+}
+
+.w-50 {
+  width: 50% !important;
 }
 
 .text-xs {
@@ -156,4 +178,10 @@ button {
 
 .cursor {
   cursor: pointer;
+}
+
+.dialog:hover {
+  padding-inline: .7em;
+  border: 1px solid #a2a6ad18;
+  border-radius: 6px;
 }

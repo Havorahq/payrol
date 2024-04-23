@@ -4,8 +4,33 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../Button'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 const RoleDetails = ({ handleNext, handlePrev }) => {
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    const onFromDateChange = date => {
+        const value = moment(new Date(date)).format('YYYY-MM-DD')
+
+        if (value !== "1970-01-01") {
+            setStartDate(value)
+        } else {
+            setStartDate("")
+        }
+    }
+
+    const onToDateChange = date => {
+        const value = moment(new Date(date)).format('YYYY-MM-DD')
+
+        if (value !== "1970-01-01") {
+            setEndDate(value)
+        } else {
+            setEndDate("")
+        }
+    }
+
 
     return (
         <div className={styles.section}>
@@ -20,7 +45,7 @@ const RoleDetails = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Role Details</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_3.png" alt='step' width={540} height={7} />
+                <Image src="/images/step_3.png" alt='step' width={450} height={7} />
             </div>
             <form>
                 <div className="my-half">
@@ -40,16 +65,32 @@ const RoleDetails = ({ handleNext, handlePrev }) => {
                 <div className="my-half x-axis gap-1">
                     <div className="w-100">
                         <label htmlFor="">Start date</label>
-                        <input 
-                            type="text" 
-                            placeholder="Start date"
+                        <DatePicker 
+                            onChange={date => onFromDateChange(date)}
+                            className="formcontrol w-100"
+                            dateFormat="dd-MM-yyyy"
+                            placeholderText="dd-mm-yy"
+                            minDate={endDate || new Date()}
+                            isClearable={startDate}
+                            wrapperClassName="datePicker"
+                            name="startDate"
+                            selectsStart
+                            selected={startDate}
                         />
                     </div>
                     <div className="w-100">
                         <label htmlFor="">End Date</label>
-                        <input 
-                            type="text" 
-                            placeholder="End date"
+                        <DatePicker 
+                            dateFormat="dd-MM-yyyy"
+                            onChange={date => onToDateChange(date)}
+                            selected={endDate}
+                            minDate={startDate}
+                            isClearable={endDate}
+                            className="formcontrol"
+                            wrapperClassName="datePicker"
+                            name="endDate"
+                            selectsEnd
+                            placeholderText="dd-mm-yy"
                         />
                     </div>
                 </div>

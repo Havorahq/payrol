@@ -14,7 +14,9 @@ const ContractType = ({ handleNext }) => {
             <div>
                 <h1>Create Contract📄</h1>
                 <p className={styles.desc}>Create an account below</p>
-                <Image src="/images/step_1.png" alt='step' width={540} height={7} />
+                <div className="w-100">
+                    <Image src="/images/step_1.png" alt='step' width={450} height={7} />
+                </div>
             </div>
             <div className="y-axis">
                 <div 
