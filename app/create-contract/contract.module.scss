@@ -1,0 +1,41 @@
+.container {
+    padding: 1em;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+ }
+ 
+ .left {
+     height: 100%;
+     width: 50vw;
+     background: linear-gradient(338.14deg, #3B37FF -3.56%, #FF7A21 119.15%);
+     border-radius: 16px;
+     padding: 2em 4em;
+     color: #fff;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-evenly;
+ 
+     .title {
+         font-size: 44px;
+         font-weight: 600;
+     }
+ 
+     .desc {
+         font-size: 12px;
+         line-height: 22px;
+         margin-top: 10px;
+     }
+ 
+     .asset {
+         align-self: center;
+     }
+ }
+ 
+ .right {
+     height: 100%;
+     width: 50vw;
+     background: #fff;
+     padding: 2em 4em;
+ }
