@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./dashboard.module.scss";
 import Wrapper from "../components/wrapper/Wrapper";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import { FaPlus } from "react-icons/fa";
 import { RiFileCheckLine } from "react-icons/ri";
 import { LuArrowRight } from "react-icons/lu";

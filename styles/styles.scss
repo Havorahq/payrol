@@ -8,9 +8,10 @@
   --color-primary-dark: hsl(211, 50%, 29%);
   /* But hardcoded hex values are also fine */
   --color-grey: #F6F6F6;
-  --color-grey-light: #c0c5ce;
+  --color-grey-mid: #797979;
   --color-grey-dark: #343d46;
   --color-black: #1a1a1a;
+  --color-black-2: #131414;
   /* RGBA too */
   --color-white: rgba(255, 255, 255, 0.9);
   --color-ash: #616161;
@@ -52,7 +53,7 @@
 body {
   width: 100vw;
   height: 100vh;
-  font-family: Arial, sans-serif;
+  font-size: 16px;
   color: black;
   font-family: "DM Sans", sans-serif;
 }
@@ -239,4 +240,16 @@ button {
   padding-inline: .7em;
   border: 1px solid #a2a6ad18;
   border-radius: 6px;
+}
+
+@media(max-width: 912px) {
+  body {
+    font-size: 14px !important;
+  }
+}
+
+@media(max-width: 360px) {
+  body {
+    font-size: 12px !important;
+  }
 }

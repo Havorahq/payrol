@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
-import Button from '../Button'
+import Button from '../common/Button'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
-import Button from '../Button'
+import Button from '../common/Button'
 import { FaChevronRight } from 'react-icons/fa'
 
 const ContractType = ({ handleNext }) => {
