@@ -2,10 +2,12 @@ import React from 'react'
 import styles from './header.module.scss'
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { FaCaretDown } from "react-icons/fa";
+import Link from 'next/link';
 
 const Header = () => {
     return (
         <div className={styles.headerContainer}>
+            <Link href="/connect-button">Connect</Link>
             <div className={`${styles.iconContainer} ${styles.ashBg}`}>
                 <MdOutlineNotificationsNone size={20} />
             </div>

@@ -8,16 +8,19 @@ import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
          <p className="w-100">Total Contract</p>
-         <div className={`${styles.addButton} x-axis gap-1`}>
-          <FaPlus />
-          <div className="w-100">
-            Contract
+         <div className="x-axis gap-1">
+          <div className={`${styles.addButton} x-axis gap-1`}>
+            <FaPlus />
+            <div className="w-100">
+              Contract
+            </div>
           </div>
          </div>
       </div>
