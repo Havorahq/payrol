@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import styles from './auth.module.scss'
-import Button from '../Button'
+import Button from '../common/Button'
 import Image from 'next/image'
 
 
