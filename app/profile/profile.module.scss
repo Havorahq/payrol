@@ -1,0 +1,15 @@
+.profileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--space-ml);
+    background: var(--color-white);
+    margin-block: var(--space-ml);
+    border-radius: var(--space-xs);
+    color: var(--color-ash);
+
+    p {
+        font-size: var(--space-ml);
+        font-weight: 500;
+    }
+}
