@@ -1,0 +1,36 @@
+.headerContainer {
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-md) var(--space-ml);
+  background: var(--color-white);
+  border-radius: var(--space-xs);
+}
+.headerContainer .iconContainer {
+  border-radius: 50%;
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headerContainer .iconContainer p {
+  font-weight: 500;
+  color: var(--color-white);
+  font-size: var(--space-md);
+}
+.headerContainer .ashBg {
+  background: var(--color-grey);
+}
+.headerContainer .primaryBg {
+  background: var(--color-primary);
+}
+.headerContainer .profileContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.headerContainer .profileContainer .profileDetails p {
+  font-size: var(--space-sm);
+  color: var(--color-ash);
+}/*# sourceMappingURL=header.module.css.map */

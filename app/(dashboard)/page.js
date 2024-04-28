@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./dashboard.module.scss";
 import Wrapper from "../components/wrapper/Wrapper";
 import Button from "../components/common/Button";
@@ -8,21 +9,20 @@ import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
-import Link from "next/link";
 
 export default function Home() {
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
          <p className="w-100">Total Contract</p>
-         <div className="x-axis gap-1">
+         <Link href="/create-contract">
           <div className={`${styles.addButton} x-axis gap-1`}>
             <FaPlus />
             <div className="w-100">
               Contract
             </div>
           </div>
-         </div>
+         </Link>
       </div>
 
       <div className={styles.cardContainer}>

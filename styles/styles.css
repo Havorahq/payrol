@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+:root {
+  /* Color variables */
+  /* HSL allows us to make easier modifications to brightness */
+  --color-primary: hsl(221, 44%, 41%);
+  --color-primary-light: hsl(221, 32%, 65%);
+  --color-primary-dark: hsl(211, 50%, 29%);
+  /* But hardcoded hex values are also fine */
+  --color-grey: #F6F6F6;
+  --color-grey-mid: #797979;
+  --color-grey-dark: #343d46;
+  --color-black: #1a1a1a;
+  --color-black-2: #131414;
+  /* RGBA too */
+  --color-white: rgba(255, 255, 255, 0.9);
+  --color-ash: #616161;
+  --color-primary: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%);
+  /* Font family variables */
+  --font-serif: "Merriweather", serif;
+  --font-sans-serif: "Montserrat", sans-serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  /* Font size variables */
+  --font-size-2xs: 0.75rem;
+  --font-size-xs: 0.875rem;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-ml: 1.5rem;
+  --font-size-lg: 2.25rem;
+  --font-size-xl: 3rem;
+  --font-size-2xl: 3.75rem;
+  /* Spacing variables */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-ml: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.25rem;
+  --space-2xl: 5rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-size: 16px;
+  color: black;
+  font-family: "DM Sans", sans-serif;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+main {
+  padding: var(--space-lg);
+  background: var(--color-grey);
+  width: 100%;
+  height: 100% !important;
+}
+
+label, input {
+  display: block;
+  width: 100%;
+}
+
+label, .label {
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.25px;
+  margin-block: 5px;
+  font-size: 14px;
+}
+
+input, .formcontrol {
+  display: block;
+  padding: 12px 16px;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  width: 100%;
+}
+
+textarea {
+  padding: 12px 16px;
+  gap: 16px;
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+  height: 120px;
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  margin-block: 1em;
+  padding: 18px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #1D1D1F;
+  border: 1px solid #DBE1EB;
+  font-weight: 400;
+}
+
+.line {
+  border-top: 1px solid #DBE1EB;
+  width: 100%;
+}
+
+.inputContainer {
+  border-radius: 4px;
+  border: 1px solid #A2A6AD;
+}
+.inputContainer input {
+  border: none;
+  outline: none;
+}
+.inputContainer select {
+  height: inherit;
+  padding-inline: 0.5em;
+  width: 30%;
+  border: none;
+  outline: none;
+  margin-left: 2px;
+  font-weight: 500;
+}
+
+.x-axis {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.gap-1 {
+  gap: 1em;
+}
+
+.mt-2 {
+  margin-top: 2em;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+.my-half {
+  margin-block: 0.5em;
+}
+
+.py-half {
+  margin-block: 0.5em;
+}
+
+.my-1 {
+  margin-block: 1em;
+}
+
+.py-1 {
+  padding-block: 1em;
+}
+
+.greyText {
+  color: #8F9299;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-70 {
+  width: 70% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.text-xs {
+  font-size: 8px !important;
+}
+
+.text-small {
+  font-size: 10px !important;
+}
+
+.text-medium {
+  font-size: 12px !important;
+}
+
+.text-normal {
+  font-size: 14px !important;
+}
+
+.text-base {
+  font-size: 16px !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.dialog:hover {
+  padding-inline: 0.7em;
+  border: 1px solid rgba(162, 166, 173, 0.0941176471);
+  border-radius: 6px;
+}
+
+@media (max-width: 912px) {
+  body {
+    font-size: 14px !important;
+  }
+}
+@media (max-width: 360px) {
+  body {
+    font-size: 12px !important;
+  }
+}/*# sourceMappingURL=styles.css.map */
