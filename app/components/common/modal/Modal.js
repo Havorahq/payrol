@@ -1,7 +1,7 @@
 // components/Modal.js
 
 import React from 'react';
-import styles from './Modal.module.scss'; // Import SCSS module for styling
+import styles from './modal.module.scss'; // Import SCSS module for styling
 import { ImCancelCircle } from "react-icons/im";
 
 const Modal = ({ isOpen, onClose, children }) => {
