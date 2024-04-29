@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
   /* Color variables */
@@ -8,10 +9,12 @@
   --color-primary-dark: hsl(211, 50%, 29%);
   /* But hardcoded hex values are also fine */
   --color-grey: #F6F6F6;
+  --color-grey-1: #8F9299;
   --color-grey-mid: #797979;
   --color-grey-dark: #343d46;
   --color-black: #1a1a1a;
   --color-black-2: #131414;
+  --color-black-3: #1D1D1F;
   /* RGBA too */
   --color-white: rgba(255, 255, 255, 0.9);
   --color-ash: #616161;
@@ -22,6 +25,7 @@
   --font-serif: 'Merriweather', serif;
   --font-sans-serif: 'Montserrat', sans-serif;
   --font-dm-sans: "DM Sans", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
 
   /* Font size variables */
   --font-size-2xs: 0.75rem;
@@ -55,7 +59,7 @@ body {
   height: 100vh;
   font-size: 16px;
   color: black;
-  font-family: "DM Sans", sans-serif;
+  font-family:var(--font-dm-sans) !important;
 }
 
 a {
@@ -78,9 +82,11 @@ label, input {
 label, .label {
   font-weight: 500;
   line-height: 20px;
-  letter-spacing: -0.25px;
   margin-block: 5px;
   font-size: 14px;
+  color: var(--color-black-3);
+  font-family: var(--font-dm-sans);
+  letter-spacing: 0.25px;
 }
 
 input, .formcontrol {
@@ -89,7 +95,7 @@ input, .formcontrol {
   gap: 16px;
   border-radius: 4px;
   border: 1px solid #A2A6AD;
-  width: 100%;
+  width: 100% !important;
 }
 
 textarea {

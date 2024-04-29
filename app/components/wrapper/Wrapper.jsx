@@ -1,14 +1,20 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './wrapper.module.scss'
 import Sidebar from '../sidebar/Sidebar'
 import Header from '../header/Header'
 import { usePathname } from 'next/navigation'
 import routes from '@/plugins/routes'
+import Drawer from '../drawer/Drawer'
 
 const Wrapper = ({ children }) => {
     const pathname = usePathname()
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    const toggleDrawer = () => {
+      setDrawerOpen(!isDrawerOpen);
+    };
 
     const getTitle = () => {
         let title = "";
@@ -24,11 +30,14 @@ const Wrapper = ({ children }) => {
 
     return (
         <div className={styles.wrapper}>
-            <Sidebar title={getTitle()} />
+            <div className={styles.sidebar}>
+              <Sidebar title={getTitle()} />
+            </div>
             <main>
-                <Header />
+                <Header toggleDrawer={toggleDrawer} />
                 {children}
             </main>
+            {isDrawerOpen && <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} />}
         </div>
     )
 }

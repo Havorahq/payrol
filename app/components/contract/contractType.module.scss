@@ -1,45 +1,49 @@
-.container {
+// .container {
+//     margin: 2em;
+//     padding: 2em;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-evenly;
+//     overflow-y: scroll !important;
+//     width: 100%;
+// }
+
+.section {
     margin: 2em;
     padding: 2em;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: start;
+    gap: 2em;
     overflow-y: scroll !important;
 }
 
-.section {
-    margin: 2em;
-    padding: .5em 2em;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 2.5em;
-    overflow-y: scroll !important;
-}
 
-/* For WebKit browsers */
 .section::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
-  }
+    width: 12px;
+}
   
-  .section::-webkit-scrollbar-track {
-    background-color: #fff; /* Color of the scrollbar track */
-  }
+.section::-webkit-scrollbar-track {
+    background-color: #fff;
+}
   
-  .section::-webkit-scrollbar-thumb {
-    background-color: #fff; /* Color of the scrollbar thumb */
-    border-radius: 6px; /* Rounded corners for the scrollbar thumb */
-  }
+.section::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 6px;
+}
   
-  .section::-webkit-scrollbar-thumb:hover {
-    background-color: #fff; /* Color of the scrollbar thumb on hover */
-  }
-  
+.section::-webkit-scrollbar-thumb:hover {
+    background-color: #fff; 
+}
+
+
+
 
 .desc {
-    color: #8F9299;
+    color: var(--color-grey-1);
+    font-family: var(--font-dm-sans);
     font-size: 13px;
     margin-top: 5px;
 }
@@ -50,6 +54,7 @@
     border-radius: 4px;
     cursor: pointer;
     position: relative;
+    width: 100%;
 
     .tabDetails {
         width: 65%;
@@ -70,11 +75,31 @@
     }
 
 }
-// .check {
-//     position: absolute;
-//     top: 0;
-//     right: 0;
-// }
+
+.datePickerContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    border: 1px solid #A2A6AD;
+    width: 100% !important;
+    border-radius: 4px;
+
+    .datePicker {
+        display: block;
+        padding: 12px 16px;
+        gap: 16px;
+        border: none;
+        width: 100% !important;
+    }
+    .datePicker:focus {
+        outline: none;
+    }
+
+    .icon {
+        color: var(--color-black-2);
+    }
+}
+
 
 .hr {
     border-bottom: 1px solid #E0E0E0;
@@ -107,5 +132,12 @@
         color: linear-gradient(180deg, #3B37FF 0%, #FF7A20 100%) !important;
         font-weight: 500;
         cursor: pointer;
+    }
+}
+
+@media(max-width: 912px) {
+    .section {
+        padding: 0 !important;
+        margin-block: var(--space-2xl);
     }
 }

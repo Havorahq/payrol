@@ -18,23 +18,23 @@
     overflow-y: scroll !important;
 }
 
-/* For WebKit browsers */
+
 .container::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
-  }
-  
-  .container::-webkit-scrollbar-track {
-    background-color: #fff; /* Color of the scrollbar track */
-  }
-  
-  .container::-webkit-scrollbar-thumb {
-    background-color: #fff; /* Color of the scrollbar thumb */
-    border-radius: 6px; /* Rounded corners for the scrollbar thumb */
-  }
-  
-  .container::-webkit-scrollbar-thumb:hover {
-    background-color: #fff; /* Color of the scrollbar thumb on hover */
-  }
+    width: 12px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background-color: #fff;
+}
   
 
 .desc {
@@ -62,11 +62,6 @@
     }
 
 }
-// .check {
-//     position: absolute;
-//     top: 0;
-//     right: 0;
-// }
 
 .tabInactive {
     border: 1px solid #00000040;
@@ -94,7 +89,7 @@
     }
 }
 
-@media(max-width: 850px) {
+@media(max-width: 912px) {
     .container {
         padding: 0 !important;
     }

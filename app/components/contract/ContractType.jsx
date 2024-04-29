@@ -10,14 +10,15 @@ const ContractType = ({ handleNext }) => {
     const [activeTab, setActiveTab] = useState("")
 
     return (
-        <div className={styles.container}>
+        <div className={styles.section}>
             <div>
                 <h1>Create Contract📄</h1>
                 <p className={styles.desc}>Create an account below</p>
-                <div className="w-100">
+                {/* <div className="w-100">
                     <Image src="/images/step_1.png" alt='step' width={450} height={7} />
-                </div>
+                </div> */}
             </div>
+
             <div className="y-axis">
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'fixed' ? styles.tabActive : styles.tabInactive}`}
@@ -65,6 +66,7 @@ const ContractType = ({ handleNext }) => {
                     <FaChevronRight size={14} color={activeTab === 'milestone' ? "#14125e" : "#1C1B1F"} />
                 </div>
             </div>
+            
             <Button label="Continue"  onClick={handleNext} style="btn-primary" />
         </div>
     )
