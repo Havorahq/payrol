@@ -99,7 +99,7 @@ const Contract = () => {
           </p>
         </div>
         <div className={styles.asset}>
-          <Image src={`/images/${details[step]?.asset}`} alt="Calculator image" width={350} height={300} />
+          <Image src={`/images/${details[step]?.asset}`} alt="Calculator image" width={340} height={300} />
         </div>
       </div>
       <div className={styles.right}>

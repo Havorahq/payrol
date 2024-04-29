@@ -41,6 +41,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
         }
 
         .cardBody {
@@ -49,5 +50,29 @@
             font-weight: 600;
         }
     }
+}
+
+.tableContainer {
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--color-white);
+    border-radius: var(--space-xs);
+
+    .tableHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: var(--space-lg);
+
+        .tableTitle {
+            color: var(--black-2);
+            font-size: var(--font-size-ml);
+            font-family: var(--font-dm-sans);
+            font-weight: 500;
+            width: 100%;
+        }
+    }
+
 }
   

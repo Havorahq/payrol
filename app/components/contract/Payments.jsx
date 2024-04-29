@@ -22,7 +22,7 @@ const Payments = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Payments Schedule</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_4.png" alt='step' width={450} height={7} />
+                {/* <Image src="/images/step_4.png" alt='step' width={450} height={7} /> */}
             </div>
             <form>
                 <div className="my-half">
