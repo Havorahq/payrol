@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./dashboard.module.scss";
 import Wrapper from "../components/wrapper/Wrapper";
 import Button from "../components/common/Button";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
 import { RiFileCheckLine } from "react-icons/ri";
 import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
@@ -28,7 +28,7 @@ export default function Home() {
       <div className={styles.cardContainer}>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className="x-axis">
+            <div className="x-axis gap-1">
               <p>Active Contract</p>
               <RiFileCheckLine />
             </div>
@@ -40,7 +40,7 @@ export default function Home() {
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className="x-axis">
+            <div className="x-axis gap-1">
               <p>Pending Contract</p>
               <BiLeaf />
             </div>
@@ -52,7 +52,7 @@ export default function Home() {
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className="x-axis">
+            <div className="x-axis gap-1">
               <p>Cancelled Contract</p>
               <ImCancelCircle />
             </div>
@@ -63,7 +63,7 @@ export default function Home() {
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <div className="x-axis">
+            <div className="x-axis gap-1">
               <p>Payment Due</p>
               <BiDollarCircle />
             </div>
@@ -74,8 +74,48 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
-        
+      <div className={styles.tableContainer}>
+        <div className={styles.tableHeader}>
+          <p className={styles.tableTitle}>All Contract</p>
+          <div className="inputGroup">
+            <FaSearch color="#797979" />
+            <input type="text" placeholder="Search names" />
+          </div>
+        </div>
+
+        {/* <table>
+          <thead>
+            <tr>
+              <th>S/N</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>George Reynolds</td>
+              <td>Georgereynolds@gmail.com</td>
+              <td>$1000</td>
+              <td>Fixed</td>
+              <td>Active</td>
+              <td>View</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>George Reynolds</td>
+              <td>Georgereynolds@gmail.com</td>
+              <td>$1000</td>
+              <td>Fixed</td>
+              <td>Active</td>
+              <td>View</td>
+            </tr>
+          </tbody>
+        </table> */}
       </div>
     </Wrapper>
   );
