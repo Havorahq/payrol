@@ -3,9 +3,11 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
-import Button from '../Button'
+import Button from '../common/Button'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { FaArrowDown } from 'react-icons/fa'
+import { FaCaretDown } from "react-icons/fa";
 
 const RoleDetails = ({ handleNext, handlePrev }) => {
     const [startDate, setStartDate] = useState("");
@@ -45,17 +47,17 @@ const RoleDetails = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Role Details</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_3.png" alt='step' width={450} height={7} />
+                {/* <Image src="/images/step_3.png" alt='step' width={450} height={7} /> */}
             </div>
             <form>
-                <div className="my-half">
+                <div className="my-1">
                     <label htmlFor="">Job Title</label>
                     <input 
                         type="text" 
                         placeholder="Enter Job Titles"
                     />
                 </div>
-                <div className="my-half">
+                <div className="my-1">
                     <label htmlFor="">Job Description (Optional)</label>
                     <textarea 
                         type="text" 
@@ -65,33 +67,39 @@ const RoleDetails = ({ handleNext, handlePrev }) => {
                 <div className="my-half x-axis gap-1">
                     <div className="w-100">
                         <label htmlFor="">Start date</label>
-                        <DatePicker 
-                            onChange={date => onFromDateChange(date)}
-                            className="formcontrol w-100"
-                            dateFormat="dd-MM-yyyy"
-                            placeholderText="dd-mm-yy"
-                            minDate={endDate || new Date()}
-                            isClearable={startDate}
-                            wrapperClassName="datePicker"
-                            name="startDate"
-                            selectsStart
-                            selected={startDate}
-                        />
+                        <div className={styles.datePickerContainer}>
+                            <DatePicker 
+                                dateFormat="dd-MM-yyyy"
+                                onChange={date => onFromDateChange(date)}
+                                className={styles.datePicker}
+                                placeholderText="dd-mm-yy"
+                                minDate={endDate || new Date()}
+                                isClearable={false}
+                                wrapperClassName="datePicker"
+                                name="startDate"
+                                selectsStart
+                                selected={startDate}
+                            />
+                            <FaCaretDown className={styles.icon} />
+                        </div>
                     </div>
                     <div className="w-100">
                         <label htmlFor="">End Date</label>
-                        <DatePicker 
-                            dateFormat="dd-MM-yyyy"
-                            onChange={date => onToDateChange(date)}
-                            selected={endDate}
-                            minDate={startDate}
-                            isClearable={endDate}
-                            className="formcontrol"
-                            wrapperClassName="datePicker"
-                            name="endDate"
-                            selectsEnd
-                            placeholderText="dd-mm-yy"
-                        />
+                        <div className={styles.datePickerContainer}>
+                            <DatePicker 
+                                dateFormat="dd-MM-yyyy"
+                                onChange={date => onToDateChange(date)}
+                                selected={endDate}
+                                minDate={startDate}
+                                isClearable={false}
+                                className={styles.datePicker}
+                                wrapperClassName="datePicker"
+                                name="endDate"
+                                selectsEnd
+                                placeholderText="dd-mm-yy"
+                            />
+                            <FaCaretDown className={styles.icon} />
+                        </div>
                     </div>
                 </div>
                 <Button label="Continue" onClick={handleNext} />

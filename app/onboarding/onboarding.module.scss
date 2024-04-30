@@ -39,3 +39,16 @@
     background: #fff;
     padding: 2em 4em;
 }
+
+@media(max-width: 912px) {
+    .container {
+        padding: 0 !important;
+    }
+    .left {
+        display: none !important;
+    }
+
+    .right {
+        padding: var(--space-2xs);
+    }
+}

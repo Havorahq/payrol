@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
-import Button from '../Button'
+import Button from '../common/Button'
 import { FaChevronDown, FaChevronLeft, FaChevronUp } from 'react-icons/fa'
 
 const Payments = ({ handleNext, handlePrev }) => {
@@ -22,7 +22,7 @@ const Payments = ({ handleNext, handlePrev }) => {
             <div>
                 <h1>Payments Schedule</h1>
                 <p className={styles.desc}>Enter the personal details of the employee below</p>
-                <Image src="/images/step_4.png" alt='step' width={450} height={7} />
+                {/* <Image src="/images/step_4.png" alt='step' width={450} height={7} /> */}
             </div>
             <form>
                 <div className="my-half">

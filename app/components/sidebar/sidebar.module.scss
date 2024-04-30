@@ -1,0 +1,53 @@
+.sidebar {
+    // width: 23vw;
+    height: 100%;
+    padding: var(--space-ml);
+
+    .linkContainer {
+        margin-top: var(--space-2xl);
+        font-weight: 500;
+        text-decoration: none !important;
+        // position: relative;
+        height: 100%;
+
+        .link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-ml);
+            font-size: var(--font-size-xs);
+            margin-block: var(--space-sm);
+            border-radius: var(--space-2xs);
+            width: 100% !important;
+        }
+
+        .linkActive { 
+            color: var(--color-white) !important;
+            background: var(--color-primary);
+        }
+
+        .linkInactive {
+            color: var(--color-ash);
+            background: var(--color-white);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .iconActive {
+            color: var(--color-white)
+        } 
+
+        .iconInactive {
+            color: var(--color-ash)
+        }
+
+        .signout {
+            margin-top: var(--space-2xl);
+        }
+    }
+
+}
