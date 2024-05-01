@@ -1,12 +1,15 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './auth.module.scss'
 import Button from '../common/Button'
 import Image from 'next/image'
+import { OnboardingContext } from '@/app/onboarding/page'
+
 
 
 const Signup = ({ setAuth }) => {
+  const { onRouteChange, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -93,7 +96,7 @@ const Signup = ({ setAuth }) => {
         </div>
 
         <p className={styles.prompt}>
-          Have an account? <span className={styles.action} onClick={() => setAuth("signin")}>Sign in</span>
+          Have an account? <span className={styles.action} onClick={() => onRouteChange("signin")}>Sign in</span>
         </p>
     </div>
   )

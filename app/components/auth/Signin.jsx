@@ -1,11 +1,13 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styles from './auth.module.scss'
 import Button from '../common/Button'
 import Image from 'next/image'
+import { OnboardingContext } from '@/app/onboarding/page'
 
-const Signin = ({ setAuth }) => {
+const Signin = () => {
+  const { onRouteChange, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -41,12 +43,22 @@ const Signin = ({ setAuth }) => {
           </div>
           <div>
             <div>
-              <label htmlFor="">Email</label>
-              <input type="text" />
+              <label>Email</label>
+              <input 
+                type="text" 
+                name="email"
+                placeholder="Enter Email Address"
+                required
+              />
             </div>
             <div>
               <label htmlFor="">Password</label>
-              <input type="text" />
+              <input 
+                type={isPasswordShown ? "text" : "password"}
+                name="password"
+                placeholder="Enter Password"
+                required
+              />
             </div>
             <Button label="Continue" />
             <div className="x-axis gap-1">
@@ -59,7 +71,7 @@ const Signin = ({ setAuth }) => {
         </div>
 
         <p className={styles.prompt}>
-          Need to create an account? <span className={styles.action} onClick={() => setAuth("signup")}>Sign up</span>
+          Need to create an account? <span className={styles.action} onClick={() => onRouteChange("signup")}>Sign up</span>
         </p>
     </div>
   )
