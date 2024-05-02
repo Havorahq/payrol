@@ -93,7 +93,7 @@ label, .label {
 
 input, .formcontrol {
   display: block;
-  padding: 12px 16px;
+  padding: var(--space-md) var(--space-ml);
   gap: 16px;
   border-radius: 4px;
   border: 1px solid #A2A6AD;
@@ -129,6 +129,21 @@ button {
   color: #1D1D1F;
   border: 1px solid #DBE1EB;
   font-weight: 400;
+}
+
+.password-icon{
+  position: absolute;
+  top: 40px;
+  cursor: pointer;
+  right: 15px;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.hide {
+  display: none !important;
 }
 
 .line {
@@ -253,6 +268,10 @@ td {
 
 .py-1 {
   padding-block: 1em;
+}
+
+.padded {
+  padding: var(--space-xl)
 }
 
 .greyText {

@@ -1,12 +1,16 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './auth.module.scss'
 import Button from '../common/Button'
 import Image from 'next/image'
+import { OnboardingContext } from '@/app/onboarding/page'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 
-const Signup = ({ setAuth }) => {
+
+const Signup = () => {
+  const { onChange, onRouteChange, onReset, togglePassword, state: { firstName, lastName, email, businessName, businessEmail, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -20,7 +24,7 @@ const Signup = ({ setAuth }) => {
           <div className="x-axis gap-1 my-1">
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'business' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("business")}
+              onClick={() => { setActiveTab("business"); onReset(); }}
             >
               <Image src='/icons/dollar.png' alt="icon" width={36} height={36} />
               <div>
@@ -30,7 +34,7 @@ const Signup = ({ setAuth }) => {
             </div>
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'employee' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("employee")}
+              onClick={() => { setActiveTab("employee"); onReset(); }}
             >
               <Image src='/icons/employee.png' alt="icon" width={36} height={36} />
               <div>
@@ -41,46 +45,85 @@ const Signup = ({ setAuth }) => {
           </div>
           <form>
             <div className="my-half">
-              <label htmlFor="">First name</label>
+              <label htmlFor="">First Name</label>
               <input 
                 type="text" 
+                name="firstName"
+                value={firstName}
                 placeholder="Enter your first name"
+                onChange={onChange}
+                required
               />
             </div>
             <div className="my-half">
-              <label htmlFor="">Last name</label>
+              <label htmlFor="">Last Name</label>
               <input 
                 type="text" 
+                name="lastName"
+                value={lastName}
                 placeholder="Enter your last name"
+                onChange={onChange}
+                required
               />
             </div>
+            {
+            activeTab === "employee" &&
+            <div>
+              <label>Email</label>
+              <input 
+                type="text" 
+                name="email"
+                value={email}
+                placeholder="Enter Email Address"
+                onChange={onChange}
+                required
+              />
+            </div>}
             {
               activeTab === "business" ?
               <div>
                 <div className="my-half">
-                  <label htmlFor="">Business name</label>
+                  <label htmlFor="">Business Name</label>
                   <input 
                     type="text" 
+                    name="businessName"
+                    value={businessName} 
                     placeholder="Enter business name"
+                    onChange={onChange}
+                    required
                   />
                 </div>
                 <div className="my-half">
                   <label htmlFor="">Business Email</label>
                   <input 
                     type="text" 
+                    name="businessEmail"
+                    value={businessEmail} 
                     placeholder="Enter business email"
+                    onChange={onChange}
+                    required
                   />
                 </div>
               </div>
               :
               null
             }
-            <div className="my-half">
+            <div className="my-half relative">
               <label htmlFor="">Password</label>
               <input 
-                type="password" 
-                placeholder="Enter your password"
+                type={isPasswordShown ? "text" : "password"}
+                name="password"
+                value={password}
+                placeholder="Enter Password"
+                onChange={onChange}
+                required
               />
+              {
+                isPasswordShown?
+                <FaEyeSlash size={22} className="password-icon" color="#A2A6AD" onClick={togglePassword}  />
+                :  
+                <FaEye className="password-icon" color="#A2A6AD" size={22} onClick={togglePassword}  />  
+              }
             </div>
             <Button label="Continue" />
             <div className="x-axis gap-1">
@@ -93,7 +136,7 @@ const Signup = ({ setAuth }) => {
         </div>
 
         <p className={styles.prompt}>
-          Have an account? <span className={styles.action} onClick={() => setAuth("signin")}>Sign in</span>
+          Have an account? <span className={styles.action} onClick={() => onRouteChange("signin")}>Sign in</span>
         </p>
     </div>
   )
