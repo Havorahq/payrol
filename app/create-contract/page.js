@@ -37,6 +37,8 @@ const Contract = () => {
     monthlyRate, milestoneTitles, milestoneRates, walletAddress 
   } = state;
 
+  console.log(state)
+
   const handleNext = () => {
     if(step < 6) {
       setState(state => ({

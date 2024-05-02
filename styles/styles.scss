@@ -270,6 +270,10 @@ td {
   padding-block: 1em;
 }
 
+.padded {
+  padding: var(--space-xl)
+}
+
 .greyText {
   color: #8F9299
 }

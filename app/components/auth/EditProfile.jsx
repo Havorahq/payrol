@@ -6,7 +6,7 @@ import Button from '../common/Button'
 
 const EditProfile = () => {
     return (
-        <div className={styles.editContainer}>
+        <div className={styles.container}>
         <div>
           <h1>Edit Profile</h1>
         </div>

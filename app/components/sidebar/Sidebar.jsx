@@ -9,7 +9,7 @@ import { IoMdSettings } from "react-icons/io";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
 const Sidebar = (props) => {
-    console.log("Props: ", props)
+    
     return (
         <div className={styles.sidebar}>
             <Image src="/icons/xalari_logo_dh.png" alt="brand logo" width={129} height={39} />

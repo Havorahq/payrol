@@ -17,10 +17,11 @@ const Onboarding = () => {
     lastName: "",
     businessName: "",
     businessEmail: "",
-    isPasswordShown: false
+    isPasswordShown: false,
   })
 
   const { route, firstName, lastName, businessName, businessEmail, email, password, isPasswordShown } = state;
+  console.log(state)
 
   const renderPages = () => {
     switch (route) {
@@ -40,6 +41,19 @@ const Onboarding = () => {
     setState(state=>({
         ...state,
         route: value
+    }))
+  }
+
+  const onReset = () => {
+    setState(state => ({
+      ...state,
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      businessName: "",
+      businessEmail: "",
+      isPasswordShown: false,
     }))
   }
 
@@ -63,6 +77,7 @@ const Onboarding = () => {
         onChange,
         togglePassword,
         onRouteChange,
+        onReset,
         state
       }}
     >

@@ -43,8 +43,8 @@ const ContractType = ({ setState }) => {
                     <FaChevronRight size={14} color={activeTab === 'fixed' ? "#14125e" : "#1C1B1F"} />
                 </div>
                 <div 
-                    className={`x-axis justify-between ${styles.tab} ${activeTab === 'payAsYouGo' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => handleDivClick("payAsYouGo")}
+                    className={`x-axis justify-between ${styles.tab} ${activeTab === 'Pay As You Go' ? styles.tabActive : styles.tabInactive}`}
+                    onClick={() => handleDivClick("Pay As You Go")}
                 >
                     <div className="x-axis gap-1">
                         <Image src='/icons/payAsYouGo.png' alt="icon" width={36} height={36} />
@@ -57,7 +57,7 @@ const ContractType = ({ setState }) => {
                             </span> */}
                         </div>
                     </div>
-                    <FaChevronRight size={14} color={activeTab === 'payAsYouGo' ? "#14125e" : "#1C1B1F"} />
+                    <FaChevronRight size={14} color={activeTab === 'Pay As You Go' ? "#14125e" : "#1C1B1F"} />
                 </div>
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'milestone' ? styles.tabActive : styles.tabInactive}`}

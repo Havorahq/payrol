@@ -5,11 +5,12 @@ import styles from './auth.module.scss'
 import Button from '../common/Button'
 import Image from 'next/image'
 import { OnboardingContext } from '@/app/onboarding/page'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 
 
 const Signup = () => {
-  const { onChange, onRouteChange, togglePassword, state: { firstName, lastName, businessName, businessEmail, password, isPasswordShown } } = useContext(OnboardingContext)
+  const { onChange, onRouteChange, onReset, togglePassword, state: { firstName, lastName, email, businessName, businessEmail, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -23,7 +24,7 @@ const Signup = () => {
           <div className="x-axis gap-1 my-1">
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'business' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("business")}
+              onClick={() => { setActiveTab("business"); onReset(); }}
             >
               <Image src='/icons/dollar.png' alt="icon" width={36} height={36} />
               <div>
@@ -33,7 +34,7 @@ const Signup = () => {
             </div>
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'employee' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("employee")}
+              onClick={() => { setActiveTab("employee"); onReset(); }}
             >
               <Image src='/icons/employee.png' alt="icon" width={36} height={36} />
               <div>
@@ -66,6 +67,19 @@ const Signup = () => {
               />
             </div>
             {
+            activeTab === "employee" &&
+            <div>
+              <label>Email</label>
+              <input 
+                type="text" 
+                name="email"
+                value={email}
+                placeholder="Enter Email Address"
+                onChange={onChange}
+                required
+              />
+            </div>}
+            {
               activeTab === "business" ?
               <div>
                 <div className="my-half">
@@ -94,7 +108,7 @@ const Signup = () => {
               :
               null
             }
-            <div className="my-half">
+            <div className="my-half relative">
               <label htmlFor="">Password</label>
               <input 
                 type={isPasswordShown ? "text" : "password"}
@@ -104,6 +118,12 @@ const Signup = () => {
                 onChange={onChange}
                 required
               />
+              {
+                isPasswordShown?
+                <FaEyeSlash size={22} className="password-icon" color="#A2A6AD" onClick={togglePassword}  />
+                :  
+                <FaEye className="password-icon" color="#A2A6AD" size={22} onClick={togglePassword}  />  
+              }
             </div>
             <Button label="Continue" />
             <div className="x-axis gap-1">

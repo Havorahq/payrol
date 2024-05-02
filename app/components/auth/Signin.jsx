@@ -8,7 +8,7 @@ import { OnboardingContext } from '@/app/onboarding/page'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const Signin = () => {
-  const { onChange, onRouteChange, togglePassword, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
+  const { onChange, onRouteChange, onReset, togglePassword, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -22,7 +22,7 @@ const Signin = () => {
           <div className="x-axis gap-1 my-1">
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'business' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("business")}
+              onClick={() => { setActiveTab("business"); onReset(); }}
             >
               <Image src='/icons/dollar.png' alt="icon" width={36} height={36} />
               <div>
@@ -33,7 +33,7 @@ const Signin = () => {
             </div>
             <div 
               className={`x-axis ${styles.tab} ${activeTab === 'employee' ? styles.tabActive : styles.tabInactive}`}
-              onClick={() => setActiveTab("employee")}
+              onClick={() => { setActiveTab("employee"); onReset(); }}
             >
               <Image src='/icons/employee.png' alt="icon" width={36} height={36} />
               <div>
