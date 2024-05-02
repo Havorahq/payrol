@@ -1,13 +1,21 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { FaChevronRight } from 'react-icons/fa'
+import { ContractContext } from '@/app/create-contract/page'
 
-const ContractType = ({ handleNext }) => {
+const ContractType = ({ setState }) => {
+    const { onChange, handleNext, handlePrev, state } = useContext(ContractContext)
     const [activeTab, setActiveTab] = useState("")
+
+    const handleDivClick = (value) => {
+        setActiveTab(value)
+        setState({ ...state, contractType: value });
+    };
+
 
     return (
         <div className={styles.section}>
@@ -22,7 +30,7 @@ const ContractType = ({ handleNext }) => {
             <div className="y-axis">
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'fixed' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("fixed")}
+                    onClick={() => handleDivClick("fixed")}
                 >
                     <div className="x-axis gap-1">
                         <Image src='/icons/fixed.png' alt="icon" width={36} height={36} />
@@ -35,8 +43,8 @@ const ContractType = ({ handleNext }) => {
                     <FaChevronRight size={14} color={activeTab === 'fixed' ? "#14125e" : "#1C1B1F"} />
                 </div>
                 <div 
-                    className={`x-axis justify-between ${styles.tab} ${activeTab === 'payAsYouGo' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("payAsYouGo")}
+                    className={`x-axis justify-between ${styles.tab} ${activeTab === 'Pay As You Go' ? styles.tabActive : styles.tabInactive}`}
+                    onClick={() => handleDivClick("Pay As You Go")}
                 >
                     <div className="x-axis gap-1">
                         <Image src='/icons/payAsYouGo.png' alt="icon" width={36} height={36} />
@@ -49,11 +57,11 @@ const ContractType = ({ handleNext }) => {
                             </span> */}
                         </div>
                     </div>
-                    <FaChevronRight size={14} color={activeTab === 'payAsYouGo' ? "#14125e" : "#1C1B1F"} />
+                    <FaChevronRight size={14} color={activeTab === 'Pay As You Go' ? "#14125e" : "#1C1B1F"} />
                 </div>
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'milestone' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("milestone")}
+                    onClick={() => handleDivClick("milestone")}
                 >
                     <div className="x-axis gap-1">
                         <Image src='/icons/milestone.png' alt="icon" width={36} height={36} />

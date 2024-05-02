@@ -1,12 +1,14 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { FaChevronDown, FaChevronLeft, FaChevronUp } from 'react-icons/fa'
+import { ContractContext } from '@/app/create-contract/page'
 
-const Payments = ({ handleNext, handlePrev }) => {
+const Payments = () => {
+    const { handleNext, handlePrev, onChange, state: { monthlyRate, milestoneTitles, milestoneRates } } = useContext(ContractContext)
     const [mile, setMile] = useState(false)
 
     return (
@@ -36,7 +38,11 @@ const Payments = ({ handleNext, handlePrev }) => {
                         </select>
                         <input 
                             type='text'
+                            name="monthlyRate"
+                            value={monthlyRate}
                             placeholder='1000'
+                            onChange={onChange}
+                            // required
                         />
                     </div>
                 </div>
@@ -59,14 +65,14 @@ const Payments = ({ handleNext, handlePrev }) => {
                         </div>
                         <div className="my-half x-axis gap-1">
                             <div className="w-100">
-                                <label htmlFor="">Title</label>
+                                <label>Title</label>
                                 <input 
                                     type="text" 
                                     placeholder="Enter Milestone Title"
                                 />
                             </div>
                             <div className="w-100">
-                                <label htmlFor="">Enter Rate</label>
+                                <label>Enter Rate</label>
                                 <div className='inputContainer x-axis w-100'>
                                     <select name="" id="">
                                         <option value="">

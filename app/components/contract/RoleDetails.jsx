@@ -1,37 +1,39 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
 import { FaArrowDown } from 'react-icons/fa'
 import { FaCaretDown } from "react-icons/fa";
+import { ContractContext } from '@/app/create-contract/page'
 
-const RoleDetails = ({ handleNext, handlePrev }) => {
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+const RoleDetails = () => {
+    const { handleNext, handlePrev, onChange, onFromDateChange, onToDateChange, state: { jobTitle, jobDescription, startDate, endDate } } = useContext(ContractContext)
 
-    const onFromDateChange = date => {
-        const value = moment(new Date(date)).format('YYYY-MM-DD')
+    // const [startDate, setStartDate] = useState("");
+    // const [endDate, setEndDate] = useState("");
 
-        if (value !== "1970-01-01") {
-            setStartDate(value)
-        } else {
-            setStartDate("")
-        }
-    }
+    // const onFromDateChange = date => {
+    //     const value = moment(new Date(date)).format('YYYY-MM-DD')
 
-    const onToDateChange = date => {
-        const value = moment(new Date(date)).format('YYYY-MM-DD')
+    //     if (value !== "1970-01-01") {
+    //         setStartDate(value)
+    //     } else {
+    //         setStartDate("")
+    //     }
+    // }
 
-        if (value !== "1970-01-01") {
-            setEndDate(value)
-        } else {
-            setEndDate("")
-        }
-    }
+    // const onToDateChange = date => {
+    //     const value = moment(new Date(date)).format('YYYY-MM-DD')
+
+    //     if (value !== "1970-01-01") {
+    //         setEndDate(value)
+    //     } else {
+    //         setEndDate("")
+    //     }
+    // }
 
 
     return (
@@ -54,14 +56,20 @@ const RoleDetails = ({ handleNext, handlePrev }) => {
                     <label htmlFor="">Job Title</label>
                     <input 
                         type="text" 
+                        name="jobTitle"
+                        value={jobTitle}
                         placeholder="Enter Job Titles"
+                        onChange={onChange}
                     />
                 </div>
                 <div className="my-1">
                     <label htmlFor="">Job Description (Optional)</label>
                     <textarea 
                         type="text" 
+                        name="jobDescription"
+                        value={jobDescription}
                         placeholder="Enter Job description here"
+                        onChange={onChange}
                     />
                 </div>
                 <div className="my-half x-axis gap-1">

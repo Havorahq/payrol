@@ -1,12 +1,13 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
+import { ContractContext } from '@/app/create-contract/page'
 
-const Wallet = ({ handlePrev, handleNext }) => {
-
+const Wallet = () => {
+    const { handleNext, handlePrev, onChange, state: { walletAddress } } = useContext(ContractContext)
 
     return (
         <div className={styles.section}>
@@ -28,7 +29,11 @@ const Wallet = ({ handlePrev, handleNext }) => {
                     <label htmlFor="">Employee wallet address</label>
                     <input 
                         type="text" 
+                        name="walletAddress"
+                        value={walletAddress}
                         placeholder="Enter a Wallet Address"
+                        onChange={onChange}
+                        // required
                     />
                 </div>
                 <Button label="Connect Wallet" onClick={handleNext} />
