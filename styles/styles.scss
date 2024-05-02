@@ -131,6 +131,21 @@ button {
   font-weight: 400;
 }
 
+.password-icon{
+  position: absolute;
+  top: 40px;
+  cursor: pointer;
+  right: 15px;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.hide {
+  display: none !important;
+}
+
 .line {
   border-top: 1px solid #DBE1EB;
   width: 100%;

@@ -1,11 +1,22 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
+import { ContractContext } from '@/app/create-contract/page'
+import { capitalizeFirst, capitalizeFirstWord } from '@/plugins/utils'
 
-const ContractDetails = ({ handlePrev}) => {
+const ContractDetails = () => {
+    const { 
+        handleNext, handlePrev, onChange, 
+        state: { 
+            contractType, employeeName, employeeEmail, 
+            jobTitle, jobDescription, startDate, endDate,
+            monthlyRate, milestoneTitles, milestoneRates, walletAddress 
+        } 
+    } = useContext(ContractContext)
+
     return (
         <div className={styles.section}>
              <Image 
@@ -21,36 +32,40 @@ const ContractDetails = ({ handlePrev}) => {
                 <p className={styles.desc}>Details of your contract below</p>
                 {/* <Image src="/images/step_5.png" alt='step' width={540} height={7} /> */}
                 <div className={`${styles.hr} py-1 mt-1`}>
-                    <p className="label">Pay As You Go</p>
-                    <p className="text-small w-70 greyText">For contracts that require time sheet or work submissions each payment cycle.</p>
+                    <p className="label">Contract Type</p>
+                    <p className="text-small w-70 greyText">{capitalizeFirst(contractType)}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Employee Name</p>
-                    <p className="text-small w-70 greyText">John Bola</p>
+                    <p className="text-small w-70 greyText">{capitalizeFirst(employeeName)}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Employee Email</p>
-                    <p className="text-small w-70 greyText">test@gmail.com</p>
+                    <p className="text-small w-70 greyText">{employeeEmail}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Job Title</p>
-                    <p className="text-small w-70 greyText">Developer</p>
+                    <p className="text-small w-70 greyText">{jobTitle}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Job Description</p>
-                    <p className="text-small w-70 greyText">This a a demo description</p>
+                    <p className="text-small w-70 greyText">{jobDescription}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Start date</p>
-                    <p className="text-small w-70 greyText">Wednesday, 31 Jan 2024</p>
+                    <p className="text-small w-70 greyText">{startDate}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">End date</p>
-                    <p className="text-small w-70 greyText">Thursday, 1 Feb 2024</p>
+                    <p className="text-small w-70 greyText">{endDate}</p>
                 </div>
                 <div className={`${styles.hr} py-1`}>
                     <p className="label">Monthly Rate </p>
-                    <p className="text-small w-70 greyText">This a a demo description</p>
+                    <p className="text-small w-70 greyText">{monthlyRate}</p>
+                </div>
+                <div className={`${styles.hr} py-1`}>
+                    <p className="label">Wallet Address </p>
+                    <p className="text-small w-70 greyText">{walletAddress}</p>
                 </div>
                 <Button label="Accept Contract" />
             </div>
@@ -59,3 +74,6 @@ const ContractDetails = ({ handlePrev}) => {
 }
 
 export default ContractDetails
+
+
+

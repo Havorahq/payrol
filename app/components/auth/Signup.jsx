@@ -8,8 +8,8 @@ import { OnboardingContext } from '@/app/onboarding/page'
 
 
 
-const Signup = ({ setAuth }) => {
-  const { onRouteChange, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
+const Signup = () => {
+  const { onChange, onRouteChange, togglePassword, state: { firstName, lastName, businessName, businessEmail, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -44,34 +44,50 @@ const Signup = ({ setAuth }) => {
           </div>
           <form>
             <div className="my-half">
-              <label htmlFor="">First name</label>
+              <label htmlFor="">First Name</label>
               <input 
                 type="text" 
+                name="firstName"
+                value={firstName}
                 placeholder="Enter your first name"
+                onChange={onChange}
+                required
               />
             </div>
             <div className="my-half">
-              <label htmlFor="">Last name</label>
+              <label htmlFor="">Last Name</label>
               <input 
                 type="text" 
+                name="lastName"
+                value={lastName}
                 placeholder="Enter your last name"
+                onChange={onChange}
+                required
               />
             </div>
             {
               activeTab === "business" ?
               <div>
                 <div className="my-half">
-                  <label htmlFor="">Business name</label>
+                  <label htmlFor="">Business Name</label>
                   <input 
                     type="text" 
+                    name="businessName"
+                    value={businessName} 
                     placeholder="Enter business name"
+                    onChange={onChange}
+                    required
                   />
                 </div>
                 <div className="my-half">
                   <label htmlFor="">Business Email</label>
                   <input 
                     type="text" 
+                    name="businessEmail"
+                    value={businessEmail} 
                     placeholder="Enter business email"
+                    onChange={onChange}
+                    required
                   />
                 </div>
               </div>
@@ -81,8 +97,12 @@ const Signup = ({ setAuth }) => {
             <div className="my-half">
               <label htmlFor="">Password</label>
               <input 
-                type="password" 
-                placeholder="Enter your password"
+                type={isPasswordShown ? "text" : "password"}
+                name="password"
+                value={password}
+                placeholder="Enter Password"
+                onChange={onChange}
+                required
               />
             </div>
             <Button label="Continue" />

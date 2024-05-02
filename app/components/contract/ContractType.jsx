@@ -1,13 +1,21 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { FaChevronRight } from 'react-icons/fa'
+import { ContractContext } from '@/app/create-contract/page'
 
-const ContractType = ({ handleNext }) => {
+const ContractType = ({ setState }) => {
+    const { onChange, handleNext, handlePrev, state } = useContext(ContractContext)
     const [activeTab, setActiveTab] = useState("")
+
+    const handleDivClick = (value) => {
+        setActiveTab(value)
+        setState({ ...state, contractType: value });
+    };
+
 
     return (
         <div className={styles.section}>
@@ -22,8 +30,9 @@ const ContractType = ({ handleNext }) => {
             <div className="y-axis">
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'fixed' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("fixed")}
+                    onClick={() => handleDivClick("fixed")}
                 >
+                    <input type="button" hidden name="contractType" className='hide' value={"Fixed"} onChange={onChange} />
                     <div className="x-axis gap-1">
                         <Image src='/icons/fixed.png' alt="icon" width={36} height={36} />
                         <div className={styles.tabDetails}>
@@ -36,8 +45,9 @@ const ContractType = ({ handleNext }) => {
                 </div>
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'payAsYouGo' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("payAsYouGo")}
+                    onClick={() => handleDivClick("Pay As You Go")}
                 >
+                    <input type="button" hidden name="contractType" className='hide' value={"Pay As You Go"} onChange={onChange} />
                     <div className="x-axis gap-1">
                         <Image src='/icons/payAsYouGo.png' alt="icon" width={36} height={36} />
                         <div>
@@ -53,8 +63,9 @@ const ContractType = ({ handleNext }) => {
                 </div>
                 <div 
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'milestone' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => setActiveTab("milestone")}
+                    onClick={() => handleDivClick("milestone")}
                 >
+                    <input type="button" hidden name="contractType" className='hide' value={"Milestone"} onChange={onChange} />
                     <div className="x-axis gap-1">
                         <Image src='/icons/milestone.png' alt="icon" width={36} height={36} />
                         <div>

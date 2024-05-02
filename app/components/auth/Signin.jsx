@@ -5,9 +5,10 @@ import styles from './auth.module.scss'
 import Button from '../common/Button'
 import Image from 'next/image'
 import { OnboardingContext } from '@/app/onboarding/page'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const Signin = () => {
-  const { onRouteChange, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
+  const { onChange, onRouteChange, togglePassword, state: { email, password, isPasswordShown } } = useContext(OnboardingContext)
   const [activeTab, setActiveTab] = useState("employee")
 
   return (
@@ -47,18 +48,28 @@ const Signin = () => {
               <input 
                 type="text" 
                 name="email"
+                value={email}
                 placeholder="Enter Email Address"
+                onChange={onChange}
                 required
               />
             </div>
-            <div>
+            <div className='relative'>
               <label htmlFor="">Password</label>
               <input 
                 type={isPasswordShown ? "text" : "password"}
                 name="password"
+                value={password}
                 placeholder="Enter Password"
+                onChange={onChange}
                 required
               />
+              {
+                isPasswordShown?
+                <FaEyeSlash size={22} className="password-icon" color="#A2A6AD" onClick={togglePassword}  />
+                :  
+                <FaEye className="password-icon" color="#A2A6AD" size={22} onClick={togglePassword}  />  
+              }
             </div>
             <Button label="Continue" />
             <div className="x-axis gap-1">

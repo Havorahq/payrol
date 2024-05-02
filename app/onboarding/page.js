@@ -9,15 +9,18 @@ import Signup from '../components/auth/Signup';
 export const OnboardingContext = createContext();
 
 const Onboarding = () => {
-  const [auth, setAuth] = useState("signin")
   const [state, setState] = useState({
     route: "signin",
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
+    businessName: "",
+    businessEmail: "",
     isPasswordShown: false
   })
 
-  const { route, email, password, isPasswordShown } = state;
+  const { route, firstName, lastName, businessName, businessEmail, email, password, isPasswordShown } = state;
 
   const renderPages = () => {
     switch (route) {
@@ -38,11 +41,27 @@ const Onboarding = () => {
         ...state,
         route: value
     }))
-}
+  }
+
+  const togglePassword = () => {
+    setState(state => ({
+      ...state,
+      isPasswordShown : !isPasswordShown,
+    }))
+  }
+
+  const onChange = (e) => {
+    setState(state=>({
+        ...state,
+       [ e.target.name]: e.target.value
+    }))
+  }
 
   return (
     <OnboardingContext.Provider 
       value={{ 
+        onChange,
+        togglePassword,
         onRouteChange,
         state
       }}
@@ -65,11 +84,6 @@ const Onboarding = () => {
         </div>
         <div className={styles.right}>
           {renderPages()}
-          {/* {
-            auth === "signin" ?
-            <Signin setAuth={setAuth} /> :
-            <Signup setAuth={setAuth} />
-          } */}
         </div>
       </div>
     </OnboardingContext.Provider>

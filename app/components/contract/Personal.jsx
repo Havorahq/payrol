@@ -1,11 +1,13 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
+import { ContractContext } from '@/app/create-contract/page'
 
-const Personal = ({ handleNext, handlePrev }) => {
+const Personal = () => {
+    const { handleNext, handlePrev, onChange, state: { employeeName, employeeEmail } } = useContext(ContractContext)
 
     return (
         <div className={styles.section}>
@@ -27,19 +29,26 @@ const Personal = ({ handleNext, handlePrev }) => {
                     <label htmlFor="">Employee Name</label>
                     <input 
                         type="text" 
+                        name="employeeName"
+                        value={employeeName}
                         placeholder="Enter Employee Name"
+                        onChange={onChange}
+                        // required
                     />
                 </div>
                 <div className="my-1">
                     <label htmlFor="">Employee Email</label>
                     <input 
                         type="text" 
+                        name="employeeEmail"
+                        value={employeeEmail}
                         placeholder="Enter Employee Email"
+                        onChange={onChange}
+                        // required
                     />
                 </div>
                 <Button label="Continue" onClick={handleNext} />
             </form>
-            {/* <Button label="Continue" style="btn-primary" /> */}
         </div>
     )
 }
