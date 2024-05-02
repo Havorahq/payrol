@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./dashboard.module.scss";
@@ -9,20 +11,36 @@ import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
+import { supabase } from "@/lib/supabaseClient";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [contract, setContract] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("user").select("*");
+      if (error) {
+        console.error(error);
+      } else {
+        setContract(data);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log({ contract });
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
-         <p className="w-100">Total Contract</p>
-         <Link href="/create-contract">
+        <p className="w-100">Total Contract</p>
+        <Link href="/create-contract">
           <div className={`${styles.addButton} x-axis gap-1`}>
             <FaPlus />
-            <div className="w-100">
-              Contract
-            </div>
+            <div className="w-100">Contract</div>
           </div>
-         </Link>
+        </Link>
       </div>
 
       <div className={styles.cardContainer}>
@@ -34,9 +52,7 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>
-            10
-          </div>
+          <div className={styles.cardBody}>10</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -46,9 +62,7 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>
-            2
-          </div>
+          <div className={styles.cardBody}>2</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -57,9 +71,7 @@ export default function Home() {
               <ImCancelCircle />
             </div>
           </div>
-          <div className={styles.cardBody}>
-            2
-          </div>
+          <div className={styles.cardBody}>2</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -68,12 +80,9 @@ export default function Home() {
               <BiDollarCircle />
             </div>
           </div>
-          <div className={styles.cardBody}>
-            80,576
-          </div>
+          <div className={styles.cardBody}>80,576</div>
         </div>
       </div>
-
       <div className={styles.tableContainer}>
         <div className={styles.tableHeader}>
           <p className={styles.tableTitle}>All Contract</p>
@@ -117,6 +126,7 @@ export default function Home() {
           </tbody>
         </table> */}
       </div>
+
     </Wrapper>
   );
 }
