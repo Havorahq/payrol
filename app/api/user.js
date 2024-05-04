@@ -2,9 +2,7 @@ import { supabase } from "../../lib/supabase";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { data, error } = await supabase
-      .from("your_table_name")
-      .insert([req.body]);
+    const { data, error } = await supabase.from("user").insert([req.body]);
 
     if (error) {
       return res.status(500).json({ error: error.message });

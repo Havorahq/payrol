@@ -16,10 +16,14 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [contract, setContract] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase.from("user").select("*");
+    const fetchContract = async () => {
+      const { data, error } = await supabase
+        .from("contract")
+        .select("*")
+        .eq("employerId", "employerId");
       if (error) {
         console.error(error);
       } else {
@@ -27,10 +31,27 @@ export default function Home() {
       }
     };
 
-    fetchData();
+    fetchContract();
   }, []);
 
-  console.log({ contract });
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase
+        .from("user")
+        .insert([{ first_name: "otimade", email: "otimade@gmail.com" }]);
+      console.log("done");
+      if (error) {
+        console.error(error);
+      } else {
+        setUser(data);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  console.log({ contract, user });
+
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
@@ -126,7 +147,6 @@ export default function Home() {
           </tbody>
         </table> */}
       </div>
-
     </Wrapper>
   );
 }
