@@ -15,6 +15,7 @@ import {
   logout,
 } from "./../../connect-button/actions/auth";
 import { handleLogin } from "@/app/api/user";
+import { useRouter } from "next/navigation";
 
 const Signin = () => {
   const {
@@ -23,8 +24,10 @@ const Signin = () => {
     onReset,
     onTabChange,
     setPublicAddress,
-    state: { email, activeTab },
+    state: { activeTab },
   } = useContext(OnboardingContext);
+
+  const router = useRouter();
 
   return (
     <div className={styles.container}>
@@ -78,22 +81,19 @@ const Signin = () => {
             isLoggedIn: async (address) => {
               console.log("checking if logged in!", { address });
               setPublicAddress(address);
-
-              // Check if the address is in the database
-              const { data, error } = await handleLogin(address);
-
-              if (data) {
-                return await isLoggedIn();
-              } else {
-                // If the address is not in the database, redirect to the signup page
-                onRouteChange("signup");
-                // return false;
-              }
+              return await isLoggedIn();
             },
 
             doLogin: async (params) => {
               console.log("logging in!");
-              await login(params);
+              const payload = await login(params);
+
+              const { data, error } = await handleLogin(payload.address);
+              if (data.status == 406) {
+                onRouteChange("signup");
+              } else {
+                router.push("/");
+              }
               return { success: true };
             },
             getLoginPayload: async ({ address }) =>

@@ -11,6 +11,7 @@ const ConnectButtonPage = () => {
       auth={{
         isLoggedIn: async (address) => {
           console.log("checking if logged in!", { address });
+          setPublicAddress(address);
           return await isLoggedIn();
         },
         doLogin: async (params) => {

@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { OnboardingContext } from "@/app/onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const {
@@ -26,6 +27,8 @@ const Signup = () => {
     },
   } = useContext(OnboardingContext);
 
+  const router = useRouter();
+
   const handleSignUp = async () => {
     try {
       const { data, error } = await handleSignUpServer(
@@ -40,11 +43,12 @@ const Signup = () => {
       if (error) {
         // Handle error
         console.error(error);
+        alert("Error signing up ");
         return;
       }
 
-      alert("Signed up successfully");
-      // redirect("/");
+      alert("Signed up successfully, Welcome on board");
+      router.push("/");
     } catch (error) {
       console.error(error);
     }
