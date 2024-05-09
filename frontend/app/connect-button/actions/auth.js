@@ -24,6 +24,11 @@ export async function login(payload) {
       payload: verifiedPayload.payload,
     });
     cookies().set("jwt", jwt);
+
+    // Extract user details from the verified payload
+    return verifiedPayload.payload;
+
+    // Return an object with the necessary user information
   }
 }
 

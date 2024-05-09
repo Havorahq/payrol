@@ -1,26 +1,59 @@
-import { supabase } from "../../lib/supabase";
+import { supabase } from "./../../lib/supabaseClient";
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    const { data, error } = await supabase
-      .from("your_table_name")
-      .insert([req.body]);
+export const handleSignUpServer = async (
+  firstName,
+  lastName,
+  email,
+  businessName,
+  businessEmail,
+  publicAddress
+) => {
+  try {
+    const { data, error } = await supabase.from("user").insert([
+      {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        public_address: publicAddress,
+        business_name: businessName,
+        business_email: businessEmail,
+      },
+    ]);
 
     if (error) {
-      return res.status(500).json({ error: error.message });
+      throw new Error(error.message);
     }
 
-    res.status(200).json(data);
-  } else {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
   }
-}
+};
+
+export const handleLogin = async (publicAddress) => {
+  console.log({ publicAddress });
+
+  try {
+    const user = await supabase
+      .from("user")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("public_address", publicAddress)
+      .single();
+
+    if (!user) {
+      // User not found, redirect to signup
+      return { data: null, error: "User not found. Please sign up." };
+    }
+
+    return { data: user, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
 
 export async function getServerSideProps(context) {
   const { data, error } = await supabase.from("user").select("*");
-
-  console.log({ data });
 
   if (error) {
     console.error(error);

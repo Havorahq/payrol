@@ -11,11 +11,14 @@ const ConnectButtonPage = () => {
       auth={{
         isLoggedIn: async (address) => {
           console.log("checking if logged in!", { address });
+          setPublicAddress(address);
           return await isLoggedIn();
         },
         doLogin: async (params) => {
           console.log("logging in!");
           await login(params);
+
+          return { success: true };
         },
         getLoginPayload: async ({ address }) => generatePayload({ address }),
         doLogout: async () => {
