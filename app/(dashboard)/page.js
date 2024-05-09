@@ -34,24 +34,6 @@ export default function Home() {
     fetchContract();
   }, []);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase
-        .from("user")
-        .insert([{ first_name: "otimade", email: "otimade@gmail.com" }]);
-      console.log("done");
-      if (error) {
-        console.error(error);
-      } else {
-        setUser(data);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  console.log({ contract, user });
-
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>

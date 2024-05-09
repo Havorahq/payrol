@@ -15,15 +15,9 @@ const ConnectButtonPage = () => {
         },
         doLogin: async (params) => {
           console.log("logging in!");
-          const authResponse = await login(params);
+          await login(params);
 
-          // Extract user details from the authentication response
-          const { name, email, picture } = authResponse.user;
-
-          console.log({ name, email });
-
-          // Store user details in your application's state or database
-          // setUserDetails({ name, email, picture });
+          return { success: true };
         },
         getLoginPayload: async ({ address }) => generatePayload({ address }),
         doLogout: async () => {
