@@ -17,11 +17,11 @@ export default function RootLayout({ children }) {
     <ThirdwebProvider>
       <html lang="en">
         <body
-          style={{
-            minHeight: "100vh",
-            display: "grid",
-            placeContent: "center",
-          }}
+          // style={{
+          //   minHeight: "100vh",
+          //   display: "grid",
+          //   placeContent: "center",
+          // }}
         >
           {children}
         </body>
