@@ -5,6 +5,18 @@ import styles from "./onboarding.module.scss";
 import Image from "next/image";
 import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
+import Link from "next/link";
+
+import { FaPlus } from "react-icons/fa6";
+// import {
+//   CONTRACT_ADDRESS,
+//   TOKEN_CONTRACT_ADDRESS,
+// } from "../smart-contract/constants";
+// import CONTRACT_ABI from "../smart-contract/wordanamain-abi.json";
+// import TOKEN_ABI from "../smart-contract/token-abi.json";
+import Web3 from "web3";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import { BigNumber } from "bignumber.js";
 import { GlobalProvider } from "../context/GlobalContext";
 
 export const OnboardingContext = createContext();
@@ -63,7 +75,7 @@ const Onboarding = () => {
   };
 
   const setPublicAddress = (value) => {
-  console.log(value);
+    console.log(value);
     setState((state) => ({
       ...state,
       publicAddress: value,
