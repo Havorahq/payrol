@@ -6,15 +6,16 @@ import Button from "../common/Button";
 import Image from "next/image";
 import { OnboardingContext } from "../../onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ConnectButton } from "thirdweb/react";
-import { client } from "./../../../lib/client";
-import {
-  generatePayload,
-  isLoggedIn,
-  login,
-  logout,
-} from "./../../connect-button/actions/auth";
-import { handleLogin } from "../../api/user";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "thirdweb/react";
+// import { client } from "./../../../lib/client";
+// import {
+//   generatePayload,
+//   isLoggedIn,
+//   login,
+//   logout,
+// } from "./../../connect-button/actions/auth";
+import { handleLogin } from "@/app/api/user";
 import { useRouter } from "next/navigation";
 
 const Signin = () => {
@@ -75,35 +76,7 @@ const Signin = () => {
             </div>
           </div>
         </div>
-        <ConnectButton
-          client={client}
-          auth={{
-            isLoggedIn: async (address) => {
-              console.log("checking if logged in!", { address });
-              setPublicAddress(address);
-              return await isLoggedIn();
-            },
-
-            doLogin: async (params) => {
-              console.log("logging in!");
-              const payload = await login(params);
-
-              const { data, error } = await handleLogin(payload.address);
-              if (data.status == 406) {
-                onRouteChange("signup");
-              } else {
-                router.push("/");
-              }
-              return { success: true };
-            },
-            getLoginPayload: async ({ address }) =>
-              generatePayload({ address }),
-            doLogout: async () => {
-              console.log("logging out!");
-              await logout();
-            },
-          }}
-        />
+        <ConnectButton />
       </div>
 
       <p className={styles.prompt}>

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^1.3.3",
     "@supabase/supabase-js": "^2.42.7",
     "@thirdweb-dev/react": "^4.6.11",
     "@thirdweb-dev/sdk": "^4.0.72",
@@ -19,7 +20,10 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
     "react-icons": "^5.1.0",
-    "sass": "^1.75.0"
+    "sass": "^1.75.0",
+    "viem": "^1.21.4",
+    "wagmi": "^1.4.13",
+    "web3": "^4.4.0"
   },
   "devDependencies": {
     "@types/react": "18.3.1",
