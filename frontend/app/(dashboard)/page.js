@@ -11,7 +11,7 @@ import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -92,7 +92,13 @@ export default function Home() {
           </div>
         </div>
 
-        {/* <table>
+        <div className="x-axis gap-2 my-2">
+          <div className="btn-secondary">Active</div>
+          <div className="btn-secondary">Pending</div>
+          <div className="btn-secondary">Cancelled</div>
+        </div>
+
+        <table>
           <thead>
             <tr>
               <th>S/N</th>
@@ -111,7 +117,7 @@ export default function Home() {
               <td>Georgereynolds@gmail.com</td>
               <td>$1000</td>
               <td>Fixed</td>
-              <td>Active</td>
+              <td className="tabActive" style={{ padding: 0 }}>Active</td>
               <td>View</td>
             </tr>
             <tr>
@@ -120,11 +126,11 @@ export default function Home() {
               <td>Georgereynolds@gmail.com</td>
               <td>$1000</td>
               <td>Fixed</td>
-              <td>Active</td>
+              <td className="tabActive" style={{ padding: 0 }}>Active</td>
               <td>View</td>
             </tr>
           </tbody>
-        </table> */}
+        </table>
       </div>
 
     </Wrapper>
