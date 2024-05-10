@@ -8,10 +8,24 @@ import { ContractContext } from '@/app/create-contract/page'
 import { capitalizeFirst, capitalizeFirstWord } from '@/plugins/utils'
 import { useRouter } from 'next/navigation'
 import Modal from '../common/modal/Modal'
+import { ContractHandler } from '@/app/smart-contract/handler'
+import { useSendTransaction } from "thirdweb/react";
+import { prepareContractCall, getContract } from "thirdweb";
+import { client } from '@/lib/client'
+import { defineChain, toWei } from "thirdweb";
+
+const liskId = 	4202;
+
+const contractFactory = getContract({
+    client,
+    chain: defineChain(liskId),
+    address: "0xA18F9BDEb5990fbfB6FE6CE43c97699602eA7747",
+  });
 
 const ContractDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter()
+    const { mutate: sendTransaction, isPending } = useSendTransaction();
 
     const { 
         handleNext, handlePrev, onChange, state,
@@ -27,6 +41,21 @@ const ContractDetails = () => {
 
     const handleSubmit = () => {
         console.log("Submitted: ", state)
+        const deployTx = prepareContractCall({
+            contractFactory,
+            method: "function createNewFixedRateAgreement(string memory _employerId,string memory _employeeId,address _employerAddress,address _currency,uint256 _fixedPayment)",
+            params: [
+                    "employerId",
+                    "employeeId",
+                    "0xA18F9BDEb5990fbfB6FE6CE43c97699602eA7747",
+                    "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda",
+                    toWei(state.monthlyRate)
+            ],
+            value: 0
+        })
+        console.log(deployTx, 'tttt')
+        sendTransaction(deployTx);
+        console.log(isPending,'the pending')
     }
 
     return (
@@ -87,7 +116,10 @@ const ContractDetails = () => {
                         <p className="label">Wallet Address </p>
                         <p className="text-small w-70 greyText">{walletAddress}</p>
                     </div>
-                    <Button label="Accept Contract" onClick={() => {openModal(); handleSubmit()}} />
+                    <Button label="Accept Contract" onClick={() => {
+                        // openModal(); 
+                        handleSubmit()
+                        }} />
                 </div>
             </div>
         </>
