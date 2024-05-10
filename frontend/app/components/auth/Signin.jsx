@@ -4,7 +4,7 @@ import React, { useState, useContext } from "react";
 import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "../../onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ConnectButton } from "thirdweb/react";
 import { client } from "./../../../lib/client";
@@ -14,7 +14,7 @@ import {
   login,
   logout,
 } from "./../../connect-button/actions/auth";
-import { handleLogin } from "@/app/api/user";
+import { handleLogin } from "../../api/user";
 import { useRouter } from "next/navigation";
 
 const Signin = () => {

@@ -11,7 +11,7 @@ import { LuArrowRight } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
 
 export default function Home() {

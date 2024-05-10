@@ -5,7 +5,7 @@ import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { FaChevronDown, FaChevronLeft, FaChevronUp } from 'react-icons/fa'
-import { ContractContext } from '@/app/create-contract/page'
+import { ContractContext } from '../../create-contract/page'
 
 const Payments = () => {
     const { handleNext, handlePrev, onChange, state: { monthlyRate, milestoneTitles, milestoneRates } } = useContext(ContractContext)

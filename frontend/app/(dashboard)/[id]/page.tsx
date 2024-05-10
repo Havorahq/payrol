@@ -2,7 +2,7 @@ import Button from '../../components/common/Button';
 import Wrapper from '../../components/wrapper/Wrapper'
 import React from 'react'
 import styles from './styles.module.scss'
-import { capitalizeFirst } from '@/plugins/utils';
+import { capitalizeFirst } from '../../../plugins/utils';
 
 const ContractDetail = () => {
   return (

@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
-import { ContractContext } from '@/app/create-contract/page'
+import { ContractContext } from '../../create-contract/page'
 
 const Wallet = () => {
     const { handleNext, handlePrev, onChange, state: { walletAddress } } = useContext(ContractContext)
