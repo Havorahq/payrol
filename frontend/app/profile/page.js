@@ -5,9 +5,9 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 
 import styles from "./profile.module.scss"
-import Wrapper from "@/app/components/wrapper/Wrapper"
-import Modal from '@/app/components/common/modal/Modal'
-import EditProfile from '@/app/components/auth/EditProfile'
+import Wrapper from "../components/wrapper/Wrapper"
+import Modal from '../components/common/modal/Modal'
+import EditProfile from '../components/auth/EditProfile'
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);

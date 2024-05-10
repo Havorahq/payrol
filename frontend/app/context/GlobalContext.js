@@ -8,7 +8,7 @@ export const GlobalProvider = ({ children }) => {
   const [globalState, setGlobalState] = useState({});
 
   // Accessing state from AuthContext
-  const { isLoggedIn, user, state } = useContext(OnboardingContext);
+  const { isLoggedIn, user, state: { publicAddress } } = useContext(OnboardingContext);
 
   // You can perform any actions with auth state here and update globalState accordingly
 

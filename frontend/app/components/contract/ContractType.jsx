@@ -5,7 +5,7 @@ import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { FaChevronRight } from 'react-icons/fa'
-import { ContractContext } from '@/app/create-contract/page'
+import { ContractContext } from '../../create-contract/page'
 
 const ContractType = ({ setState }) => {
     const { onChange, handleNext, handlePrev, state } = useContext(ContractContext)

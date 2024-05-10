@@ -7,7 +7,7 @@ import Button from '../common/Button'
 import DatePicker from 'react-datepicker'
 import { FaArrowDown } from 'react-icons/fa'
 import { FaCaretDown } from "react-icons/fa";
-import { ContractContext } from '@/app/create-contract/page'
+import { ContractContext } from '../../create-contract/page'
 
 const RoleDetails = () => {
     const { handleNext, handlePrev, onChange, onFromDateChange, onToDateChange, state: { jobTitle, jobDescription, startDate, endDate } } = useContext(ContractContext)

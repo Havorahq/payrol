@@ -43,7 +43,7 @@ const Onboarding = () => {
     activeTab,
     publicAddress,
   } = state;
-  console.log(state);
+  console.log("Address: ", publicAddress);
 
   const renderPages = () => {
     switch (route) {
@@ -86,7 +86,6 @@ const Onboarding = () => {
     setState((state) => ({
       ...state,
       email: "",
-
       firstName: "",
       lastName: "",
       businessName: "",
