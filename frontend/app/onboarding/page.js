@@ -16,9 +16,6 @@ import { FaPlus } from "react-icons/fa6";
 // } from "../smart-contract/constants";
 // import CONTRACT_ABI from "../smart-contract/wordanamain-abi.json";
 // import TOKEN_ABI from "../smart-contract/token-abi.json";
-import Web3 from "web3";
-import { useAccount, useContractRead, useContractWrite } from "wagmi";
-import { BigNumber } from "bignumber.js";
 import { GlobalProvider } from "../context/GlobalContext";
 
 export const OnboardingContext = createContext();
