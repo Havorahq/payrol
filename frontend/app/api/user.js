@@ -73,6 +73,44 @@ export const findContract = async (employer_email, employee_email) => {
   }
 };
 
+export const findAllEmployerContract = async (user_email) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("employer_email", user_email);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
+export const findAllEmployeeContract = async (user_email) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("employee_email", user_email);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
 export async function getServerSideProps(context) {
   const { data, error } = await supabase.from("user").select("*");
 

@@ -16,6 +16,15 @@ const ContractDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter()
 
+    useContractEvent({
+        address: factoryAddress,
+        abi: factoryAbi,
+        eventName: "FixedRateAgreementDeployed",
+        listener: (eventNumber) => {
+            console.log(eventNumber[0])
+        },
+      });
+
     const { data: fixedContractHash, error:fixedContractError, 
         isLoading: fixContractLoading, write: deployFixedAgreement, isSuccess:fixedContractSuccess} = useContractWrite({
         address: factoryAddress,
@@ -33,7 +42,7 @@ const ContractDetails = () => {
 
     useEffect(()=>{
         if (fixedContractSuccess) {
-            console.log('fixed rate contract deployed')
+            console.log('fixed rate contract deployed', fixedContractSuccess)
         }
 
         if (paygContractSuccess){
@@ -86,17 +95,6 @@ const ContractDetails = () => {
         }
         
     }
-
-    useContractEvent({
-        address: factoryAddress,
-        abi: factoryAbi,
-        eventName: "FixedRateAgreementDeployed",
-        listener: (eventNumber) => {
-            const eventNum = eventNumber[0];
-            const contractAddress = eventNum.args
-            console.log(contractAddress, 'the num fixed contract')
-        },
-      });
 
     return (
         <>
