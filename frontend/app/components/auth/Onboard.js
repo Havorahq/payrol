@@ -30,8 +30,10 @@ const Onboard = () => {
   const router = useRouter();
 
   const handleSignUp = async () => {
+    const user_type = activeTab;
     try {
       const { data, error } = await handleSignUpServer(
+        user_type,
         firstName,
         lastName,
         email,

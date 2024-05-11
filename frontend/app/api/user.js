@@ -1,6 +1,7 @@
 import { supabase } from "./../../lib/supabaseClient";
 
 export const handleSignUpServer = async (
+  user_type,
   firstName,
   lastName,
   email,
@@ -9,8 +10,6 @@ export const handleSignUpServer = async (
   publicAddress
 ) => {
   try {
-
-    const user_type = activeTab
     const { data, error } = await supabase.from("user").insert([
       {
         first_name: firstName,
