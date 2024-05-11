@@ -9,7 +9,7 @@ import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
 import { useRouter } from "next/navigation";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect} from "wagmi";
 
 const Onboard = () => {
   const {
@@ -38,7 +38,6 @@ const Onboard = () => {
         user_type,
         firstName,
         lastName,
-        user_type,
         email,
         businessName,
         businessEmail,
