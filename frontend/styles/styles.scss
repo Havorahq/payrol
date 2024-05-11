@@ -237,6 +237,21 @@ table {
   align-items: center;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin-block: var(--space-xl);
+}
+
+.center-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .justify-between {
   justify-content: space-between !important;
 }

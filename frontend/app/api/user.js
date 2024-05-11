@@ -5,6 +5,7 @@ export const handleSignUpServer = async (
   firstName,
   lastName,
   email,
+  // user_type,
   businessName,
   businessEmail,
   publicAddress
