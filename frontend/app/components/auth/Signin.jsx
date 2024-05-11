@@ -1,23 +1,19 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
 import { OnboardingContext } from "@/app/onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ConnectButton } from "thirdweb/react";
-import { client } from "./../../../lib/client";
-import {
-  generatePayload,
-  isLoggedIn,
-  login,
-  logout,
-} from "./../../connect-button/actions/auth";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
 import { useRouter } from "next/navigation";
+import { useAccount, useDisconnect } from "wagmi";
+import { findUser } from "./../../api/user";
 
 const Signin = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     onChange,
     onRouteChange,
@@ -27,6 +23,35 @@ const Signin = () => {
     state: { activeTab },
   } = useContext(OnboardingContext);
 
+  const account = useAccount();
+  const { address } = account;
+  const { disconnect } = useDisconnect();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        if (address) {
+          const userExist = await findUser(address);
+          console.log({ userExist, address });
+          if (userExist.data.status === 200) {
+            router.push("/");
+          } else {
+            disconnect();
+            onRouteChange("signup");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Handle error (e.g., show an error message)
+      } finally {
+        setIsLoading(false); // Mark loading as complete
+      }
+    };
+
+    fetchData();
+  }, [address]);
+
   const router = useRouter();
 
   return (
@@ -34,76 +59,12 @@ const Signin = () => {
       <div>
         <h1>Welcome Back👋🏼</h1>
         <p className={styles.desc}>Please signin to your account</p>
+        <p style={{ marginTop: "10px" }}>
+          You will be redirected to the sign up page if you dont have an account
+        </p>
       </div>
-
-      <div>
-        <div className="x-axis gap-1 my-1">
-          <div
-            className={`x-axis ${styles.tab} ${
-              activeTab === "business" ? styles.tabActive : styles.tabInactive
-            }`}
-            onClick={() => {
-              onTabChange("business");
-              onReset();
-            }}
-          >
-            <Image src="/icons/dollar.png" alt="icon" width={36} height={36} />
-            <div>
-              <p className={styles.tabTitle}>Business</p>
-              <p className={styles.tabDesc}>Sign In As a Business</p>
-            </div>
-            {/* <Image src='/icons/check.png' className={styles.check} alt="icon" width={15} height={15} /> */}
-          </div>
-          <div
-            className={`x-axis ${styles.tab} ${
-              activeTab === "employee" ? styles.tabActive : styles.tabInactive
-            }`}
-            onClick={() => {
-              onTabChange("employee");
-              onReset();
-            }}
-          >
-            <Image
-              src="/icons/employee.png"
-              alt="icon"
-              width={36}
-              height={36}
-            />
-            <div>
-              <p className={styles.tabTitle}>Employee</p>
-              <p className={styles.tabDesc}>Sign In As an Employee</p>
-            </div>
-          </div>
-        </div>
-        <ConnectButton
-          client={client}
-          auth={{
-            isLoggedIn: async (address) => {
-              console.log("checking if logged in!", { address });
-              setPublicAddress(address);
-              return await isLoggedIn();
-            },
-
-            doLogin: async (params) => {
-              console.log("logging in!");
-              const payload = await login(params);
-
-              const { data, error } = await handleLogin(payload.address);
-              if (data.status == 406) {
-                onRouteChange("signup");
-              } else {
-                router.push("/");
-              }
-              return { success: true };
-            },
-            getLoginPayload: async ({ address }) =>
-              generatePayload({ address }),
-            doLogout: async () => {
-              console.log("logging out!");
-              await logout();
-            },
-          }}
-        />
+      <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+        <ConnectButton />
       </div>
 
       <p className={styles.prompt}>

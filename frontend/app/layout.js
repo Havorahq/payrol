@@ -3,29 +3,59 @@ import { Inter } from "next/font/google";
 import "../styles/styles.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { ThirdwebProvider } from "thirdweb/react";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import {
+  Lightlink_Phoenix_Mainnet,
+  Lightlink_Pegasus_Testnet,
+} from "../lib/network";
+
+const { chains, publicClient } = configureChains(
+  [
+    Lightlink_Pegasus_Testnet,
+    Lightlink_Phoenix_Mainnet,
+
+    mainnet,
+    polygon,
+    optimism,
+    arbitrum,
+    base,
+    zora,
+  ],
+  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+);
+const { connectors } = getDefaultWallets({
+  appName: "Wordana",
+  projectId: "b1ca4e750e5de2aa789e1b2533d92ac4",
+  chains,
+});
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata = {
+// const metadata = {
 //   title: "Xalari",
 //   description: "Payroll Management on the blockchain!",
 // };
 
 export default function RootLayout({ children }) {
   return (
-    <ThirdwebProvider>
-      <html lang="en">
-        <body
-          style={{
-            minHeight: "100vh",
-            display: "grid",
-            placeContent: "center",
-          }}
-        >
-          {children}
-        </body>
-      </html>
-    </ThirdwebProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider chains={chains} initialChain={1891}>
+            <main>{children}</main>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </body>
+    </html>
   );
 }
