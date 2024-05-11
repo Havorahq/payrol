@@ -63,8 +63,6 @@ const ContractDetails = () => {
     const closeModal = () => setIsOpen(false);
 
     const handleSubmit = () => {
-        console.log("Submitted: ", state)
-        console.log('deploying agreement')
         if (state.contractType === 'fixed'){
             deployFixedAgreement({
                 args: [
@@ -88,6 +86,17 @@ const ContractDetails = () => {
         }
         
     }
+
+    useContractEvent({
+        address: factoryAddress,
+        abi: factoryAbi,
+        eventName: "FixedRateAgreementDeployed",
+        listener: (eventNumber) => {
+            const eventNum = eventNumber[0];
+            const contractAddress = eventNum.args
+            console.log(contractAddress, 'the num fixed contract')
+        },
+      });
 
     return (
         <>
