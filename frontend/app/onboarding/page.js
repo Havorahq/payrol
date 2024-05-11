@@ -5,6 +5,8 @@ import styles from "./onboarding.module.scss";
 import Image from "next/image";
 import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
+import Onboard from "../components/auth/Onboard";
+import Home from "../(dashboard)/page";
 import Link from "next/link";
 
 import { FaPlus } from "react-icons/fa6";
@@ -52,6 +54,13 @@ const Onboarding = () => {
         break;
       case "signup":
         return <Signup />;
+        break;
+      case "onboard":
+        return <Onboard />;
+        break;
+
+      case "dashboard":
+        return <Home />;
         break;
       default:
         return <Signin />;
