@@ -30,7 +30,7 @@ export const handleSignUpServer = async (
   }
 };
 
-export const handleLogin = async (publicAddress) => {
+export const findUser = async (publicAddress) => {
   console.log({ publicAddress });
 
   try {

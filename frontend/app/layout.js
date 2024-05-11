@@ -45,7 +45,6 @@ export default function RootLayout({ children }) {
           <RainbowKitProvider chains={chains} initialChain={lisk_testnet.id}>
            
               <main>{children}</main>
-           
           </RainbowKitProvider>
         </WagmiConfig>
       </body>
