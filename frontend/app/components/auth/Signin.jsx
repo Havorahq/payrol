@@ -19,7 +19,6 @@ const Signin = () => {
     onRouteChange,
     onReset,
     onTabChange,
-    setPublicAddress,
     state: { activeTab },
   } = useContext(OnboardingContext);
 

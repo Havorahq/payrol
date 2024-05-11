@@ -28,7 +28,6 @@ const Onboarding = () => {
     lastName: "",
     businessName: "",
     businessEmail: "",
-    publicAddress: "",
     activeTab: "business",
   });
 
@@ -40,7 +39,6 @@ const Onboarding = () => {
     businessEmail,
     email,
     activeTab,
-    publicAddress,
   } = state;
   console.log(state);
 
@@ -80,13 +78,13 @@ const Onboarding = () => {
     }));
   };
 
-  const setPublicAddress = (value) => {
-    console.log(value);
-    setState((state) => ({
-      ...state,
-      publicAddress: value,
-    }));
-  };
+  // const setPublicAddress = (value) => {
+  //   console.log(value);
+  //   setState((state) => ({
+  //     ...state,
+  //     publicAddress: value,
+  //   }));
+  // };
 
   const onReset = () => {
     setState((state) => ({
@@ -114,7 +112,6 @@ const Onboarding = () => {
         onRouteChange,
         onTabChange,
         onReset,
-        setPublicAddress,
         state,
       }}
     >

@@ -9,6 +9,7 @@ import { OnboardingContext } from "@/app/onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
 import { useRouter } from "next/navigation";
+import { useAccount, useDisconnect } from "wagmi";
 
 const Onboard = () => {
   const {
@@ -23,11 +24,12 @@ const Onboard = () => {
       businessEmail,
       email,
       activeTab,
-      publicAddress,
     },
   } = useContext(OnboardingContext);
 
   const router = useRouter();
+  const account = useAccount();
+  const { address } = account;
 
   const handleSignUp = async () => {
     const user_type = activeTab;
@@ -39,7 +41,7 @@ const Onboard = () => {
         email,
         businessName,
         businessEmail,
-        publicAddress
+        address
       );
 
       if (error) {
