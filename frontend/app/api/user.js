@@ -4,13 +4,12 @@ export const handleSignUpServer = async (
   firstName,
   lastName,
   email,
+  user_type,
   businessName,
   businessEmail,
   publicAddress
 ) => {
   try {
-
-    const user_type = activeTab
     const { data, error } = await supabase.from("user").insert([
       {
         first_name: firstName,
