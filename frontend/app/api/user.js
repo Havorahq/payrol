@@ -9,11 +9,14 @@ export const handleSignUpServer = async (
   publicAddress
 ) => {
   try {
+
+    const user_type = activeTab
     const { data, error } = await supabase.from("user").insert([
       {
         first_name: firstName,
         last_name: lastName,
         email,
+        user_type,
         public_address: publicAddress,
         business_name: businessName,
         business_email: businessEmail,
@@ -31,8 +34,6 @@ export const handleSignUpServer = async (
 };
 
 export const findUser = async (publicAddress) => {
-  console.log({ publicAddress });
-
   try {
     const user = await supabase
       .from("user")
@@ -52,7 +53,7 @@ export const findUser = async (publicAddress) => {
   }
 };
 
-export const findContract = async (employer_email) => {
+export const findContract = async (employer_email, employee_email) => {
   try {
     const contract = await supabase
       .from("contract")

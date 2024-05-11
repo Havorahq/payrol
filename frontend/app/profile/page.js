@@ -8,19 +8,14 @@ import styles from "./profile.module.scss";
 import Wrapper from "@/app/components/wrapper/Wrapper";
 import Modal from "@/app/components/common/modal/Modal";
 import EditProfile from "@/app/components/auth/EditProfile";
-import { findUser } from "../api/user";
-import { useAccount, useDisconnect } from "wagmi";
+
 import useUserData from "../hooks/useUserData";
 
 const Profile = () => {
-  const account = useAccount();
-  const { address } = account;
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const { userData, isLoading, error } = useUserData();
-
-  // console.log({ userData });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -37,7 +32,7 @@ const Profile = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const { email, first_name, last_name, public_address,user_type } = userData;
+  const { email, first_name, last_name, public_address, user_type } = userData;
 
   return (
     <>

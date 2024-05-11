@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { findContract } from "../api/user";
 import { useAccount, useDisconnect } from "wagmi";
+import { useRouter } from "next/navigation";
 // Assuming you have a function to fetch user data from the server
 
 const useContractData = () => {
@@ -9,6 +10,7 @@ const useContractData = () => {
   const [contractData, setContractData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,8 +23,10 @@ const useContractData = () => {
           if (contractExist.data.status === 200) {
             setContractData(contractExist.data.data);
           } else {
-            setUserData(null);
+            setContractData(null);
           }
+        } else {
+          router.push("/");
         }
       } catch (error) {
         setError(error);
