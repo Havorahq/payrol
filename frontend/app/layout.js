@@ -10,21 +10,12 @@ import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import {
-  Lightlink_Phoenix_Mainnet,
-  Lightlink_Pegasus_Testnet,
+  lisk_testnet,
 } from "../lib/network";
 
 const { chains, publicClient } = configureChains(
   [
-    Lightlink_Pegasus_Testnet,
-    Lightlink_Phoenix_Mainnet,
-
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    zora,
+    lisk_testnet,
   ],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
@@ -51,7 +42,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains} initialChain={1891}>
+          <RainbowKitProvider chains={chains} initialChain={lisk_testnet.id}>
            
               <main>{children}</main>
            

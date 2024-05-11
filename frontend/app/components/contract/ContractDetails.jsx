@@ -1,17 +1,54 @@
 "use client"
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import styles from './contractType.module.scss'
 import Button from '../common/Button'
 import { ContractContext } from '@/app/create-contract/page'
-import { capitalizeFirst, capitalizeFirstWord } from '@/plugins/utils'
+import { capitalizeFirst, writeContract } from '@/plugins/utils'
 import { useRouter } from 'next/navigation'
 import Modal from '../common/modal/Modal'
+import { useContractEvent, useAccount, useContractWrite } from "wagmi";
+import { factoryAddress } from '@/lib/contractFactory'
+import factoryAbi from '@/lib/factoryAbi.json'
 
 const ContractDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter()
+
+    const { data: fixedContractHash, error:fixedContractError, 
+        isLoading: fixContractLoading, write: deployFixedAgreement, isSuccess:fixedContractSuccess} = useContractWrite({
+        address: factoryAddress,
+        abi: factoryAbi,
+        functionName: 'createNewFixedRateAgreement',
+    })
+
+    // PAYG = PAY AS YOU GO
+    const { data: paygContractHash, error:paygContractError, 
+        isLoading: paygContractLoading, write: deployPAYGAgreement, isSuccess:paygContractSuccess} = useContractWrite({
+        address: factoryAddress,
+        abi: factoryAbi,
+        functionName: 'createNewPayAsYouGoAgreement',
+    })
+
+    useEffect(()=>{
+        if (fixedContractSuccess) {
+            console.log('fixed rate contract deployed')
+        }
+
+        if (paygContractSuccess){
+            console.log('PAYG contract deployed')
+        }
+
+        if (fixedContractError){
+            console.log(fixedContractError, 'error deploying fixed contract')
+        }
+
+        if (paygContractError){
+            console.log(paygContractError, 'error deploying payg contract')
+        }
+        
+    }, [fixedContractSuccess, paygContractSuccess, fixedContractError, paygContractError])
 
     const { 
         handleNext, handlePrev, onChange, state,
@@ -27,6 +64,29 @@ const ContractDetails = () => {
 
     const handleSubmit = () => {
         console.log("Submitted: ", state)
+        console.log('deploying agreement')
+        if (state.contractType === 'fixed'){
+            deployFixedAgreement({
+                args: [
+                    'employer@employer.com',
+                    'employee@employee.com',
+                    '0xE08686958FF334A5422df17FaF05dd989e779FfA',
+                    '0x2728DD8B45B788e26d12B13Db5A244e5403e7eda',
+                    state.monthlyRate
+                ]
+            })
+        } else if (state.contractType.toLowerCase() === 'pay as you go'){
+            deployPAYGAgreement({
+                args: [
+                    'employer@employer.com',
+                    'employee@employee.com',
+                    '0xE08686958FF334A5422df17FaF05dd989e779FfA',
+                    '0x2728DD8B45B788e26d12B13Db5A244e5403e7eda',
+                    state.monthlyRate
+                ]
+            })
+        }
+        
     }
 
     return (
@@ -87,7 +147,10 @@ const ContractDetails = () => {
                         <p className="label">Wallet Address </p>
                         <p className="text-small w-70 greyText">{walletAddress}</p>
                     </div>
-                    <Button label="Accept Contract" onClick={() => {openModal(); handleSubmit()}} />
+                    <Button label="Accept Contract" onClick={() => {
+                        // openModal(); 
+                        handleSubmit()
+                        }} />
                 </div>
             </div>
         </>

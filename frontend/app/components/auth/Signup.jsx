@@ -5,7 +5,7 @@ import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
 import { useRouter } from "next/navigation";
