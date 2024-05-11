@@ -24,6 +24,8 @@ const useUserData = () => {
           } else {
             setUserData(null);
           }
+        } else {
+          router.push("/");
         }
       } catch (error) {
         setError(error);
@@ -34,8 +36,6 @@ const useUserData = () => {
 
     fetchData();
   }, [address]);
-
-  console.log({ userData });
 
   return { userData, isLoading, error };
 };
