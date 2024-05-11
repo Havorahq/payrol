@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
@@ -56,15 +56,15 @@ const Signin = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <h1>Welcome Back👋🏼</h1>
+      <div className="center-vertical">
+        <h1>Welcome 👋🏼</h1>
         <p className={styles.desc}>Please signin to your account</p>
         <p style={{ marginTop: "10px" }}>
           You will be redirected to the sign up page if you dont have an account
         </p>
-      </div>
-      <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+      <div className="center">
         <ConnectButton />
+      </div>
       </div>
 
       <p className={styles.prompt}>

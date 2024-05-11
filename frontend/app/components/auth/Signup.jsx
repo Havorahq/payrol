@@ -5,7 +5,7 @@ import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
