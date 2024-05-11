@@ -13,24 +13,25 @@ import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
 import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
+import useContractData from "../hooks/useContractData";
 
 export default function Home() {
-  const [contract, setContract] = useState([]);
+  const { contractData, isLoading, error } = useContractData();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase.from("user").select("*");
-      if (error) {
-        console.error(error);
-      } else {
-        setContract(data);
-      }
-    };
+  // console.log({ userData });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    fetchData();
-  }, []);
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
-  console.log({ contract });
+  if (!contractData) {
+    return <div>Loading...</div>;
+  }
+
+  console.log({ contractData });
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
@@ -117,7 +118,9 @@ export default function Home() {
               <td>Georgereynolds@gmail.com</td>
               <td>$1000</td>
               <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>Active</td>
+              <td className="tabActive" style={{ padding: 0 }}>
+                Active
+              </td>
               <td>View</td>
             </tr>
             <tr>
@@ -126,13 +129,14 @@ export default function Home() {
               <td>Georgereynolds@gmail.com</td>
               <td>$1000</td>
               <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>Active</td>
+              <td className="tabActive" style={{ padding: 0 }}>
+                Active
+              </td>
               <td>View</td>
             </tr>
           </tbody>
         </table>
       </div>
-
     </Wrapper>
   );
 }
