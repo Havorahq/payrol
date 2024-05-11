@@ -25,6 +25,7 @@ const Signin = () => {
   const account = useAccount();
   const { address } = account;
   const { disconnect } = useDisconnect();
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,7 +35,7 @@ const Signin = () => {
           const userExist = await findUser(address);
           console.log({ userExist, address });
           if (userExist.data.status === 200) {
-            router.push("/");
+            router.push("/dashboard");
           } else {
             disconnect();
             onRouteChange("signup");
@@ -51,7 +52,6 @@ const Signin = () => {
     fetchData();
   }, [address]);
 
-  const router = useRouter();
 
   return (
     <div className={styles.container}>

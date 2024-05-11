@@ -60,12 +60,12 @@ const Onboard = () => {
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className="center-vertical">
         <h1>Sign Up👋🏼</h1>
-        <p className={styles.desc}>Create an account below</p>
+        {/* <p className={styles.desc}>Create an account below</p> */}
       </div>
 
-      <div>
+      <div className="my-1 w-100">
         <div>
           <div className="my-half">
             <label htmlFor="firstName">First Name</label>
