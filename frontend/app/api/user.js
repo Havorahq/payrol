@@ -52,6 +52,27 @@ export const findUser = async (publicAddress) => {
   }
 };
 
+export const findContract = async (employer_email) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("employer_email", employer_email)
+      .eq("employee_email", employee_email)
+      .single();
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
 export async function getServerSideProps(context) {
   const { data, error } = await supabase.from("user").select("*");
 
