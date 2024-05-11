@@ -1,6 +1,6 @@
 // globalContext.js (Global Context)
 import React, { createContext, useContext, useState } from 'react';
-import { OnboardingContext } from '../(onboarding)/page';
+import { OnboardingContext } from '../onboarding/page';
 
 export const GlobalContext = createContext();
 

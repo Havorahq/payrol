@@ -4,7 +4,7 @@ import React, { useState, useContext } from "react";
 import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
-import { OnboardingContext } from "@/app/(onboarding)/page";
+import { OnboardingContext } from "@/app/onboarding/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 // import { ConnectButton } from "thirdweb/react";
