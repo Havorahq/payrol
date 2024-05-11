@@ -33,6 +33,7 @@ const Onboard = () => {
     const user_type = activeTab;
     try {
       const { data, error } = await handleSignUpServer(
+        user_type,
         firstName,
         lastName,
         user_type,

@@ -1,6 +1,7 @@
 import { supabase } from "./../../lib/supabaseClient";
 
 export const handleSignUpServer = async (
+  user_type,
   firstName,
   lastName,
   email,
