@@ -21,7 +21,20 @@ const ContractDetails = () => {
         abi: factoryAbi,
         eventName: "FixedRateAgreementDeployed",
         listener: (eventNumber) => {
-            console.log(eventNumber[0])
+            const eventNum = eventNumber[0]
+            state.contractAddress = eventNum.args.contractAddress
+            console.log(eventNum.args.contractAddress, 'the contract address')
+        },
+      });
+
+      useContractEvent({
+        address: factoryAddress,
+        abi: factoryAbi,
+        eventName: "PayAsYoGoAgreementDeployed",
+        listener: (eventNumber) => {
+            const eventNum = eventNumber[0]
+            state.contractAddress = eventNum.args.contractAddress
+            console.log(eventNum.args.contractAddress, 'the contract address')
         },
       });
 
