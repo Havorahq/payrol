@@ -123,7 +123,6 @@ export async function getServerSideProps(context) {
 }
 
 export const handleCreateContract = async (contractObj) => {
-
   try {
     const { data, error } = await supabase.from("contract").insert([
       {
@@ -131,12 +130,12 @@ export const handleCreateContract = async (contractObj) => {
         employer_id: contractObj.employerEmail,
         employee_id: contractObj.employeeEmail,
         payment: contractObj.monthlyRate,
-        status: 'pending',
+        status: "pending",
         token_address: contractObj.tokenAddress,
         contract_type: contractObj.contractType,
         job_title: contractObj.jobTitle,
         job_description: contractObj.jobDescription,
-        business_name: contractObj.businessName
+        business_name: contractObj.businessName,
       },
     ]);
 
@@ -150,11 +149,15 @@ export const handleCreateContract = async (contractObj) => {
   }
 };
 
-export const handleEmployeeEnterContract = async (contractId, paymentAddress, employeeEmail)=>{
+export const handleEmployeeEnterContract = async (
+  contractId,
+  paymentAddress,
+  employeeEmail
+) => {
   try {
     const contract = await supabase
       .from("contract")
-      .update({status: 'active', payment_adress: paymentAddress})
+      .update({ status: "active", payment_adress: paymentAddress })
       .eq("id", contractId)
       .eq("employee_id", employeeEmail);
 
@@ -168,4 +171,20 @@ export const handleEmployeeEnterContract = async (contractId, paymentAddress, em
     console.error("Error logging in:", error);
     return { data: null, error: "An error occurred. Please try again." };
   }
-}
+};
+
+export const fetchAllContract = async () => {
+  try {
+    const contract = await supabase.from("contract").select("*");
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};

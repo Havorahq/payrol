@@ -15,16 +15,17 @@ import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
 import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const {userData, isLoading: userLoading, error:userErroer} = useUserData()
-  const { contractData, isLoading, error } = useContractData();
+  const { userData, isLoading: userLoading, error: userErroer } = useUserData();
+  const { contractData, allContract, isLoading, error } = useContractData();
+  const router = useRouter();
 
-  if (userLoading){
+  if (userLoading) {
     return <div>Loading...</div>;
   }
 
-  // console.log({ userData });
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -37,7 +38,25 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  console.log({ contractData }, 'the contract data');
+  const activeContract = contractData.filter(
+    (contract) => contract.status === "active"
+  ).length;
+
+  const pendingContract = contractData.filter(
+    (contract) => contract.status === "pending"
+  ).length;
+
+  const upcomingPayment = () => {
+    return contractData.reduce((sum, ad) => sum + parseInt(ad.payment), 0);
+  };
+
+  console.log({ allContract });
+
+  const handleClick = (id) => {
+    router.push(`/dashboard/${id}`);
+  };
+
+  const { user_type } = userData;
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
@@ -59,7 +78,7 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>10</div>
+          <div className={styles.cardBody}>{activeContract}</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -69,25 +88,16 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>2</div>
+          <div className={styles.cardBody}>{pendingContract}</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <div className="x-axis gap-1">
-              <p>Cancelled Contract</p>
-              <ImCancelCircle />
-            </div>
-          </div>
-          <div className={styles.cardBody}>2</div>
-        </div>
-        <div className={styles.card}>
-          <div className={styles.cardHeader}>
-            <div className="x-axis gap-1">
-              <p>Payment Due</p>
+              <p> Payment</p>
               <BiDollarCircle />
             </div>
           </div>
-          <div className={styles.cardBody}>80,576</div>
+          <div className={styles.cardBody}>{upcomingPayment}</div>
         </div>
       </div>
       <div className={styles.tableContainer}>
@@ -117,7 +127,7 @@ export default function Home() {
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             <tr>
               <td>1</td>
               <td>George Reynolds</td>
@@ -140,6 +150,32 @@ export default function Home() {
               </td>
               <td>View</td>
             </tr>
+          </tbody> */}
+          <tbody>
+            {contractData.map((item, index) => {
+              const {
+                id,
+                status,
+                contract_type,
+                business_name,
+                employee_id,
+                payment,
+              } = item;
+
+              return (
+                <tr key={id} onClick={() => handleClick(id)}>
+                  <td>{index + 1}</td>
+                  <td>{business_name}</td>
+                  <td>{employee_id}</td>
+                  <td>{payment}</td>
+                  <td>{contract_type}</td>
+                  <td style={{ padding: 0 }}>{status}</td>
+                  <td>
+                    <Button label="View" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
