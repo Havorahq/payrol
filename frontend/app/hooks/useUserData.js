@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { findUser } from "../api/user";
 import { useAccount, useDisconnect } from "wagmi";
+import { useRouter } from "next/navigation";
 // Assuming you have a function to fetch user data from the server
 
 const useUserData = () => {
@@ -9,6 +10,7 @@ const useUserData = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
