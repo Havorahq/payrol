@@ -150,12 +150,13 @@ export const handleCreateContract = async (contractObj) => {
   }
 };
 
-export const handleEmployeeEnterContract = async (contractId, paymentAddress)=>{
+export const handleEmployeeEnterContract = async (contractId, paymentAddress, employeeEmail)=>{
   try {
     const contract = await supabase
       .from("contract")
       .update({status: 'active', payment_adress: paymentAddress})
-      .eq("id", contractId);
+      .eq("id", contractId)
+      .eq("employee_id", employeeEmail);
 
     if (!contract) {
       // User not found, redirect to signup
