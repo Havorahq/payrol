@@ -28,16 +28,16 @@ const Payments = () => {
             </div>
             <form>
                 <div className="my-half">
-                    <label htmlFor="">Monthly Rate</label>
+                    <label htmlFor="">Rate</label>
                     <div className='inputContainer x-axis'>
                         <select name="" id="">
                             <option value="">
                                 USDT
                             </option>
-                            <option value="">BTC</option>
+                            {/* <option value="">BTC</option> */}
                         </select>
                         <input 
-                            type='text'
+                            type='number'
                             name="monthlyRate"
                             value={monthlyRate}
                             placeholder='1000'
