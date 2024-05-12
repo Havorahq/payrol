@@ -101,9 +101,9 @@ const ContractDetails = () => {
     const closeModal = () => setIsOpen(false);
 
     const handleSubmit = () => {
-        console.log(userData, 'the user data')
         if (!user) return console.error('user not loaded yet')
         state.employerEmail = user.business_email
+        state.businessName = user.business_name
         if (state.contractType === 'fixed'){
             deployFixedAgreement({
                 args: [

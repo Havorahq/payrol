@@ -123,19 +123,20 @@ export async function getServerSideProps(context) {
 }
 
 export const handleCreateContract = async (contractObj) => {
-  console.log(contractObj, 'the obj')
+
   try {
     const { data, error } = await supabase.from("contract").insert([
       {
         contract_address: contractObj.contractAddress,
         employer_id: contractObj.employerEmail,
         employee_id: contractObj.employeeEmail,
-        payment: contractObj.monthlyPayment,
+        payment: contractObj.monthlyRate,
         status: 'pending',
         token_address: contractObj.tokenAddress,
         contract_type: contractObj.contractType,
         job_title: contractObj.jobTitle,
-        job_description: contractObj.jobDescription
+        job_description: contractObj.jobDescription,
+        business_name: contractObj.businessName
       },
     ]);
 
@@ -148,3 +149,22 @@ export const handleCreateContract = async (contractObj) => {
     return { data: null, error: error.message };
   }
 };
+
+export const handleEmployeeEnterContract = async (contractId, paymentAddress)=>{
+  try {
+    const contract = await supabase
+      .from("contract")
+      .update({status: 'active', payment_adress: paymentAddress})
+      .eq("id", contractId);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "Could not update contract, try again" };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+}
