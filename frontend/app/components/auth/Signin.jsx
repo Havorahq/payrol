@@ -32,6 +32,7 @@ const Signin = () => {
     const fetchData = async () => {
       try {
         if (address) {
+          console.log(address, 'there is an address')
           const userExist = await findUser(address);
           console.log({ userExist, address });
           if (userExist.data.status === 200) {
@@ -40,6 +41,8 @@ const Signin = () => {
             disconnect();
             onRouteChange("signup");
           }
+        } else{
+          console.log('no address')
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

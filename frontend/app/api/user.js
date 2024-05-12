@@ -78,7 +78,7 @@ export const findAllEmployerContract = async (user_email) => {
     const contract = await supabase
       .from("contract")
       .select("*") // Select all user columns (adjust as needed)
-      .eq("employer_email", user_email);
+      .eq("employer_id", user_email);
 
     if (!contract) {
       // User not found, redirect to signup
@@ -97,7 +97,7 @@ export const findAllEmployeeContract = async (user_email) => {
     const contract = await supabase
       .from("contract")
       .select("*") // Select all user columns (adjust as needed)
-      .eq("employee_email", user_email);
+      .eq("employee_id", user_email);
 
     if (!contract) {
       // User not found, redirect to signup
@@ -121,3 +121,30 @@ export async function getServerSideProps(context) {
 
   return { props: { data } };
 }
+
+export const handleCreateContract = async (contractObj) => {
+  console.log(contractObj, 'the obj')
+  try {
+    const { data, error } = await supabase.from("contract").insert([
+      {
+        contract_address: contractObj.contractAddress,
+        employer_id: contractObj.employerEmail,
+        employee_id: contractObj.employeeEmail,
+        payment: contractObj.monthlyPayment,
+        status: 'pending',
+        token_address: contractObj.tokenAddress,
+        contract_type: contractObj.contractType,
+        job_title: contractObj.jobTitle,
+        job_description: contractObj.jobDescription
+      },
+    ]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
+  }
+};
