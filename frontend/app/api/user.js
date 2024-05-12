@@ -73,6 +73,44 @@ export const findContract = async (employer_email, employee_email) => {
   }
 };
 
+export const findAllEmployerContract = async (user_email) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("employer_id", user_email);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
+export const findAllEmployeeContract = async (user_email) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .select("*") // Select all user columns (adjust as needed)
+      .eq("employee_id", user_email);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "contract not found. Please sign up." };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
 export async function getServerSideProps(context) {
   const { data, error } = await supabase.from("user").select("*");
 
@@ -82,4 +120,52 @@ export async function getServerSideProps(context) {
   }
 
   return { props: { data } };
+}
+
+export const handleCreateContract = async (contractObj) => {
+
+  try {
+    const { data, error } = await supabase.from("contract").insert([
+      {
+        contract_address: contractObj.contractAddress,
+        employer_id: contractObj.employerEmail,
+        employee_id: contractObj.employeeEmail,
+        payment: contractObj.monthlyRate,
+        status: 'pending',
+        token_address: contractObj.tokenAddress,
+        contract_type: contractObj.contractType,
+        job_title: contractObj.jobTitle,
+        job_description: contractObj.jobDescription,
+        business_name: contractObj.businessName
+      },
+    ]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: error.message };
+  }
+};
+
+export const handleEmployeeEnterContract = async (contractId, paymentAddress, employeeEmail)=>{
+  try {
+    const contract = await supabase
+      .from("contract")
+      .update({status: 'active', payment_adress: paymentAddress})
+      .eq("id", contractId)
+      .eq("employee_id", employeeEmail);
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "Could not update contract, try again" };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
 }

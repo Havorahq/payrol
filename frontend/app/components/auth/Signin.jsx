@@ -42,6 +42,8 @@ const Signin = () => {
             disconnect();
             onRouteChange("signup");
           }
+        } else{
+          console.log('no address')
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

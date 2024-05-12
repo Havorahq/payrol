@@ -9,12 +9,47 @@ import { capitalizeFirst, writeContract } from '@/plugins/utils'
 import { useRouter } from 'next/navigation'
 import Modal from '../common/modal/Modal'
 import { useContractEvent, useAccount, useContractWrite } from "wagmi";
+import useUserData from '@/app/hooks/useUserData'
 import { factoryAddress } from '@/lib/contractFactory'
 import factoryAbi from '@/lib/factoryAbi.json'
+import { handleCreateContract } from '@/app/api/user'
 
 const ContractDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter()
+    const account = useAccount()
+    const {userData, isLoading, error} = useUserData()
+    const [user, setUser] = useState()
+
+    useContractEvent({
+        address: factoryAddress,
+        abi: factoryAbi,
+        eventName: "FixedRateAgreementDeployed",
+        listener: async (eventNumber) => {
+            const eventNum = eventNumber[0]
+            state.contractAddress = eventNum.args.contractAddress
+            const{data: reqData, error: reqError} = await handleCreateContract(state)
+            if (reqError){
+                return console.error(reqError, 'contract creation error')
+            }
+            openModal(); 
+        },
+      });
+
+      useContractEvent({
+        address: factoryAddress,
+        abi: factoryAbi,
+        eventName: "PayAsYoGoAgreementDeployed",
+        listener: async (eventNumber) => {
+            const eventNum = eventNumber[0]
+            state.contractAddress = eventNum.args.contractAddress
+            const{data: reqData, error: reqError} = await handleCreateContract(state)
+            if (reqError){
+                return console.error(reqError, 'contract creation error')
+            }
+            openModal(); 
+        },
+      });
 
     const { data: fixedContractHash, error:fixedContractError, 
         isLoading: fixContractLoading, write: deployFixedAgreement, isSuccess:fixedContractSuccess} = useContractWrite({
@@ -32,8 +67,11 @@ const ContractDetails = () => {
     })
 
     useEffect(()=>{
+        if (userData) {
+            setUser(userData)
+        }
         if (fixedContractSuccess) {
-            console.log('fixed rate contract deployed')
+            console.log('fixed rate contract deployed', fixedContractSuccess)
         }
 
         if (paygContractSuccess){
@@ -48,7 +86,7 @@ const ContractDetails = () => {
             console.log(paygContractError, 'error deploying payg contract')
         }
         
-    }, [fixedContractSuccess, paygContractSuccess, fixedContractError, paygContractError])
+    }, [fixedContractSuccess, paygContractSuccess, fixedContractError, paygContractError, userData])
 
     const { 
         handleNext, handlePrev, onChange, state,
@@ -63,13 +101,16 @@ const ContractDetails = () => {
     const closeModal = () => setIsOpen(false);
 
     const handleSubmit = () => {
+        if (!user) return console.error('user not loaded yet')
+        state.employerEmail = user.business_email
+        state.businessName = user.business_name
         if (state.contractType === 'fixed'){
             deployFixedAgreement({
                 args: [
-                    'employer@employer.com',
-                    'employee@employee.com',
-                    '0xE08686958FF334A5422df17FaF05dd989e779FfA',
-                    '0x2728DD8B45B788e26d12B13Db5A244e5403e7eda',
+                    user.business_email, // employer id
+                    state.employeeEmail, // employee id
+                    account.address, // employer address,
+                    '0x2728DD8B45B788e26d12B13Db5A244e5403e7eda', // usdt address
                     state.monthlyRate
                 ]
             })
@@ -84,27 +125,17 @@ const ContractDetails = () => {
                 ]
             })
         }
+        state.tokenAddress = '0x2728DD8B45B788e26d12B13Db5A244e5403e7eda';
         
     }
-
-    useContractEvent({
-        address: factoryAddress,
-        abi: factoryAbi,
-        eventName: "FixedRateAgreementDeployed",
-        listener: (eventNumber) => {
-            const eventNum = eventNumber[0];
-            const contractAddress = eventNum.args
-            console.log(contractAddress, 'the num fixed contract')
-        },
-      });
 
     return (
         <>
             <Modal  isOpen={isOpen} onClose={closeModal}>
                 <div className='padded'>
                     <h2>All done!🎉</h2>
-                    <p>You’ve successfully signed your contract! </p>
-                    <Button label="Back to Home" onClick={() => router.push('/')} />
+                    <p>You have successfully created your contract! </p>
+                    <Button label="Back to Home" onClick={() => router.push('/dashboard')} />
                 </div>
             </Modal>
             <div className={styles.section}>
@@ -156,8 +187,7 @@ const ContractDetails = () => {
                         <p className="label">Wallet Address </p>
                         <p className="text-small w-70 greyText">{walletAddress}</p>
                     </div>
-                    <Button label="Accept Contract" onClick={() => {
-                        // openModal(); 
+                    <Button label="Create Contract" onClick={() => {
                         handleSubmit()
                         }} />
                 </div>
