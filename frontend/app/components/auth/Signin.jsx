@@ -19,6 +19,7 @@ const Signin = () => {
     onRouteChange,
     onReset,
     onTabChange,
+    setPublicAddress,
     state: { activeTab },
   } = useContext(OnboardingContext);
 
@@ -35,6 +36,7 @@ const Signin = () => {
           const userExist = await findUser(address);
           console.log({ userExist, address });
           if (userExist.data.status === 200) {
+            setPublicAddress(address)
             router.push("/dashboard");
           } else {
             disconnect();
