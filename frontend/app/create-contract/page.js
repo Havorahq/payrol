@@ -140,10 +140,10 @@ const Contract = () => {
         case 3:
             return <Payments />
             break;
-        // case 4:
-        //     return <Wallet />
-        //     break;
         case 4:
+            return <Wallet />
+            break;
+        case 5:
             return <ContractDetails />
             break;
         default:
