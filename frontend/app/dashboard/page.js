@@ -14,9 +14,15 @@ import { ImCancelCircle } from "react-icons/im";
 import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
 import useContractData from "../hooks/useContractData";
+import useUserData from "../hooks/useUserData";
 
 export default function Home() {
+  const {userData, isLoading: userLoading, error:userErroer} = useUserData()
   const { contractData, isLoading, error } = useContractData();
+
+  if (userLoading){
+    return <div>Loading...</div>;
+  }
 
   // console.log({ userData });
   if (isLoading) {
@@ -31,7 +37,7 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  console.log({ contractData });
+  console.log({ contractData }, 'the contract data');
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>

@@ -5,7 +5,7 @@ import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
@@ -56,14 +56,14 @@ const Signin = () => {
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className="center-vertical">
         <h1>Welcome 👋🏼</h1>
 
         <p className={styles.desc}>Please Create an account</p>
         <p>You will be signed in if you already have an account</p>
       </div>
 
-      <div>
+      <div className="center-vertical">
         <div className="x-axis gap-1 my-1">
           <div
             className={`x-axis ${styles.tab} ${
@@ -102,7 +102,7 @@ const Signin = () => {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+        <div className="center">
           <ConnectButton />
         </div>
       </div>

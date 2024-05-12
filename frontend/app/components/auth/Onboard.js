@@ -5,10 +5,11 @@ import styles from "./auth.module.scss";
 import Button from "../common/Button";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { OnboardingContext } from "@/app/onboarding/page";
+import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
 import { useRouter } from "next/navigation";
+import { useAccount, useDisconnect} from "wagmi";
 
 const Onboard = () => {
   const {
@@ -23,23 +24,24 @@ const Onboard = () => {
       businessEmail,
       email,
       activeTab,
-      publicAddress,
     },
   } = useContext(OnboardingContext);
 
   const router = useRouter();
+  const account = useAccount();
+  const { address } = account;
 
   const handleSignUp = async () => {
     const user_type = activeTab;
     try {
       const { data, error } = await handleSignUpServer(
+        user_type,
         firstName,
         lastName,
-        user_type,
         email,
         businessName,
         businessEmail,
-        publicAddress
+        address
       );
 
       if (error) {
@@ -58,12 +60,12 @@ const Onboard = () => {
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className="center-vertical">
         <h1>Sign Up👋🏼</h1>
-        <p className={styles.desc}>Create an account below</p>
+        {/* <p className={styles.desc}>Create an account below</p> */}
       </div>
 
-      <div>
+      <div className="my-1 w-100">
         <div>
           <div className="my-half">
             <label htmlFor="firstName">First Name</label>

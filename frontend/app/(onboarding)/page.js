@@ -6,7 +6,7 @@ import Image from "next/image";
 import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
 import Onboard from "../components/auth/Onboard";
-import Home from "../(dashboard)/page";
+import Home from "../dashboard/page";
 import Link from "next/link";
 
 import { FaPlus } from "react-icons/fa6";
@@ -28,7 +28,6 @@ const Onboarding = () => {
     lastName: "",
     businessName: "",
     businessEmail: "",
-    publicAddress: "",
     activeTab: "business",
   });
 
@@ -40,7 +39,6 @@ const Onboarding = () => {
     businessEmail,
     email,
     activeTab,
-    publicAddress,
   } = state;
   console.log(state);
 
@@ -80,13 +78,13 @@ const Onboarding = () => {
     }));
   };
 
-  const setPublicAddress = (value) => {
-    console.log(value);
-    setState((state) => ({
-      ...state,
-      publicAddress: value,
-    }));
-  };
+  // const setPublicAddress = (value) => {
+  //   console.log(value);
+  //   setState((state) => ({
+  //     ...state,
+  //     publicAddress: value,
+  //   }));
+  // };
 
   const onReset = () => {
     setState((state) => ({
@@ -114,7 +112,6 @@ const Onboarding = () => {
         onRouteChange,
         onTabChange,
         onReset,
-        setPublicAddress,
         state,
       }}
     >
