@@ -7,37 +7,74 @@ import styles from "./styles.module.scss";
 import { capitalizeFirst } from "../../../plugins/utils";
 import useContractData from "@/app/hooks/useContractData";
 import { useEffect } from "react";
-import { usePathname } from 'next/navigation'
-import { handleEmployeeEnterContract } from "@/app/api/user";
-import {useAccount} from "wagmi";
+import { usePathname } from "next/navigation";
+import {
+  handleEmployeeEnterContract,
+  handleUpdatePayment,
+} from "@/app/api/user";
+import { useAccount } from "wagmi";
+import Modal from "../../components/common/modal/Modal";
 import useUserData from "@/app/hooks/useUserData";
+import { useRouter } from "next/navigation";
 
 const ContractDetail = () => {
-
   function getLastWordAfterSlash(url) {
     const match = url.match(/\/([^\/]+)\/?$/);
     return match ? match[1] : null;
-}
+  }
 
-  const pathname = usePathname()
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
   const id = getLastWordAfterSlash(pathname);
   const [contract, setContract] = useState(null);
-  const { allContract, isLoading, error, specificContract } = useContractData(id);
-  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false)
-  const {address} = useAccount()
-  const [isEmployer, setIsEmployer] = useState(true)
-  const {userData} = useUserData()
+  const { allContract, isLoading, error, specificContract } =
+    useContractData(id);
+  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
+  const { address } = useAccount();
+  const [isEmployer, setIsEmployer] = useState(null);
+
+  const { userData } = useUserData();
 
   const handleAcceptance = async () => {
-    setAcceptingPaymentClicked(true)
-    try{
-      const res = await handleEmployeeEnterContract(id, address)
-      console.log(res, 'success yy')
-      setAcceptingPaymentClicked(false)
-      location.reload()
-    } catch(e){
-      console.log(e, 'error entering contract')
-      setAcceptingPaymentClicked(false)
+    setAcceptingPaymentClicked(true);
+    try {
+      const res = await handleEmployeeEnterContract(id, address);
+      console.log(res, "success yy");
+      setAcceptingPaymentClicked(false);
+      location.reload();
+    } catch (e) {
+      console.log(e, "error entering contract");
+      setAcceptingPaymentClicked(false);
+    }
+  };
+
+  console.log("specificContract", specificContract);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  const handleSendPayment = async (status) => {
+    console.log("clicked", status);
+    if (status == "send") {
+      try {
+        const res = await handleUpdatePayment(id, "pending");
+        console.log(res, "success yy");
+        setAcceptingPaymentClicked(false);
+        location.reload();
+      } catch (e) {
+        console.log(e, "error sending contract");
+        setAcceptingPaymentClicked(false);
+      }
+    } else if (status == "confirm") {
+      try {
+        const res = await handleUpdatePayment(id, "confirmed");
+        console.log("confirmed");
+        openModal();
+      } catch (e) {
+        console.log(e, "error sending contract");
+        setAcceptingPaymentClicked(false);
+      }
     }
   };
 
@@ -48,13 +85,23 @@ const ContractDetail = () => {
     }
   }, [id, allContract]);
 
-  useEffect(()=>{
-    if (userData){
-      setIsEmployer(userData.user_type === "business")
+  useEffect(() => {
+    if (userData) {
+      setIsEmployer(userData.user_type === "business");
     }
-  }, [userData])
+  }, [userData]);
   return (
     <Wrapper>
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="padded">
+          <h2>All done!🎉</h2>
+          <p>You have Confirmed your payment! </p>
+          <Button
+            label="Back to Home"
+            onClick={() => router.push("/dashboard")}
+          />
+        </div>
+      </Modal>
       <div style={{ padding: 50 }}>
         <h1>Contract Details📄</h1>
         <p className={styles.desc}>Details of your contract below</p>
@@ -62,62 +109,116 @@ const ContractDetail = () => {
         <div className={`${styles.hr} py-1 mt-1`}>
           <p className="label">Contract Type</p>
           <p className="text-small w-70 greyText">
-            {capitalizeFirst(specificContract? specificContract[0].contract_type: '')}
-          </p>
-        </div>
-        <div className={`${styles.hr} py-1`}>
-          <p className="label">Employee Name</p>
-          <p className="text-small w-70 greyText">
-            {capitalizeFirst(specificContract? specificContract[0].business_name: '')}
+            {capitalizeFirst(
+              specificContract ? specificContract[0].contract_type : ""
+            )}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Employee Email</p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].employee_id: ''}</p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].employee_id : ""}
+          </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Title</p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].job_title: ''}</p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].job_title : ""}
+          </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Description</p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].job_description: ''}</p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].job_description : ""}
+          </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Rate ($) </p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].payment: ''}</p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].payment : ""}
+          </p>
         </div>
         <div className={`${styles.hr} py-1`}>
-          <p className="label">Wallet Address </p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].payment_address: ''}</p>
-        </div>
-        <div className={`${styles.hr} py-1`}>
-          <p className="label">Contract Address </p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].contract_address: ''}</p>
+          <p className="label">Employee Wallet Address </p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].payment_address : ""}
+          </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Status</p>
-          <p className="text-small w-70 greyText">{specificContract? specificContract[0].status: ''}</p>
+          <p className="text-small w-70 greyText">
+            {specificContract ? specificContract[0].status : ""}
+          </p>
         </div>
-        {!isEmployer && <div>
-          {
-            (acceptingPaymentClicked)?(
+        {isEmployer && (
+          <div>
+            {specificContract &&
+              specificContract[0].status === "active" &&
+              specificContract[0].payment_status !== "pending" &&
+              specificContract[0].payment_status !== "active" && (
+                <div className="my-half">
+                  <p className="label">Payment Hash</p>
+                  <input
+                    type="text"
+                    placeholder="Submit Blockchain payment Hash "
+                  />
+                </div>
+              )}
+          </div>
+        )}
+
+        {!isEmployer && (
+          <div>
+            {acceptingPaymentClicked ? (
               <p>Processing acceptance...</p>
-            ):(
+            ) : (
               <div>
-              {specificContract && specificContract[0].status === 'pending' && (<Button
-                label="Accept Contract"
-                onClick={() => {
-                  handleAcceptance()
-                }}
-              />)}
+                {specificContract &&
+                  specificContract[0].status === "pending" && (
+                    <Button
+                      label="Accept Contract"
+                      onClick={() => {
+                        handleAcceptance();
+                      }}
+                    />
+                  )}
               </div>
-              
-            )
-          }
-        </div>}
-        
-        
+            )}
+          </div>
+        )}
+
+        {isEmployer && (
+          <div>
+            {specificContract &&
+              specificContract[0].status === "active" &&
+              specificContract[0].payment_status !== "pending" &&
+              specificContract[0].payment_status !== "active" && (
+                <Button
+                  label="Submit Payment Hash"
+                  onClick={() => {
+                    handleSendPayment("send");
+                  }}
+                />
+              )}
+          </div>
+        )}
+
+        {console.log({ isEmployer })}
+
+        {!isEmployer && (
+          <div>
+            {specificContract &&
+              specificContract[0].status === "active" &&
+              specificContract[0].payment_status === "pending" && (
+                <Button
+                  label="Confirm Payment"
+                  onClick={() => {
+                    handleSendPayment("confirm");
+                  }}
+                />
+              )}
+          </div>
+        )}
       </div>
     </Wrapper>
   );

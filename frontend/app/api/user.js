@@ -74,12 +74,8 @@ export const findContract = async (employer_email, employee_email) => {
 };
 
 export const findContractById = async (id) => {
-  console.log(id, 'the id')
   try {
-    const contract = await supabase
-      .from("contract")
-      .select()
-      .eq("id", id)
+    const contract = await supabase.from("contract").select().eq("id", id);
 
     if (!contract) {
       // User not found, redirect to signup
@@ -173,14 +169,35 @@ export const handleEmployeeEnterContract = async (
   contractId,
   paymentAddress
 ) => {
-  console.log(paymentAddress, 'dsdsd id')
+  console.log(paymentAddress, "dsdsd id");
   try {
     const contract = await supabase
       .from("contract")
       .update({ status: "active", payment_address: paymentAddress })
-      .eq("id", contractId)
+      .eq("id", contractId);
 
-      console.log(contract,'the update')
+    console.log(contract, "the update");
+
+    if (!contract) {
+      // User not found, redirect to signup
+      return { data: null, error: "Could not update contract, try again" };
+    }
+
+    return { data: contract, error: null };
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return { data: null, error: "An error occurred. Please try again." };
+  }
+};
+
+export const handleUpdatePayment = async (contractId, payment_status) => {
+  try {
+    const contract = await supabase
+      .from("contract")
+      .update({ payment_status })
+      .eq("id", contractId);
+
+    console.log(contract, "the update");
 
     if (!contract) {
       // User not found, redirect to signup
