@@ -52,7 +52,7 @@ export default function Home() {
 
   console.log({ allContract });
 
-  const handleClick = (id) => {
+  const handleViewClick = (id) => {
     router.push(`/dashboard/${id}`);
   };
 
@@ -102,7 +102,7 @@ export default function Home() {
       </div>
       <div className={styles.tableContainer}>
         <div className={styles.tableHeader}>
-          <p className={styles.tableTitle}>All Contract</p>
+          <p className={styles.tableTitle}>All Contracts</p>
           <div className="inputGroup">
             <FaSearch color="#797979" />
             <input type="text" placeholder="Search names" />
@@ -127,30 +127,6 @@ export default function Home() {
               <th></th>
             </tr>
           </thead>
-          {/* <tbody>
-            <tr>
-              <td>1</td>
-              <td>George Reynolds</td>
-              <td>Georgereynolds@gmail.com</td>
-              <td>$1000</td>
-              <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>
-                Active
-              </td>
-              <td>View</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>George Reynolds</td>
-              <td>Georgereynolds@gmail.com</td>
-              <td>$1000</td>
-              <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>
-                Active
-              </td>
-              <td>View</td>
-            </tr>
-          </tbody> */}
           <tbody>
             {contractData.map((item, index) => {
               const {
@@ -162,8 +138,10 @@ export default function Home() {
                 payment,
               } = item;
 
+              console.log(item, 'the contract item')
+
               return (
-                <tr key={id} onClick={() => handleClick(id)}>
+                <tr key={id} onClick={() => handleViewClick(id)}>
                   <td>{index + 1}</td>
                   <td>{business_name}</td>
                   <td>{employee_id}</td>
