@@ -5,18 +5,41 @@ import Wrapper from "../../components/wrapper/Wrapper";
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import { capitalizeFirst } from "../../../plugins/utils";
-import { useRouter } from "next/navigation";
 import useContractData from "@/app/hooks/useContractData";
+import { useEffect } from "react";
+import { usePathname } from 'next/navigation'
+import { handleEmployeeEnterContract } from "@/app/api/user";
+import {useAccount} from "wagmi";
+import useUserData from "@/app/hooks/useUserData";
 
 const ContractDetail = () => {
-  const router = useRouter();
-  const { id } = router.query;
+
+  function getLastWordAfterSlash(url) {
+    const match = url.match(/\/([^\/]+)\/?$/);
+    return match ? match[1] : null;
+}
+
+  const pathname = usePathname()
+  const id = getLastWordAfterSlash(pathname);
   const [contract, setContract] = useState(null);
-  const { contractData, allContract, isLoading, error } = useContractData();
+  const { allContract, isLoading, error, specificContract } = useContractData(id);
+  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false)
+  const {address} = useAccount()
+  const [isEmployer, setIsEmployer] = useState(true)
+  const {userData} = useUserData()
 
-  console.log({ id });
-
-  const handleSubmit = () => {};
+  const handleAcceptance = async () => {
+    setAcceptingPaymentClicked(true)
+    try{
+      const res = await handleEmployeeEnterContract(id, address)
+      console.log(res, 'success yy')
+      setAcceptingPaymentClicked(false)
+      location.reload()
+    } catch(e){
+      console.log(e, 'error entering contract')
+      setAcceptingPaymentClicked(false)
+    }
+  };
 
   useEffect(() => {
     if (id && allContract) {
@@ -24,6 +47,12 @@ const ContractDetail = () => {
       setContract(foundContract);
     }
   }, [id, allContract]);
+
+  useEffect(()=>{
+    if (userData){
+      setIsEmployer(userData.user_type === "business")
+    }
+  }, [userData])
   return (
     <Wrapper>
       <div style={{ padding: 50 }}>
@@ -33,50 +62,62 @@ const ContractDetail = () => {
         <div className={`${styles.hr} py-1 mt-1`}>
           <p className="label">Contract Type</p>
           <p className="text-small w-70 greyText">
-            {capitalizeFirst("Placeholder")}
+            {capitalizeFirst(specificContract? specificContract[0].contract_type: '')}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Employee Name</p>
           <p className="text-small w-70 greyText">
-            {capitalizeFirst("Placeholder")}
+            {capitalizeFirst(specificContract? specificContract[0].business_name: '')}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Employee Email</p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].employee_id: ''}</p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Title</p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].job_title: ''}</p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Description</p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].job_description: ''}</p>
         </div>
         <div className={`${styles.hr} py-1`}>
-          <p className="label">Start date</p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
-        </div>
-        <div className={`${styles.hr} py-1`}>
-          <p className="label">End date</p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
-        </div>
-        <div className={`${styles.hr} py-1`}>
-          <p className="label">Monthly Rate </p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
+          <p className="label">Rate ($) </p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].payment: ''}</p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Wallet Address </p>
-          <p className="text-small w-70 greyText">{"Placeholder"}</p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].payment_address: ''}</p>
         </div>
-        <Button
-          label="Accept Contract"
-          onClick={() => {
-            openModal();
-            handleSubmit();
-          }}
-        />
+        <div className={`${styles.hr} py-1`}>
+          <p className="label">Contract Address </p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].contract_address: ''}</p>
+        </div>
+        <div className={`${styles.hr} py-1`}>
+          <p className="label">Status</p>
+          <p className="text-small w-70 greyText">{specificContract? specificContract[0].status: ''}</p>
+        </div>
+        {!isEmployer && <div>
+          {
+            (acceptingPaymentClicked)?(
+              <p>Processing acceptance...</p>
+            ):(
+              <div>
+              {specificContract && specificContract[0].status === 'pending' && (<Button
+                label="Accept Contract"
+                onClick={() => {
+                  handleAcceptance()
+                }}
+              />)}
+              </div>
+              
+            )
+          }
+        </div>}
+        
+        
       </div>
     </Wrapper>
   );
