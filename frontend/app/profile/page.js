@@ -14,6 +14,7 @@ import useUserData from "../hooks/useUserData";
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const user = useUserData()
 
   const { userData, isLoading, error } = useUserData();
 
@@ -33,6 +34,15 @@ const Profile = () => {
   const closeModal = () => setIsOpen(false);
 
   const { email, first_name, last_name, public_address, user_type } = userData;
+
+  useEffect(() => {
+    if(user) {
+      router.push("/profile");
+    } else {
+      router.push("/");
+    }
+  }, [])
+
 
   return (
     <>

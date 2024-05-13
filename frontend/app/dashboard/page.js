@@ -21,6 +21,7 @@ export default function Home() {
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
   const { contractData, allContract, isLoading, error } = useContractData();
   const router = useRouter();
+  const user = useUserData();
 
   if (userLoading) {
     return <div>Loading...</div>;
@@ -57,6 +58,15 @@ export default function Home() {
   };
 
   const { user_type } = userData;
+
+  useEffect(() => {
+    if(user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
+    }
+  }, [])
+
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>

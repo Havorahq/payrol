@@ -11,6 +11,7 @@ const Loading = () => {
                 height="130"
                 width="130"
                 color="#4039FA"
+                secondaryColor="#ddd"
                 ariaLabel="loading"
                 />
         </div>

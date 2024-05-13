@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import styles from "./onboarding.module.scss";
 import Image from "next/image";
 import Signin from "../components/auth/Signin";
@@ -17,10 +17,15 @@ import { FaPlus } from "react-icons/fa6";
 // import CONTRACT_ABI from "../smart-contract/wordanamain-abi.json";
 // import TOKEN_ABI from "../smart-contract/token-abi.json";
 import { GlobalProvider } from "../context/GlobalContext";
+import useUserData from "../hooks/useUserData";
+import { useRouter } from "next/navigation";
 
 export const OnboardingContext = createContext();
 
 const Onboarding = () => {
+  const user = useUserData()
+  const router = useRouter()
+
   const [state, setState] = useState({
     route: "signin",
     email: "",
@@ -90,7 +95,6 @@ const Onboarding = () => {
     setState((state) => ({
       ...state,
       email: "",
-
       firstName: "",
       lastName: "",
       businessName: "",
@@ -104,6 +108,12 @@ const Onboarding = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    if(!user) {
+      router.push("/")
+    }
+  }, [])
 
   return (
     <OnboardingContext.Provider
