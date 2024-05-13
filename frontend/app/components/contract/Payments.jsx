@@ -34,10 +34,10 @@ const Payments = () => {
                             <option value="">
                                 USDT
                             </option>
-                            <option value="">BTC</option>
+                            {/* <option value="">BTC</option> */}
                         </select>
                         <input 
-                            type='text'
+                            type='number'
                             name="monthlyRate"
                             value={monthlyRate}
                             placeholder='1000'
