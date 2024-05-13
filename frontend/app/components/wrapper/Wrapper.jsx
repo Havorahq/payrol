@@ -51,9 +51,9 @@ const Wrapper = ({ children }) => {
     }
 
     return (
-      <GlobalContext>
+      <div>
         {getContent()}
-      </GlobalContext>
+      </div>
     )
 }
 

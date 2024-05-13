@@ -60,8 +60,9 @@ const ContractType = ({ setState }) => {
                     <FaChevronRight size={14} color={activeTab === 'Pay As You Go' ? "#14125e" : "#1C1B1F"} />
                 </div>
                 <div 
+                    style={{ cursor: "not-allowed"}}
                     className={`x-axis justify-between ${styles.tab} ${activeTab === 'milestone' ? styles.tabActive : styles.tabInactive}`}
-                    onClick={() => handleDivClick("milestone")}
+                    // onClick={() => handleDivClick("milestone")}
                 >
                     <div className="x-axis gap-1">
                         <Image src='/icons/milestone.png' alt="icon" width={36} height={36} />

@@ -46,7 +46,7 @@ const Payments = () => {
                         />
                     </div>
                 </div>
-                <div className="x-axis my-1 dialog justify-between cursor" onClick={() => setMile(prev => !prev)}>
+                {/* <div className="x-axis my-1 dialog justify-between cursor" onClick={() => setMile(prev => !prev)}>
                     <p className='label'>Milestones</p>
                     <div>
                         {
@@ -114,7 +114,7 @@ const Payments = () => {
                     </div> 
                     :
                     null
-                }
+                } */}
                 <Button label="Continue" onClick={handleNext} />
             </form>
             {/* <Button label="Continue" style="btn-primary" /> */}
