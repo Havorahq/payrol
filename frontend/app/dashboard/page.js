@@ -16,18 +16,19 @@ import { useState, useEffect } from "react";
 import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
 import { useRouter } from "next/navigation";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Home() {
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
   const { contractData, allContract, isLoading, error } = useContractData();
   const router = useRouter();
 
-  if (userLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (!userData) {
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    );
   }
 
   if (error) {
@@ -35,7 +36,11 @@ export default function Home() {
   }
 
   if (!contractData) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    );
   }
 
   const activeContract = contractData.filter(
@@ -136,14 +141,20 @@ export default function Home() {
                 business_name,
                 employee_id,
                 payment,
-                contract_address
+                contract_address,
               } = item;
 
               return (
-                <tr key={id} onClick={() => {
-                  handleViewClick(id)
-                  localStorage.setItem("currentContract", JSON.stringify({contract_type, contract_address}))
-                  }}>
+                <tr
+                  key={id}
+                  onClick={() => {
+                    handleViewClick(id);
+                    localStorage.setItem(
+                      "currentContract",
+                      JSON.stringify({ contract_type, contract_address })
+                    );
+                  }}
+                >
                   <td>{index + 1}</td>
                   <td>{business_name}</td>
                   <td>{employee_id}</td>

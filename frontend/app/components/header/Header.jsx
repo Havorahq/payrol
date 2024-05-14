@@ -7,20 +7,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useUserData from "@/app/hooks/useUserData";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Header = ({ toggleDrawer }) => {
   const { userData, isLoading, error } = useUserData();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    );
   }
 
   const { email, first_name, last_name, public_address, user_type } = userData;

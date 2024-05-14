@@ -7,12 +7,12 @@ import styles from "./styles.module.scss";
 import { capitalizeFirst } from "../../../plugins/utils";
 import useContractData from "@/app/hooks/useContractData";
 import { useEffect } from "react";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
 import { handleEmployeeEnterContract } from "@/app/api/user";
 import useUserData from "@/app/hooks/useUserData";
 import { useContractEvent, useAccount, useContractWrite } from "wagmi";
-import fixedAbi from '@/lib/fixedRate.json'
-import paygAbi from '@/lib/payg.json'
+import fixedAbi from "@/lib/fixedRate.json";
+import paygAbi from "@/lib/payg.json";
 import Modal from "../../components/common/modal/Modal";
 import { useRouter } from "next/navigation";
 
@@ -27,20 +27,26 @@ const ContractDetail = () => {
   const pathname = usePathname();
   const id = getLastWordAfterSlash(pathname);
   const [contract, setContract] = useState(null);
-  const { allContract, isLoading, error, specificContract } = useContractData(id);
-  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false)
-  const {address} = useAccount()
-  const [isEmployer, setIsEmployer] = useState(true)
-  const {userData} = useUserData()
-  const [contractWriteParams, setContractWriteParams] = useState()
-  const localContractInfo = JSON.parse(localStorage.getItem("currentContract"))
+  const { allContract, isLoading, error, specificContract } =
+    useContractData(id);
+  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
+  const { address } = useAccount();
+  const [isEmployer, setIsEmployer] = useState(true);
+  const { userData } = useUserData();
+  const [contractWriteParams, setContractWriteParams] = useState();
+  const localContractInfo = JSON.parse(localStorage.getItem("currentContract"));
 
-  const { data: contractHash, error:contractError, 
-      isLoading: contractLoading, write: enterAgreement, isSuccess:contractSuccess} = useContractWrite({
-      address: localContractInfo.contract_address,
-      abi: localContractInfo.contract_type === 'fixed' ? fixedAbi : paygAbi,
-      functionName: 'employeeEnterContract',
-  })
+  const {
+    data: contractHash,
+    error: contractError,
+    isLoading: contractLoading,
+    write: enterAgreement,
+    isSuccess: contractSuccess,
+  } = useContractWrite({
+    address: localContractInfo.contract_address,
+    abi: localContractInfo.contract_type === "fixed" ? fixedAbi : paygAbi,
+    functionName: "employeeEnterContract",
+  });
 
   const acceptOnDb = async () => {
     setAcceptingPaymentClicked(true);
@@ -82,21 +88,17 @@ const ContractDetail = () => {
     }
   };
 
-  const handleEnterAgreement = async () =>{
-    enterAgreement(
-      {
-        args: [
-          address
-        ]
-    }
-    )
-  }
+  const handleEnterAgreement = async () => {
+    enterAgreement({
+      args: [address],
+    });
+  };
 
-  useEffect(()=>{
-    if (contractSuccess){
-      acceptOnDb()
+  useEffect(() => {
+    if (contractSuccess) {
+      acceptOnDb();
     }
-  }, [contractSuccess])
+  }, [contractSuccess]);
 
   useEffect(() => {
     if (id && allContract) {
@@ -193,12 +195,15 @@ const ContractDetail = () => {
               <p>Processing acceptance...</p>
             ) : (
               <div>
-              {specificContract && specificContract[0].status === 'pending' && (<Button
-                label="Accept Contract"
-                onClick={() => {
-                  handleEnterAgreement()
-                }}
-              />)}
+                {specificContract &&
+                  specificContract[0].status === "pending" && (
+                    <Button
+                      label="Accept Contract"
+                      onClick={() => {
+                        handleEnterAgreement();
+                      }}
+                    />
+                  )}
               </div>
             )}
           </div>
