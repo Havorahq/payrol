@@ -7,14 +7,13 @@ import styles from "./styles.module.scss";
 import { capitalizeFirst } from "../../../plugins/utils";
 import useContractData from "@/app/hooks/useContractData";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
-import {
-  handleEmployeeEnterContract,
-  handleUpdatePayment,
-} from "@/app/api/user";
-import { useAccount } from "wagmi";
-import Modal from "../../components/common/modal/Modal";
+import { usePathname } from 'next/navigation'
+import { handleEmployeeEnterContract } from "@/app/api/user";
 import useUserData from "@/app/hooks/useUserData";
+import { useContractEvent, useAccount, useContractWrite } from "wagmi";
+import fixedAbi from '@/lib/fixedRate.json'
+import paygAbi from '@/lib/payg.json'
+import Modal from "../../components/common/modal/Modal";
 import { useRouter } from "next/navigation";
 
 const ContractDetail = () => {
@@ -28,15 +27,22 @@ const ContractDetail = () => {
   const pathname = usePathname();
   const id = getLastWordAfterSlash(pathname);
   const [contract, setContract] = useState(null);
-  const { allContract, isLoading, error, specificContract } =
-    useContractData(id);
-  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
-  const { address } = useAccount();
-  const [isEmployer, setIsEmployer] = useState(null);
+  const { allContract, isLoading, error, specificContract } = useContractData(id);
+  const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false)
+  const {address} = useAccount()
+  const [isEmployer, setIsEmployer] = useState(true)
+  const {userData} = useUserData()
+  const [contractWriteParams, setContractWriteParams] = useState()
+  const localContractInfo = JSON.parse(localStorage.getItem("currentContract"))
 
-  const { userData } = useUserData();
+  const { data: contractHash, error:contractError, 
+      isLoading: contractLoading, write: enterAgreement, isSuccess:contractSuccess} = useContractWrite({
+      address: localContractInfo.contract_address,
+      abi: localContractInfo.contract_type === 'fixed' ? fixedAbi : paygAbi,
+      functionName: 'employeeEnterContract',
+  })
 
-  const handleAcceptance = async () => {
+  const acceptOnDb = async () => {
     setAcceptingPaymentClicked(true);
     try {
       const res = await handleEmployeeEnterContract(id, address);
@@ -48,8 +54,6 @@ const ContractDetail = () => {
       setAcceptingPaymentClicked(false);
     }
   };
-
-  console.log("specificContract", specificContract);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -77,6 +81,22 @@ const ContractDetail = () => {
       }
     }
   };
+
+  const handleEnterAgreement = async () =>{
+    enterAgreement(
+      {
+        args: [
+          address
+        ]
+    }
+    )
+  }
+
+  useEffect(()=>{
+    if (contractSuccess){
+      acceptOnDb()
+    }
+  }, [contractSuccess])
 
   useEffect(() => {
     if (id && allContract) {
@@ -173,15 +193,12 @@ const ContractDetail = () => {
               <p>Processing acceptance...</p>
             ) : (
               <div>
-                {specificContract &&
-                  specificContract[0].status === "pending" && (
-                    <Button
-                      label="Accept Contract"
-                      onClick={() => {
-                        handleAcceptance();
-                      }}
-                    />
-                  )}
+              {specificContract && specificContract[0].status === 'pending' && (<Button
+                label="Accept Contract"
+                onClick={() => {
+                  handleEnterAgreement()
+                }}
+              />)}
               </div>
             )}
           </div>
