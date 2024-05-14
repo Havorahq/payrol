@@ -9,8 +9,10 @@ import useContractData from "@/app/hooks/useContractData";
 import { useEffect } from "react";
 import { usePathname } from 'next/navigation'
 import { handleEmployeeEnterContract } from "@/app/api/user";
-import {useAccount} from "wagmi";
 import useUserData from "@/app/hooks/useUserData";
+import { useContractEvent, useAccount, useContractWrite } from "wagmi";
+import fixedAbi from '@/lib/fixedRate.json'
+import paygAbi from '@/lib/payg.json'
 
 const ContractDetail = () => {
 
@@ -27,8 +29,19 @@ const ContractDetail = () => {
   const {address} = useAccount()
   const [isEmployer, setIsEmployer] = useState(true)
   const {userData} = useUserData()
+  const [contractWriteParams, setContractWriteParams] = useState()
+  const localContractInfo = JSON.parse(localStorage.getItem("currentContract"))
 
-  const handleAcceptance = async () => {
+  console.log(localContractInfo, 'the local contract')
+
+  const { data: contractHash, error:contractError, 
+      isLoading: contractLoading, write: enterAgreement, isSuccess:contractSuccess} = useContractWrite({
+      address: localContractInfo.contract_address,
+      abi: localContractInfo.contract_type === 'fixed' ? fixedAbi : paygAbi,
+      functionName: 'employeeEnterContract',
+  })
+
+  const acceptOnDb = async () => {
     setAcceptingPaymentClicked(true)
     try{
       const res = await handleEmployeeEnterContract(id, address)
@@ -36,10 +49,25 @@ const ContractDetail = () => {
       setAcceptingPaymentClicked(false)
       location.reload()
     } catch(e){
-      console.log(e, 'error entering contract')
       setAcceptingPaymentClicked(false)
     }
   };
+
+  const handleEnterAgreement = async () =>{
+    enterAgreement(
+      {
+        args: [
+          address
+        ]
+    }
+    )
+  }
+
+  useEffect(()=>{
+    if (contractSuccess){
+      acceptOnDb()
+    }
+  }, [contractSuccess])
 
   useEffect(() => {
     if (id && allContract) {
@@ -108,7 +136,8 @@ const ContractDetail = () => {
               {specificContract && specificContract[0].status === 'pending' && (<Button
                 label="Accept Contract"
                 onClick={() => {
-                  handleAcceptance()
+                  // handleAcceptance()
+                  handleEnterAgreement()
                 }}
               />)}
               </div>

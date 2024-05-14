@@ -81,7 +81,6 @@ const useContractData = (id) => {
     setError(null);
     try {
       const contractExist = await findContractById(id);
-      console.log(contractExist, 'the ex')
       if (contractExist.data.status === 200) {
         setSpecificContract(contractExist.data.data);
       } else {
