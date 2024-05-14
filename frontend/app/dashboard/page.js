@@ -51,11 +51,10 @@ export default function Home() {
     (contract) => contract.status === "pending"
   ).length;
 
-  const upcomingPayment = () => {
-    return contractData.reduce((sum, ad) => sum + parseInt(ad.payment), 0);
-  };
-
-  console.log({ allContract });
+  const upcomingPayment = contractData.reduce(
+    (sum, ad) => sum + parseInt(ad.payment),
+    0
+  );
 
   const handleViewClick = (id) => {
     router.push(`/dashboard/${id}`);

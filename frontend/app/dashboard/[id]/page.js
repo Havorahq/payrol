@@ -130,7 +130,7 @@ const ContractDetail = () => {
         {/* <Image src="/images/step_5.png" alt='step' width={540} height={7} /> */}
         <div className={`${styles.hr} py-1 mt-1`}>
           <p className="label">Contract Type</p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {capitalizeFirst(
               specificContract ? specificContract[0].contract_type : ""
             )}
@@ -138,37 +138,37 @@ const ContractDetail = () => {
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Employee Email</p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].employee_id : ""}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Title</p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].job_title : ""}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Job Description</p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].job_description : ""}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Rate ($) </p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].payment : ""}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
           <p className="label">Employee Wallet Address </p>
-          <p className="text-small w-70 greyText">
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].payment_address : ""}
           </p>
         </div>
         <div className={`${styles.hr} py-1`}>
-          <p className="label">Status</p>
-          <p className="text-small w-70 greyText">
+          <p className="label">Contract Status</p>
+          <p className="text-medium w-70 greyText">
             {specificContract ? specificContract[0].status : ""}
           </p>
         </div>
