@@ -24,7 +24,7 @@ const Sidebar = (props) => {
                 </div>
                 <div className={`${styles.link} ${styles.linkInactive} ${styles.signout}`}>
                     <LiaSignOutAltSolid className={`${styles.icon} ${styles.iconInactive}`} />
-                    <Link href="/onboarding">Sign out</Link>
+                    <Link href="/">Sign out</Link>
                 </div>
             </div>
         </div>
