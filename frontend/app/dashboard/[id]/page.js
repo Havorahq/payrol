@@ -198,7 +198,7 @@ const ContractDetail = () => {
                 onClick={() => {
                   handleEnterAgreement()
                 }}
-              />)
+              />)}
               </div>
             )}
           </div>
