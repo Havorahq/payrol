@@ -41,10 +41,6 @@ const Profile = () => {
 
   return (
     <>
-      {/* <button onClick={openModal}>Open Modal</button> */}
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <EditProfile />
-      </Modal>
       <Wrapper>
         <div className={styles.profileHeader}>
           <div className="x-axis gap-1">
@@ -55,9 +51,6 @@ const Profile = () => {
               <FaArrowLeft />
             </div>
             <p className="w-100">Profile</p>
-          </div>
-          <div className={`${styles.editButton}`} onClick={openModal}>
-            Edit Profile
           </div>
         </div>
         <div className={styles.profileSummary}>
