@@ -7,15 +7,7 @@ import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
 import Onboard from "../components/auth/Onboard";
 import Home from "../dashboard/page";
-import Link from "next/link";
 
-import { FaPlus } from "react-icons/fa6";
-// import {
-//   CONTRACT_ADDRESS,
-//   TOKEN_CONTRACT_ADDRESS,
-// } from "../smart-contract/constants";
-// import CONTRACT_ABI from "../smart-contract/wordanamain-abi.json";
-// import TOKEN_ABI from "../smart-contract/token-abi.json";
 import { GlobalProvider } from "../context/GlobalContext";
 
 export const OnboardingContext = createContext();
