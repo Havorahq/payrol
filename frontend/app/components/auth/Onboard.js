@@ -52,7 +52,7 @@ const Onboard = () => {
       }
 
       alert("Signed up successfully, Welcome on board");
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.error(error);
     }
