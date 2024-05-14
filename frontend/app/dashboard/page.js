@@ -136,12 +136,14 @@ export default function Home() {
                 business_name,
                 employee_id,
                 payment,
+                contract_address
               } = item;
 
-              console.log(item, 'the contract item')
-
               return (
-                <tr key={id} onClick={() => handleViewClick(id)}>
+                <tr key={id} onClick={() => {
+                  handleViewClick(id)
+                  localStorage.setItem("currentContract", JSON.stringify({contract_type, contract_address}))
+                  }}>
                   <td>{index + 1}</td>
                   <td>{business_name}</td>
                   <td>{employee_id}</td>
