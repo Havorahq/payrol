@@ -160,31 +160,37 @@ const Contract = () => {
         onChange,
         onFromDateChange,
         onToDateChange,
-        state
+        state,
       }}
     >
       <div className={styles.container}>
         <div className={styles.left}>
-          <div className="x-axis gap-1">
-            <Image src="/icons/xalariIcon.png" alt="Brand icon" width={50} height={50} />
+          <div className={`x-axis gap-1 ${styles.brandContainer}`}>
+            <Image
+              src="/icons/brandLogo.png"
+              alt="Brand icon"
+              width={50}
+              height={50}
+            />
             <h1>Xalari</h1>
           </div>
           <div>
             <p className={styles.title}>{details[step]?.title}</p>
-            <p className={styles.desc}>
-              {details[step]?.description}
-            </p>
+            <p className={styles.desc}>{details[step]?.description}</p>
           </div>
           <div className={styles.asset}>
-            <Image src={`/images/${details[step]?.asset}`} alt="Calculator image" width={340} height={300} />
+            <Image
+              src={`/images/${details[step]?.asset}`}
+              alt="Calculator image"
+              width={340}
+              height={300}
+            />
           </div>
         </div>
-        <div className={styles.right}>
-          {renderStep()}
-        </div>
+        <div className={styles.right}>{renderStep()}</div>
       </div>
     </ContractContext.Provider>
-  )
+  );
 }
 
 export default Contract;

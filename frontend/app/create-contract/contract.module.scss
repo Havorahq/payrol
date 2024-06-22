@@ -1,56 +1,60 @@
 .container {
-    padding: 1em;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
- }
- 
- .left {
-     height: 100%;
-     width: 90%;
-     background: linear-gradient(338.14deg, #3B37FF -3.56%, #FF7A21 119.15%);
-     border-radius: var(--space-md);
-     padding: 2em 4em;
-     color: #fff;
-     display: flex;
-     flex-direction: column;
-     justify-content: space-evenly;
- 
-     .title {
-         font-size: var(--font-size-xl);
-         font-weight: 600;
-     }
- 
-     .desc {
-         font-size: var(--font-size-xs);
-         font-weight: 300;
-         line-height: 22px;
-         margin-top: 10px;
-         font-family: var(--font-dm-sans);
-     }
- 
-     .asset {
-         align-self: center;
-     }
- }
- 
- .right {
-     height: 100%;
-     width: 100%;
-     background: #fff;
-     padding: 2em 4em;
- }
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
- @media(max-width: 912px) {
-    .container {
-        padding: 0 !important;
-    }
-    .left {
-        display: none !important;
-    }
+.left {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(338.14deg, #3b37ff -3.56%, #ff7a21 119.15%);
+  padding: var(--space-ml) var(--space-2xl);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
 
-    .right {
-        padding: var(--space-2xs);
-    }
+  .brandContainer {
+    align-self: flex-start;
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+  }
+
+  .desc {
+    font-size: var(--font-size-sm);
+    font-weight: 300;
+    line-height: 22px;
+    margin-top: 10px;
+    font-family: var(--font-dm-sans);
+  }
+
+//   .asset {
+//     align-self: center;
+//   }
+}
+
+.right {
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  padding: 2em 4em;
+}
+
+@media (max-width: 912px) {
+  .container {
+    padding: 0 !important;
+  }
+  .left {
+    display: none !important;
+  }
+
+  .right {
+    padding: var(--space-2xs);
+  }
 }
