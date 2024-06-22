@@ -1,12 +1,12 @@
 const routes = [
-    {
-        path: "/",
-        title: "Dashboard",
-      },
-      {
-        path: "/profile",
-        title: "Profile",
-      }
-]
+  {
+    path: "/dashboard",
+    title: "Dashboard",
+  },
+  {
+    path: "/profile",
+    title: "Profile",
+  },
+];
 
 export default routes;

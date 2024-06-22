@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 import { useAccount, useDisconnect } from "wagmi";
 import Input from "../common/input/Input";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Modal from "../common/modal/Modal";
 const Onboard = () => {
   const {
     onChange,
@@ -29,8 +32,12 @@ const Onboard = () => {
   } = useContext(OnboardingContext);
 
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   const account = useAccount();
   const { address } = account;
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const handleSignUp = async () => {
     const user_type = activeTab;
@@ -48,12 +55,11 @@ const Onboard = () => {
       if (error) {
         // Handle error
         console.error(error);
-        alert("Error signing up ");
+        // alert("Error signing up ");
+        toast.error("Error signing up. User Already Exist");
         return;
       }
-
-      alert("Signed up successfully, Welcome on board");
-      router.push("/");
+      openModal();
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +73,18 @@ const Onboard = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.brandContainer}>
+      <ToastContainer />
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="padded">
+          <h2>All done!🎉</h2>
+          <p>You have successfully created your Account! </p>
+          <Button
+            label="Go to Your Dashboard"
+            onClick={() => router.push("/dashboard")}
+          />
+        </div>
+      </Modal>
+      <div className="center-vertical">
         <h1>Sign Up👋🏼</h1>
         {/* <p className={styles.desc}>Create an account below</p> */}
       </div>
@@ -98,20 +115,18 @@ const Onboard = () => {
               required
             />
           </div>
-          {activeTab === "employee" && (
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                placeholder="Enter Email Address"
-                onChange={onChange}
-                required
-              />
-            </div>
-          )}
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              placeholder="Enter Email Address"
+              onChange={onChange}
+              required
+            />
+          </div>
+
           {activeTab === "business" && (
             <div>
               <div className="my-1">

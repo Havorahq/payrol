@@ -15,18 +15,20 @@ import { supabase } from "../../lib/supabaseClient";
 import { useState, useEffect } from "react";
 import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
+import { useRouter } from "next/navigation";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function Home() {
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
-  const { contractData, isLoading, error } = useContractData();
+  const { contractData, allContract, isLoading, error } = useContractData();
+  const router = useRouter();
 
-  if (userLoading) {
-    return <div>Loading...</div>;
-  }
-
-  // console.log({ userData });
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (!userData) {
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    );
   }
 
   if (error) {
@@ -34,10 +36,31 @@ export default function Home() {
   }
 
   if (!contractData) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    );
   }
 
-  console.log({ contractData }, "the contract data");
+  const activeContract = contractData.filter(
+    (contract) => contract.status === "active"
+  ).length;
+
+  const pendingContract = contractData.filter(
+    (contract) => contract.status === "pending"
+  ).length;
+
+  const upcomingPayment = contractData.reduce(
+    (sum, ad) => sum + parseInt(ad.payment),
+    0
+  );
+
+  const handleViewClick = (id) => {
+    router.push(`/dashboard/${id}`);
+  };
+
+  const { user_type } = userData;
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
@@ -59,7 +82,7 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>10</div>
+          <div className={styles.cardBody}>{activeContract}</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
@@ -69,30 +92,21 @@ export default function Home() {
             </div>
             <FaArrowRight />
           </div>
-          <div className={styles.cardBody}>2</div>
+          <div className={styles.cardBody}>{pendingContract}</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <div className="x-axis gap-1">
-              <p>Cancelled Contract</p>
-              <ImCancelCircle />
-            </div>
-          </div>
-          <div className={styles.cardBody}>2</div>
-        </div>
-        <div className={styles.card}>
-          <div className={styles.cardHeader}>
-            <div className="x-axis gap-1">
-              <p>Payment Due</p>
+              <p> Payment</p>
               <BiDollarCircle />
             </div>
           </div>
-          <div className={styles.cardBody}>80,576</div>
+          <div className={styles.cardBody}>{upcomingPayment}</div>
         </div>
       </div>
       <div className={styles.tableContainer}>
         <div className={styles.tableHeader}>
-          <p className={styles.tableTitle}>All Contract</p>
+          <p className={styles.tableTitle}>All Contracts</p>
           <div className="inputGroup">
             <FaSearch color="#797979" />
             <input type="text" placeholder="Search names" />
@@ -118,28 +132,40 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>George Reynolds</td>
-              <td>Georgereynolds@gmail.com</td>
-              <td>$1000</td>
-              <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>
-                Active
-              </td>
-              <td>View</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>George Reynolds</td>
-              <td>Georgereynolds@gmail.com</td>
-              <td>$1000</td>
-              <td>Fixed</td>
-              <td className="tabActive" style={{ padding: 0 }}>
-                Active
-              </td>
-              <td>View</td>
-            </tr>
+            {contractData.map((item, index) => {
+              const {
+                id,
+                status,
+                contract_type,
+                business_name,
+                employee_id,
+                payment,
+                contract_address,
+              } = item;
+
+              return (
+                <tr
+                  key={id}
+                  onClick={() => {
+                    handleViewClick(id);
+                    localStorage.setItem(
+                      "currentContract",
+                      JSON.stringify({ contract_type, contract_address })
+                    );
+                  }}
+                >
+                  <td>{index + 1}</td>
+                  <td>{business_name}</td>
+                  <td>{employee_id}</td>
+                  <td>{payment}</td>
+                  <td>{contract_type}</td>
+                  <td style={{ padding: 0 }}>{status}</td>
+                  <td>
+                    <Button label="View" />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

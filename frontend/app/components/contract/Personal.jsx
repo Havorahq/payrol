@@ -33,17 +33,6 @@ const Personal = () => {
       </div>
       <form>
         <div className="my-1">
-          <label htmlFor="">Employee Name</label>
-          <input
-            type="text"
-            name="employeeName"
-            value={employeeName}
-            placeholder="Enter Employee Name"
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <div className="my-1">
           <label htmlFor="">Employee Email</label>
           <input
             type="text"

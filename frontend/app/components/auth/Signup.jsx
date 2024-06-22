@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import styles from "./auth.module.scss";
 import Button from "../common/button/Button";
 import Image from "next/image";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useAccount } from "wagmi";
 import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -51,7 +52,11 @@ const Signin = () => {
 
   // Render loading state while fetching data
   if (isLoading) {
-    return <div>Loading...</div>; // You can replace this with a loading spinner or any other loading indicator
+    return (
+      <div style={{ width: "100px", margin: "auto", display: "block" }}>
+        <ClipLoader color="#52bf" size={100} />
+      </div>
+    ); // You can replace this with a loading spinner or any other loading indicator
   }
 
   return (

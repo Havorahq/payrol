@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./contractType.module.scss";
-import Button from "../common/button/Button";
+import Button from "../common/Button";
 import { ContractContext } from "@/app/create-contract/page";
 import { capitalizeFirst, writeContract } from "@/plugins/utils";
 import { useRouter } from "next/navigation";
@@ -131,9 +131,9 @@ const ContractDetails = () => {
   const closeModal = () => setIsOpen(false);
 
   const handleSubmit = () => {
-    console.log(userData, "the user data");
     if (!user) return console.error("user not loaded yet");
     state.employerEmail = user.business_email;
+    state.businessName = user.business_name;
     if (state.contractType === "fixed") {
       deployFixedAgreement({
         args: [
@@ -190,12 +190,6 @@ const ContractDetails = () => {
             </p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Employee Name</p>
-            <p className="text-small w-70 greyText">
-              {capitalizeFirst(employeeName)}
-            </p>
-          </div>
-          <div className={`${styles.hr} py-1`}>
             <p className="label">Employee Email</p>
             <p className="text-small w-70 greyText">{employeeEmail}</p>
           </div>
@@ -218,10 +212,6 @@ const ContractDetails = () => {
           <div className={`${styles.hr} py-1`}>
             <p className="label">Monthly Rate </p>
             <p className="text-small w-70 greyText">{monthlyRate}</p>
-          </div>
-          <div className={`${styles.hr} py-1`}>
-            <p className="label">Wallet Address </p>
-            <p className="text-small w-70 greyText">{walletAddress}</p>
           </div>
           <Button
             label="Create Contract"

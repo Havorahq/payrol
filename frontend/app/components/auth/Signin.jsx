@@ -32,7 +32,6 @@ const Signin = () => {
     const fetchData = async () => {
       try {
         if (address) {
-          console.log(address, "there is an address");
           const userExist = await findUser(address);
           console.log({ userExist, address });
           if (userExist.data.status === 200) {
