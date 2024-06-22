@@ -2,14 +2,15 @@
 
 import React, { useContext, useState } from "react";
 import styles from "./auth.module.scss";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { handleSignUpServer } from "@/app/api/user";
 import { useRouter } from "next/navigation";
-import { useAccount, useDisconnect} from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
+import Input from "../common/input/Input";
 
 const Onboard = () => {
   const {
@@ -58,19 +59,26 @@ const Onboard = () => {
     }
   };
 
+  const isDisabled =
+    firstName === "" &&
+    lastName === "" &&
+    businessName === "" &&
+    businessEmail === "";
+
   return (
     <div className={styles.container}>
-      <div className="center-vertical">
+      <div className={styles.brandContainer}>
         <h1>Sign Up👋🏼</h1>
         {/* <p className={styles.desc}>Create an account below</p> */}
       </div>
 
       <div className="my-1 w-100">
         <div>
-          <div className="my-half">
+          <div className="my-1">
             <label htmlFor="firstName">First Name</label>
-            <input
+            <Input
               type="text"
+              id="firstName"
               name="firstName"
               value={firstName}
               placeholder="Enter your first name"
@@ -78,10 +86,11 @@ const Onboard = () => {
               required
             />
           </div>
-          <div className="my-half">
+          <div className="my-1">
             <label htmlFor="lastName">Last Name</label>
             <input
               type="text"
+              id="lastName"
               name="lastName"
               value={lastName}
               placeholder="Enter your last name"
@@ -94,6 +103,7 @@ const Onboard = () => {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={email}
                 placeholder="Enter Email Address"
@@ -104,10 +114,11 @@ const Onboard = () => {
           )}
           {activeTab === "business" && (
             <div>
-              <div className="my-half">
+              <div className="my-1">
                 <label htmlFor="businessName">Business Name</label>
                 <input
                   type="text"
+                  id="businessName"
                   name="businessName"
                   value={businessName}
                   placeholder="Enter business name"
@@ -115,10 +126,11 @@ const Onboard = () => {
                   required
                 />
               </div>
-              <div className="my-half">
+              <div className="my-1">
                 <label htmlFor="businessEmail">Business Email</label>
                 <input
                   type="email"
+                  id="businessEmail"
                   name="businessEmail"
                   value={businessEmail}
                   placeholder="Enter business email"
@@ -128,7 +140,11 @@ const Onboard = () => {
               </div>
             </div>
           )}
-          <Button label="Continue" onClick={handleSignUp} />
+          <Button
+            label="Continue"
+            onClick={handleSignUp}
+            disabled={isDisabled}
+          />
         </div>
       </div>
     </div>

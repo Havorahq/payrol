@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./dashboard.module.scss";
 import Wrapper from "../components/wrapper/Wrapper";
-import Button from "../components/common/Button";
+import Button from "../components/common/button/Button";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import { RiFileCheckLine } from "react-icons/ri";
 import { LuArrowRight } from "react-icons/lu";
@@ -17,10 +17,10 @@ import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
 
 export default function Home() {
-  const {userData, isLoading: userLoading, error:userErroer} = useUserData()
+  const { userData, isLoading: userLoading, error: userErroer } = useUserData();
   const { contractData, isLoading, error } = useContractData();
 
-  if (userLoading){
+  if (userLoading) {
     return <div>Loading...</div>;
   }
 
@@ -37,7 +37,7 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  console.log({ contractData }, 'the contract data');
+  console.log({ contractData }, "the contract data");
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
