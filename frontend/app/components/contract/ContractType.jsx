@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./contractType.module.scss";
 import Button from "../common/button/Button";
 import { FaChevronRight } from "react-icons/fa";
 import { ContractContext } from "@/app/create-contract/page";
+import Swal from "sweetalert2";
 
 const ContractType = ({ setState }) => {
   const { onChange, handleNext, handlePrev, state } =
@@ -19,7 +20,19 @@ const ContractType = ({ setState }) => {
     setState({ ...state, contractType: value });
   };
 
+  const comingSoon = () => {
+    Swal.fire({
+      title: "Coming soon",
+      text: "This feature will be available soon",
+      icon: "info",
+    });
+  };
+
   const isDisabled = contractType === "";
+
+  useEffect(() => {
+    setState({ ...state, contractType: "" });
+  }, []);
 
   return (
     <div className={styles.section}>
@@ -96,10 +109,11 @@ const ContractType = ({ setState }) => {
           />
         </div>
         <div
-          className={`x-axis justify-between ${styles.tab} ${
+          className={`x-axis cursor-notallowed justify-between ${styles.tab} ${
             activeTab === "milestone" ? styles.tabActive : styles.tabInactive
           }`}
-          onClick={() => handleDivClick("milestone")}
+          // onClick={() => handleDivClick("milestone")}
+          onClick={comingSoon}
         >
           <div className="x-axis gap-1">
             <Image

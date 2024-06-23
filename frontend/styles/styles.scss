@@ -135,14 +135,16 @@ button:disabled {
   background: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%);
 }
 
-.btn-secondary {
-  background: transparent;
-  color: #1D1D1F;
-  border: 1px solid #DBE1EB !important;
-  font-weight: 400;
-  padding: 18px;
-  border-radius: 4px;
-}
+// .btn-secondary {
+//   background: transparent;
+//   color: #1D1D1F;
+//   border: 1px solid #DBE1EB !important;
+//   font-weight: 400;
+//   padding: 18px;
+//   border-radius: 4px;
+// }
+
+
 
 .password-icon{
   position: absolute;
@@ -239,7 +241,7 @@ table {
   }
   
   td {
-    padding: var(--space-md);
+    padding-block: var(--space-md);
     color: var(--color-black-2);
     font-size: var(--font-size-xs);
   }
@@ -379,6 +381,10 @@ table {
   cursor: pointer;
 }
 
+.cursor-notallowed {
+  cursor: not-allowed;
+}
+
 .tabactive {
   color: #1EB62D;
   background-color: #F0FFF1;
@@ -403,6 +409,19 @@ table {
   padding: var(--space-xs) var(--space-md);
   font-size: var(--font-size-xs);
   border: 1px solid #DE6F48;
+  background: var(--color-white);
+  border-radius: var(--space-sm);
+  // color: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%) !important;
+  margin-right: var(--space-md);
+  cursor: pointer;
+    color: #1D1D1F;
+  border: 1px solid #DBE1EB !important;
+}
+
+.filter-active {
+  border: 1px solid #232199 !important;
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-xs);
   background: var(--color-white);
   border-radius: var(--space-sm);
   color: linear-gradient(90.55deg, #FF7418 -76.45%, #232199 107.58%) !important;
