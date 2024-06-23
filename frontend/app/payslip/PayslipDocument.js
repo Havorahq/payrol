@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   companyName: {
-    fontSize: 22,
+    fontSize: 30,
     marginBottom: 5,
   },
   companyAddress: {
-    fontSize: 12,
+    fontSize: 14,
   },
   companyIcon: {
     width: 60,
@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   employeeName: {
-    fontSize: 18,
-    textTransform: "uppercase",
+    fontSize: 14,
+    fontWeight: 700,
+    textTransform: "",
   },
   details: {
-    fontSize: 12,
+    fontSize: 16,
   },
   table: {
     display: "table",
@@ -71,13 +72,14 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   netPay: {
-    fontSize: 38,
-    textAlign: "right",
-    marginTop: 10,
+    fontSize: 18,
+    textAlign: "left",
+    marginTop: 2,
   },
   netPayLabel: {
-    fontSize: 12,
-    textAlign: "right",
+    fontSize: 14,
+    textAlign: "left",
+    marginTop: 20,
   },
   total: {
     fontSize: 12,
@@ -147,7 +149,7 @@ const PayslipDocument = ({ contractData }) => {
             </Text>
           )}
           {payment && (
-            <Text style={[styles.netPayLabel, styles.mb5]}>Payment</Text>
+            <Text style={[styles.netPayLabel, styles.mb5]}>Payment:</Text>
           )}
           <Text style={styles.netPay}>
             <Text style={styles.rupeeSm}>₹</Text>

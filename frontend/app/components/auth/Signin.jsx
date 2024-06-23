@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./auth.module.scss";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import Image from "next/image";
 import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -40,8 +40,8 @@ const Signin = () => {
             disconnect();
             onRouteChange("signup");
           }
-        } else{
-          console.log('no address')
+        } else {
+          console.log("no address");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -54,18 +54,18 @@ const Signin = () => {
     fetchData();
   }, [address]);
 
-
   return (
     <div className={styles.container}>
       <div className="center-vertical">
         <h1>Welcome 👋🏼</h1>
         <p className={styles.desc}>Please signin to your account</p>
-        <p style={{ marginTop: "10px" }}>
+        <p className="text-medium float-center greyText">
           You will be redirected to the sign up page if you dont have an account
         </p>
+      </div>
+
       <div className="center">
         <ConnectButton />
-      </div>
       </div>
 
       <p className={styles.prompt}>

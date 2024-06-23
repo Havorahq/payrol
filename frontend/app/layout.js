@@ -2,6 +2,7 @@
 import { Inter } from "next/font/google";
 import "../styles/styles.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import "sweetalert2/src/sweetalert2.scss";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";

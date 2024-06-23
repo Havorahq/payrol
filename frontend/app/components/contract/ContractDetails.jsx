@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./contractType.module.scss";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import { ContractContext } from "@/app/create-contract/page";
 import { capitalizeFirst, writeContract } from "@/plugins/utils";
 import { useRouter } from "next/navigation";
@@ -170,57 +170,53 @@ const ContractDetails = () => {
           />
         </div>
       </Modal>
-      <div className={styles.section}>
-        <Image
-          src="/icons/previous.png"
-          alt="Learn More"
-          className="cursor"
-          width={71}
-          height={18}
-          onClick={handlePrev}
-        />
-        <div>
+      <div className={styles.section} style={{ marginTop: "2em"}}>
+        <span className="w-100">
+          <Image
+            src="/icons/previous.png"
+            alt="Learn More"
+            className="cursor"
+            width={71}
+            height={18}
+            onClick={handlePrev}
+          />
+        </span>
+        <div className="w-100">
           <h1>Contract Details📄</h1>
-          <p className={styles.desc}>Details of your contract below</p>
+          <p className={styles.desc}>View details of your contract below</p>
           {/* <Image src="/images/step_5.png" alt='step' width={540} height={7} /> */}
           <div className={`${styles.hr} py-1 mt-1`}>
-            <p className="label">Contract Type</p>
-            <p className="text-small w-70 greyText">
+            <p className="label text-medium">Contract Type</p>
+            <p className="text-normal w-70 greyText">
               {capitalizeFirst(contractType)}
             </p>
           </div>
-
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Employee Email</p>
-            <p className="text-small w-70 greyText">{employeeEmail}</p>
+            <p className="label text-medium">Employee Email</p>
+            <p className="text-normal w-70 greyText">{employeeEmail}</p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Job Title</p>
-            <p className="text-small w-70 greyText">{jobTitle}</p>
+            <p className="label text-medium">Job Title</p>
+            <p className="text-normal w-70 greyText">{jobTitle}</p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Job Description</p>
-            <p className="text-small w-70 greyText">{jobDescription}</p>
+            <p className="label text-medium">Job Description</p>
+            <p className="text-normal w-70 greyText">{jobDescription}</p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Start date</p>
-            <p className="text-small w-70 greyText">{startDate}</p>
+            <p className="label text-medium">Start date</p>
+            <p className="text-normal w-70 greyText">{startDate}</p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">End date</p>
-            <p className="text-small w-70 greyText">{endDate}</p>
+            <p className="label text-medium">End date</p>
+            <p className="text-normal w-70 greyText">{endDate}</p>
           </div>
           <div className={`${styles.hr} py-1`}>
-            <p className="label">Monthly Rate </p>
-            <p className="text-small w-70 greyText">{monthlyRate}</p>
+            <p className="label text-medium">Monthly Rate </p>
+            <p className="text-normal w-70 greyText">{monthlyRate}</p>
           </div>
-          <Button
-            label="Create Contract"
-            onClick={() => {
-              handleSubmit();
-            }}
-          />
         </div>
+        <Button label="Create Contract" onClick={handleSubmit} />
       </div>
     </>
   );
