@@ -157,14 +157,14 @@ const PayslipDocument = ({ contractData }) => {
           </Text>
         </View>
         <View style={styles.table}>
-          <View style={styles.tableRow}>
+          {/* <View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
               <Text style={styles.tableCellHeader}>Details</Text>
             </View>
             <View style={styles.tableColHeader}>
               <Text style={styles.tableCellHeader}>Value</Text>
             </View>
-          </View>
+          </View> */}
           {/* {Object.entries(.map(([key, value], index) => (
             <View style={styles.tableRow} key={index}>
               <View style={styles.tableCol}>

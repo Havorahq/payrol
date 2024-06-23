@@ -43,9 +43,10 @@
 .right {
   height: 100%;
   width: 100%;
-  background: #fff;
+  background: url("../../public/images/authBg.png") no-repeat center center fixed;
+  background-size: cover;
   padding: 2em 4em;
-  // padding-inline: var(--space-ml) var(--space-2xl);
+  position: relative;
 }
 
 @media (max-width: 912px) {

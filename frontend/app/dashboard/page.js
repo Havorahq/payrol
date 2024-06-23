@@ -27,6 +27,12 @@ export default function Home() {
   const { contractData, allContract, isLoading, error } = useContractData();
   const router = useRouter();
 
+  const [activeFilter, setActiveFilter] = useState("")
+
+  const filteredData = contractData?.filter(
+    (contract, index) => activeFilter === "" || contract.status === activeFilter
+  ) || null
+
   if (!userData) {
     return (
       <div style={{ width: "100%", height: "100%" }}>
@@ -68,7 +74,7 @@ export default function Home() {
   return (
     <Wrapper>
       <div className={styles.dashboardHeader}>
-        <p className="w-100">Total Contract</p>
+        <p className="w-100">Total Contract: {contractData?.length}</p>
         <Link href="/create-contract">
           <div className={`${styles.addButton} x-axis gap-1`}>
             <FaPlus />
@@ -113,14 +119,41 @@ export default function Home() {
           <p className={styles.tableTitle}>All Contracts</p>
           <div className="inputGroup">
             <FaSearch color="#797979" />
-            <input type="text" placeholder="Search names" />
+            <input type="text" placeholder="Search" />
           </div>
         </div>
 
         <div className="x-axis gap-2 my-2">
-          <div className="btn-secondary">Active</div>
-          <div className="btn-secondary">Pending</div>
-          <div className="btn-secondary">Cancelled</div>
+          <div
+            className={activeFilter === "" ? "filter-active" : "btn-secondary"}
+            onClick={() => setActiveFilter("")}
+          >
+            All
+          </div>
+          <div
+            className={
+              activeFilter === "active" ? "filter-active" : "btn-secondary"
+            }
+            onClick={() => setActiveFilter("active")}
+          >
+            Active
+          </div>
+          <div
+            className={
+              activeFilter === "pending" ? "filter-active" : "btn-secondary"
+            }
+            onClick={() => setActiveFilter("pending")}
+          >
+            Pending
+          </div>
+          <div
+            className={
+              activeFilter === "cancelled" ? "filter-active" : "btn-secondary"
+            }
+            onClick={() => setActiveFilter("cancelled")}
+          >
+            Cancelled
+          </div>
         </div>
 
         <div className="tableContainer">
@@ -133,11 +166,11 @@ export default function Home() {
                 <th>Amount</th>
                 <th>Type</th>
                 <th>Status</th>
-                <th></th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {contractData.map((item, index) => {
+              {filteredData.map((item, index) => {
                 const {
                   id,
                   status,
@@ -181,6 +214,7 @@ export default function Home() {
               })}
             </tbody>
           </table>
+          {filteredData?.length === 0 && <div className="center-vertical my-1 padded"><p className="greyText">No Result Found</p></div>}
         </div>
       </div>
     </Wrapper>
