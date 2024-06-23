@@ -136,6 +136,7 @@
 @media (max-width: 912px) {
   .section {
     padding: 0 !important;
-    margin-block: var(--space-2xl);
+    width: 85% !important;
+    // margin-block: var(--space-2xl);
   }
 }

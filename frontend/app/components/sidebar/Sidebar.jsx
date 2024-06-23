@@ -8,6 +8,7 @@ import { CiGrid42 } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoMdSettings } from "react-icons/io";
 import { LiaSignOutAltSolid } from "react-icons/lia";
+import { IoReceiptOutline } from "react-icons/io5";
 import { useDisconnect } from "wagmi";
 import Swal from "sweetalert2";
 
@@ -27,18 +28,17 @@ const Sidebar = (props) => {
         disconnect();
       }
     });
-  }
+  };
 
   return (
     <div className={styles.sidebar}>
       <div className={`x-axis`}>
         <Image
-          src="/icons/brandLogo.png"
+          src="/icons/secondaryLogo.png"
           alt="Brand icon"
-          width={50}
-          height={50}
+          width={110}
+          height={28}
         />
-        <h2>Xalari</h2>
       </div>
       <div className={styles.linkContainer}>
         <Link href="/dashboard">
@@ -75,6 +75,24 @@ const Sidebar = (props) => {
               }`}
             />
             Profile
+          </div>
+        </Link>
+        <Link href="/payslip">
+          <div
+            className={`${styles.link} ${
+              props.title === "Payslip"
+                ? styles.linkActive
+                : styles.linkInactive
+            }`}
+          >
+            <IoReceiptOutline
+              className={`${styles.icon} ${
+                props.title === "Payslip"
+                  ? styles.iconActive
+                  : styles.iconInactive
+              }`}
+            />
+            Payslip
           </div>
         </Link>
         <div

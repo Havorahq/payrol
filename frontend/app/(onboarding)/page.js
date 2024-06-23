@@ -121,9 +121,7 @@ const Onboarding = () => {
             </div>
             <div>
               <p className={styles.title}>
-                Payroll
-                Management on the
-                blockchain!
+                Payroll Management on the blockchain!
               </p>
               <p className={styles.desc}>
                 Revolutionize Payroll Management with Blockchain Technology!
@@ -141,7 +139,17 @@ const Onboarding = () => {
               />
             </div>
           </div>
-          <div className={styles.right}>{renderPages()}</div>
+          <div className={styles.right}>
+            <span className={styles.mobileLogo}>
+              <Image
+                src="/icons/secondaryLogo.png"
+                alt="Brand icon"
+                width={110}
+                height={28}
+              />
+            </span>
+            {renderPages()}
+          </div>
         </div>
       </GlobalProvider>
     </OnboardingContext.Provider>

@@ -21,11 +21,11 @@
 }
 
 .container::-webkit-scrollbar {
-  width: 12px;
+  width: 2px;
 }
 
 .container::-webkit-scrollbar-track {
-  background-color: #fff;
+  background-color: inherit;
 }
 
 .container::-webkit-scrollbar-thumb {
@@ -92,6 +92,9 @@
 
 @media (max-width: 912px) {
   .container {
+    margin: 0 !important;
     padding: 0 !important;
+    background-image: url('../../../public/images/mobilebg.png') no-repeat fixed!important;
+    background-size: cover;
   }
 }

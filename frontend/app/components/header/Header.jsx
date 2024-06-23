@@ -22,7 +22,7 @@ const Header = ({ toggleDrawer }) => {
       <div 
         // style={{ width: "100px", margin: "auto", display: "block" }}
       >
-        <Preloader height={45} />
+        <Preloader height={40} />
       </div>
     );
   }
@@ -32,10 +32,10 @@ const Header = ({ toggleDrawer }) => {
     <div>
       <div className={styles.mobileHeader}>
         <Image
-          src="/icons/xalari_logo_dh.png"
+          src="/icons/secondaryLogo.png"
           alt="brand logo"
-          width={104}
-          height={31}
+          width={110}
+          height={28}
         />
         <RiMenu4Fill size={20} className="cursor" onClick={toggleDrawer} />
       </div>

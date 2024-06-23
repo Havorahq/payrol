@@ -138,8 +138,10 @@ button:disabled {
 .btn-secondary {
   background: transparent;
   color: #1D1D1F;
-  border: 1px solid #DBE1EB;
+  border: 1px solid #DBE1EB !important;
   font-weight: 400;
+  padding: 18px;
+  border-radius: 4px;
 }
 
 .password-icon{
@@ -207,6 +209,11 @@ button:disabled {
   .icon {
       color: var(--color-black-2);
   }
+}
+
+.tableContainer {
+  width: inherit;
+  overflow-x: scroll !important;
 }
 
 table {
@@ -328,6 +335,10 @@ table {
 
 .w-50 {
   width: 50% !important;
+}
+
+.w-fit {
+  width: fit-content !important;
 }
 
 .text-xs {

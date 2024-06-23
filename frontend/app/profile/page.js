@@ -3,20 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 import styles from "./profile.module.scss";
 import Wrapper from "@/app/components/wrapper/Wrapper";
 import Modal from "@/app/components/common/modal/Modal";
 import EditProfile from "@/app/components/auth/EditProfile";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import Button from "../components/common/button/Button";
 import useUserData from "../hooks/useUserData";
 import Preloader from "../components/common/preloader/Preloader";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  // const [isEmployer, setIsEmployer] = useState(null);
 
   const { userData, isLoading, error } = useUserData();
 
@@ -27,8 +26,7 @@ const Profile = () => {
   if (!userData) {
     return (
       <div style={{ width: "100%", height: "100%" }}>
-        <Preloader height={100} />
-        {/* <ClipLoader color="#52bf" size={100} /> */}
+        <Preloader height={80} />
       </div>
     );
   }
@@ -52,8 +50,14 @@ const Profile = () => {
             >
               <FaArrowLeft />
             </div>
-            <p className="w-100">Profile</p>
+            <div>
+              <p className="w-100">Profile</p>
+            </div>
           </div>
+          <Link href="/payslip">
+            {" "}
+            <Button label="Generate Payslip" fit />
+          </Link>
         </div>
         <div className={styles.profileSummary}>
           {employee && (
