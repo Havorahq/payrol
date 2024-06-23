@@ -14,9 +14,8 @@ import useUserData from "../hooks/useUserData";
 import Preloader from "../components/common/preloader/Preloader";
 
 const Profile = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-
+  const [isOpen, setIsOpen] = useState(false);
   const { userData, isLoading, error } = useUserData();
 
   if (error) {
@@ -34,6 +33,12 @@ const Profile = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const handleUpdateOpen = () => {
+    openModal();
+  };
+
+  const handleUpdateProfile = () => {};
+
   const { email, first_name, last_name, public_address, user_type } = userData;
 
   const employer = userData?.user_type == "business";
@@ -42,6 +47,28 @@ const Profile = () => {
   return (
     <>
       <Wrapper>
+        <Modal isOpen={isOpen} onClose={closeModal}>
+          <div className="padded">
+            <h1 className="text-big">Update Profile Details</h1>
+            <div className="my-half">
+              <p className="label">First Name</p>
+              <input type="text" placeholder={first_name} />
+            </div>
+            <div className="my-half">
+              <p className="label">Last Name</p>
+              <input type="text" placeholder={last_name} />
+            </div>
+            <div className="my-half">
+              <p className="label">Email Address</p>
+              <input type="text" placeholder={email} disabled />
+            </div>
+            <Button
+              label="Save Changes"
+              onClick={() => handleUpdateProfile()}
+              fit
+            />
+          </div>
+        </Modal>
         <div className={styles.profileHeader}>
           <div className="x-axis gap-1">
             <div
@@ -54,10 +81,12 @@ const Profile = () => {
               <p className="w-100">Profile</p>
             </div>
           </div>
-          <Link href="/payslip">
-            {" "}
-            <Button label="Generate Payslip" fit />
-          </Link>
+
+          <Button
+            label="Update Profile"
+            onClick={() => handleUpdateOpen()}
+            fit
+          />
         </div>
         <div className={styles.profileSummary}>
           {employee && (
