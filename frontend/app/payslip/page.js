@@ -65,6 +65,7 @@ const Payslip = () => {
               secondary
               fit
               onClick={() => closeModal()}
+              disabled
             />
           </span>
         </div>
@@ -74,7 +75,7 @@ const Payslip = () => {
           <p className={styles.tableTitle}>Payslips</p>
           <div className="inputGroup">
             <FaSearch color="#797979" />
-            <input type="text" placeholder="Search contract" />
+            <input type="text" placeholder="Search" />
           </div>
         </div>
         
