@@ -51,6 +51,20 @@ const Sidebar = (props) => {
           <Link href="/profile">Profile</Link>
         </div>
         <div
+          className={`${styles.link} ${
+            props.title === "Payslip" ? styles.linkActive : styles.linkInactive
+          }`}
+        >
+          <IoMdSettings
+            className={`${styles.icon} ${
+              props.title === "Payslip"
+                ? styles.iconActive
+                : styles.iconInactive
+            }`}
+          />
+          <Link href="/payslip"> Payslip</Link>
+        </div>
+        <div
           className={`${styles.link} ${styles.linkInactive} ${styles.signout}`}
         >
           <LiaSignOutAltSolid
