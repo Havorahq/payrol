@@ -1,7 +1,6 @@
 // components/PayslipDocument.js
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -93,173 +92,92 @@ const styles = StyleSheet.create({
   },
 });
 
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long" };
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", options);
+};
+
 const PayslipDocument = ({ contractData }) => {
-  console.log(contractData);
+  console.log(contractData, "contractslip data");
+
+  const {
+    business_name,
+    contract_address,
+    contract_type,
+    created_at,
+    employee_id,
+    employer_id,
+    id,
+    job_description,
+    job_title,
+    payment,
+    payment_address,
+    payment_status,
+    status,
+    token_address,
+  } = contractData;
   return (
     <Document>
-      {/* <Page size="A4" style={styles.page}>
+      <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.companyName}>{companyName}</Text>
-            {companyAddress && (
-              <Text style={styles.companyAddress}>{companyAddress}</Text>
+            <Text style={styles.companyName}>{business_name}</Text>
+            {contract_address && (
+              <Text style={styles.companyAddress}>{contract_address}</Text>
             )}
           </View>
-          {companyIconUrl && (
-            <View>
-              <img
-                src={companyIconUrl}
-                style={styles.companyIcon}
-                alt="Company Icon"
-              />
-            </View>
-          )}
         </View>
-        <Text style={styles.heading}>
-          Payslip for the month of {month}, {year}
-        </Text>
+        <Text style={styles.heading}> </Text>
         <View style={styles.employeeInfo}>
-          <Text style={[styles.employeeName, styles.mb5]}>
-            {employeeName}
-            {employeeId && `, ${employeeId}`}
-          </Text>
+          <Text style={[styles.employeeName, styles.mb5]}>{employee_id}</Text>
           <Text style={styles.details}>
-            {employeePosition}
-            {employeeJoiningDate &&
-              ` | Date of Joining : ${employeeJoiningDate}`}
+            {job_title}
+            {created_at && ` | Date: ${formatDate(created_at)}`}
           </Text>
-          {employeeUan && (
-            <Text style={styles.details}>UAN Number: {employeeUan}</Text>
+          {payment_status && (
+            <Text style={styles.details}>Payment Status: {payment_status}</Text>
           )}
-          {employeePfAccountNumber && (
+          {contract_type && (
+            <Text style={styles.details}>Contract Type: {contract_type}</Text>
+          )}
+          {job_description && (
             <Text style={styles.details}>
-              PF A/C Number: {employeePfAccountNumber}
+              Jon Description: {job_description}
             </Text>
           )}
-          {employeeAccountNumber && (
-            <Text style={styles.details}>
-              Bank A/C Number: {employeeAccountNumber}
-            </Text>
+          {payment && (
+            <Text style={[styles.netPayLabel, styles.mb5]}>Payment</Text>
           )}
-          <Text style={[styles.netPayLabel, styles.mb5]}>Employee Net Pay</Text>
           <Text style={styles.netPay}>
-            <Text style={styles.rupeeLg}>₹</Text>
-            {netSalary}
-          </Text>
-          <Text style={styles.details}>
-            {paidDays && `Paid Days : ${paidDays}`}{" "}
-            {lopDays && ` | LOP Days : ${lopDays}`}
+            <Text style={styles.rupeeSm}>₹</Text>
+            {payment}
           </Text>
         </View>
         <View style={styles.table}>
           <View style={styles.tableRow}>
             <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>EARNINGS</Text>
+              <Text style={styles.tableCellHeader}>Details</Text>
             </View>
             <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>AMOUNT</Text>
-            </View>
-            <View style={styles.tableColHeader}></View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>DEDUCTIONS</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text style={styles.tableCellHeader}>AMOUNT</Text>
+              <Text style={styles.tableCellHeader}>Value</Text>
             </View>
           </View>
-          {earningAndDeductions.map((row, index) => (
+          {/* {Object.entries(.map(([key, value], index) => (
             <View style={styles.tableRow} key={index}>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{row.earningName}</Text>
+                <Text style={styles.tableCell}>{key.replace(/_/g, " ")}</Text>
               </View>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>
-                  <Text style={styles.rupeeSm}>₹</Text>
-                  {row.earningAmount ? row.earningAmount.toFixed(2) : ""}
-                </Text>
-              </View>
-              <View style={styles.tableCol}></View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{row.deductionName}</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>
-                  <Text style={styles.rupeeSm}>₹</Text>
-                  {row.deductionAmount ? row.deductionAmount.toFixed(2) : ""}
+                  <Text style={styles.rupeeSm}></Text>
+                  {value ? value.toString() : ""}
                 </Text>
               </View>
             </View>
-          ))}
-          <View style={styles.tableRow}>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Gross Earnings</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                <Text style={styles.rupeeSm}>₹</Text>
-                {totalEarnings.toFixed(2)}
-              </Text>
-            </View>
-            <View style={styles.tableCol}></View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>Total Deductions</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>
-                <Text style={styles.rupeeSm}>₹</Text>
-                {totalDeductions.toFixed(2)}
-              </Text>
-            </View>
-          </View>
+          ))} */}
         </View>
-        {totalReimbursements > 0 && (
-          <>
-            <View style={styles.table}>
-              <View style={styles.tableRow}>
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>REIMBURSEMENTS</Text>
-                </View>
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>AMOUNT</Text>
-                </View>
-              </View>
-              {reimbursements.map((reimbursement, index) => (
-                <View style={styles.tableRow} key={index}>
-                  <View style={styles.tableCol}>
-                    <Text style={styles.tableCell}>{reimbursement.name}</Text>
-                  </View>
-                  <View style={styles.tableCol}>
-                    <Text style={styles.tableCell}>
-                      <Text style={styles.rupeeSm}>₹</Text>
-                      {reimbursement.amount
-                        ? reimbursement.amount.toFixed(2)
-                        : ""}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-              <View style={styles.tableRow}>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>Total Reimbursement</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>
-                    <Text style={styles.rupeeSm}>₹</Text>
-                    {totalReimbursements.toFixed(2)}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </>
-        )}
-        <View style={[styles.total, styles.mb5]}>
-          <Text>Total Net Payable</Text>
-          <Text>
-            <Text style={styles.rupeeSm}>₹</Text>
-            {netSalary} (Rupees {netSalary} only)
-          </Text>
-        </View>
-      </Page> */}
+      </Page>
     </Document>
   );
 };
