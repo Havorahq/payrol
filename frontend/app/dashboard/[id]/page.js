@@ -225,7 +225,7 @@ const ContractDetail = () => {
           </div>
         )}
 
-        {console.log({ isEmployer })}
+      
 
         {!isEmployer && (
           <div>
