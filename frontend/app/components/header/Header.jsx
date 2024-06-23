@@ -9,6 +9,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useUserData from "@/app/hooks/useUserData";
 import ClipLoader from "react-spinners/ClipLoader";
 import Preloader from "../common/preloader/Preloader";
+import { capitalizeFirst } from "@/plugins/utils";
 
 const Header = ({ toggleDrawer }) => {
   const { userData, isLoading, error } = useUserData();
@@ -55,7 +56,7 @@ const Header = ({ toggleDrawer }) => {
             <h5>
               {first_name} {last_name}
             </h5>
-            <p>{user_type}</p>
+            <p>{capitalizeFirst(user_type)}</p>
           </div>
           {/* <FaCaretDown size={24} /> */}
         </div>
