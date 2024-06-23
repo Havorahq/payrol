@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "../../components/common/Button";
+import Button from "../../components/common/button/Button";
 import Wrapper from "../../components/wrapper/Wrapper";
 import React, { useState } from "react";
 import styles from "./styles.module.scss";

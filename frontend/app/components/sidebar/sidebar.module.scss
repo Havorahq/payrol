@@ -2,6 +2,7 @@
     // width: 23vw;
     height: 100%;
     padding: var(--space-ml);
+    background: var(--color-white);
 
     .linkContainer {
         margin-top: var(--space-2xl);
@@ -20,6 +21,7 @@
             margin-block: var(--space-sm);
             border-radius: var(--space-2xs);
             width: 100% !important;
+            cursor: pointer;
         }
 
         .linkActive { 
@@ -30,6 +32,10 @@
         .linkInactive {
             color: var(--color-ash);
             background: var(--color-white);
+        }
+
+        .linkInactive:hover {
+            border: 1px solid rgba(0, 0, 0, 0.112);
         }
 
         .icon {

@@ -17,7 +17,7 @@ const Contract = () => {
   // const [step, setStep] = useState(0)
   const [state, setState] = useState({
     step: 0,
-    contractType: "fixed",
+    contractType: "",
     employeeName: "",
     employeeEmail: "",
     jobTitle: "",
@@ -179,9 +179,9 @@ const Contract = () => {
     >
       <div className={styles.container}>
         <div className={styles.left}>
-          <div className="x-axis gap-1">
+          <div className={`x-axis gap-1 ${styles.brandContainer}`}>
             <Image
-              src="/icons/xalariIcon.png"
+              src="/icons/brandLogo.png"
               alt="Brand icon"
               width={50}
               height={50}
@@ -196,8 +196,8 @@ const Contract = () => {
             <Image
               src={`/images/${details[step]?.asset}`}
               alt="Calculator image"
-              width={340}
-              height={300}
+              width={300}
+              height={280}
             />
           </div>
         </div>
@@ -205,6 +205,6 @@ const Contract = () => {
       </div>
     </ContractContext.Provider>
   );
-};
+}
 
 export default Contract;

@@ -110,9 +110,9 @@ const Onboarding = () => {
       <GlobalProvider>
         <div className={styles.container}>
           <div className={styles.left}>
-            <div className="x-axis gap-1">
+            <div className={`x-axis gap-1 ${styles.brandContainer}`}>
               <Image
-                src="/icons/xalariIcon.png"
+                src="/icons/brandLogo.png"
                 alt="Brand icon"
                 width={50}
                 height={50}
@@ -121,9 +121,7 @@ const Onboarding = () => {
             </div>
             <div>
               <p className={styles.title}>
-                Payroll <br />
-                Management on the <br />
-                blockchain!
+                Payroll Management on the blockchain!
               </p>
               <p className={styles.desc}>
                 Revolutionize Payroll Management with Blockchain Technology!
@@ -136,12 +134,22 @@ const Onboarding = () => {
               <Image
                 src="/images/calculator.png"
                 alt="Calculator image"
-                width={400}
+                width={370}
                 height={350}
               />
             </div>
           </div>
-          <div className={styles.right}>{renderPages()}</div>
+          <div className={styles.right}>
+            <span className={styles.mobileLogo}>
+              <Image
+                src="/icons/secondaryLogo.png"
+                alt="Brand icon"
+                width={110}
+                height={28}
+              />
+            </span>
+            {renderPages()}
+          </div>
         </div>
       </GlobalProvider>
     </OnboardingContext.Provider>

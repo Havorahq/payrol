@@ -3,7 +3,7 @@
 import React, { useContext, useState } from "react";
 import Image from "next/image";
 import styles from "./contractType.module.scss";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import DatePicker from "react-datepicker";
 import { FaArrowDown } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
@@ -42,45 +42,52 @@ const RoleDetails = () => {
   //     }
   // }
 
+  const isDisabled = !jobTitle;
+
   return (
-    <div className={styles.section}>
-      <Image
-        src="/icons/previous.png"
-        alt="Learn More"
-        className="cursor"
-        width={71}
-        height={18}
-        onClick={handlePrev}
-      />
-      <div>
+    <div className={`${styles.section}`}>
+      <span className="w-100">
+        <Image
+          src="/icons/previous.png"
+          alt="Learn More"
+          className="cursor"
+          width={71}
+          height={18}
+          onClick={handlePrev}
+        />
+      </span>
+      <div className="w-100">
         <h1>Role Details</h1>
-        <p className={styles.desc}>
-          Enter the personal details of the employee below
-        </p>
+        <p className={styles.desc}>Enter the details of the role below</p>
         {/* <Image src="/images/step_3.png" alt='step' width={450} height={7} /> */}
       </div>
-      <form>
+      <div className="w-100">
         <div className="my-1">
-          <label htmlFor="">Job Title</label>
+          <label htmlFor="jobTitle">Job Title</label>
           <input
             type="text"
+            id="jobTitle"
             name="jobTitle"
             value={jobTitle}
-            placeholder="Enter Job Titles"
+            placeholder="Solidity Engineer"
             onChange={onChange}
           />
         </div>
         <div className="my-1">
-          <label htmlFor="">Job Description (Optional)</label>
+          <label htmlFor="jobDescription">
+            Job Description{" "}
+            <span className="greyText text-medium">(Optional)</span>
+          </label>
           <textarea
             type="text"
+            id="jobDescription"
             name="jobDescription"
             value={jobDescription}
-            placeholder="Enter Job description here"
+            placeholder="Develop smart contrac..."
             onChange={onChange}
           />
         </div>
-        <div className="my-half x-axis gap-1">
+        <div className="x-axis gap-1">
           <div className="w-100">
             <label htmlFor="">Start date</label>
             <div className={styles.datePickerContainer}>
@@ -118,8 +125,8 @@ const RoleDetails = () => {
             </div>
           </div>
         </div>
-        <Button label="Continue" onClick={handleNext} />
-      </form>
+      </div>
+      <Button label="Continue" onClick={handleNext} disabled={isDisabled} />
       {/* <Button label="Continue" style="btn-primary" /> */}
     </div>
   );

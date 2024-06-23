@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./dashboard.module.scss";
 import Wrapper from "../components/wrapper/Wrapper";
-import Button from "../components/common/Button";
+import Button from "../components/common/button/Button";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import { RiFileCheckLine } from "react-icons/ri";
 import { LuArrowRight } from "react-icons/lu";
@@ -17,6 +17,10 @@ import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
 import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
+import Skeleton from "../components/common/skeleton/Skeleton";
+import { capitalizeFirst, statusClass } from "@/plugins/utils";
+import { FaRegEye } from "react-icons/fa";
+import Preloader from "../components/common/preloader/Preloader";
 
 export default function Home() {
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
@@ -25,8 +29,8 @@ export default function Home() {
 
   if (!userData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        <Preloader height={80} />
       </div>
     );
   }
@@ -37,8 +41,8 @@ export default function Home() {
 
   if (!contractData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        <Preloader height={80} />
       </div>
     );
   }
@@ -119,55 +123,65 @@ export default function Home() {
           <div className="btn-secondary">Cancelled</div>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>S/N</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {contractData.map((item, index) => {
-              const {
-                id,
-                status,
-                contract_type,
-                business_name,
-                employee_id,
-                payment,
-                contract_address,
-              } = item;
+        <div className="tableContainer">
+          <table>
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {contractData.map((item, index) => {
+                const {
+                  id,
+                  status,
+                  contract_type,
+                  business_name,
+                  employee_id,
+                  payment,
+                  contract_address,
+                } = item;
 
-              return (
-                <tr
-                  key={id}
-                  onClick={() => {
-                    handleViewClick(id);
-                    localStorage.setItem(
-                      "currentContract",
-                      JSON.stringify({ contract_type, contract_address })
-                    );
-                  }}
-                >
-                  <td>{index + 1}</td>
-                  <td>{business_name}</td>
-                  <td>{employee_id}</td>
-                  <td>{payment}</td>
-                  <td>{contract_type}</td>
-                  <td style={{ padding: 0 }}>{status}</td>
-                  <td>
-                    <Button label="View" />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr
+                    key={id}
+                    onClick={() => {
+                      handleViewClick(id);
+                      localStorage.setItem(
+                        "currentContract",
+                        JSON.stringify({ contract_type, contract_address })
+                      );
+                    }}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{business_name}</td>
+                    <td>{employee_id}</td>
+                    <td>{payment}</td>
+                    <td>{capitalizeFirst(contract_type)}</td>
+                    <td style={{ padding: 0 }}>
+                      <span className={`${statusClass(status)}`}>
+                        {capitalizeFirst(status)}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="x-axis cursor">
+                        <FaRegEye className="mr-half" size={18} />
+                        View
+                      </span>
+                      {/* <Button label="View" /> */}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </Wrapper>
   );
