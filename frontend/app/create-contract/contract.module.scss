@@ -1,8 +1,9 @@
 .container {
   height: 100%;
-  width: 100%;
+  max-width: 100% !important;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .left {
@@ -44,6 +45,7 @@
   width: 100%;
   background: #fff;
   padding: 2em 4em;
+  // padding-inline: var(--space-ml) var(--space-2xl);
 }
 
 @media (max-width: 912px) {

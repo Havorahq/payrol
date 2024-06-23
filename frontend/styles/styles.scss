@@ -15,6 +15,7 @@
   --color-black: #1a1a1a;
   --color-black-2: #131414;
   --color-black-3: #1D1D1F;
+   --color-green: #0BB783;
   /* RGBA too */
   --color-white: rgba(255, 255, 255, 0.9);
   --color-off-white: #F9F9F9
@@ -70,10 +71,9 @@ a {
 }
 
 main {
-  // padding: var(--space-lg);
+  // padding: var(--space-md);
   background: var(--color-grey);
-  background: black;
-  width: 100vw !important;
+  width: 100% !important;
   height: 100vh !important;
   overflow-y: scroll !important;
 }
@@ -100,6 +100,10 @@ input, .formcontrol {
   border-radius: 4px;
   border: 1px solid #A2A6AD;
   width: 100% !important;
+}
+
+input:focus {
+  outline: none;
 }
 
 textarea {
@@ -298,6 +302,10 @@ table {
   margin-block: 2em
 }
 
+.mr-half {
+  margin-right: .5em;
+}
+
 .py-1 {
   padding-block: 1em;
 }
@@ -340,6 +348,10 @@ table {
 
 .text-base {
   font-size: 16px !important;
+}
+
+.text-danger {
+  color: rgba(255, 0, 0, 0.704)
 }
 
 .float-left {
@@ -403,4 +415,75 @@ table {
   body {
     font-size: 12px !important;
   }
+}
+
+
+.skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: var(--color-grey);
+
+  .sidebar {
+    background: red;
+    width: 23vw;
+    height: 100%;
+  }
+
+  .header {
+    height: 15%;
+    border-radius: 9px;
+    background: red;
+  }
+
+  .body {
+    height: 80%;
+    border-radius: 9px;
+    background: red;
+  }
+}
+
+
+.tabactive {
+  color: var(--color-green) !important;
+  // background-color: #c9f7f5;
+  background: #EAFCFB;
+  font-size: 11.7px;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.tabinactive {
+  color: #f64e60;
+  background-color: #ffe2e5;
+  font-size: 11.7px;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.tabpending {
+  color: #ffa800;
+  background-color: #fff4de;
+  font-size: 11.7px;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.tabgrey {
+  color: #5e5e5e;
+  background-color: #e4e6ef;
+  font-size: 11.7px;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 5px 8px;
+  text-align: center;
+  border: none;
 }

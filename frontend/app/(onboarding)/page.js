@@ -14,7 +14,7 @@ export const OnboardingContext = createContext();
 
 const Onboarding = () => {
   const [state, setState] = useState({
-    route: "onboard",
+    route: "signin",
     email: "",
     firstName: "",
     lastName: "",

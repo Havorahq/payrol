@@ -12,22 +12,26 @@ const ContractType = ({ setState }) => {
     useContext(ContractContext);
   const [activeTab, setActiveTab] = useState("");
 
+  const { contractType } = state;
+
   const handleDivClick = (value) => {
     setActiveTab(value);
     setState({ ...state, contractType: value });
   };
 
+  const isDisabled = contractType === "";
+
   return (
     <div className={styles.section}>
-      <div>
+      <div className={styles.brandContainer}>
         <h1>Create Contract📄</h1>
-        <p className={styles.desc}>Create an account below</p>
+        <p className={styles.desc}>Select a contract type</p>
         {/* <div className="w-100">
                     <Image src="/images/step_1.png" alt='step' width={450} height={7} />
                 </div> */}
       </div>
 
-      <div className="y-axis">
+      <div className="y-axis w-100" style={{ margin: 0, padding: 0 }}>
         <div
           className={`x-axis justify-between ${styles.tab} ${
             activeTab === "fixed" ? styles.tabActive : styles.tabInactive
@@ -125,7 +129,12 @@ const ContractType = ({ setState }) => {
         </div>
       </div>
 
-      <Button label="Continue" onClick={handleNext} style="btn-primary" />
+      <Button
+        label="Continue"
+        onClick={handleNext}
+        style="btn-primary"
+        disabled={isDisabled}
+      />
     </div>
   );
 };

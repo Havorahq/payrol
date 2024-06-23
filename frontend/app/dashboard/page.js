@@ -17,6 +17,9 @@ import useContractData from "../hooks/useContractData";
 import useUserData from "../hooks/useUserData";
 import { useRouter } from "next/navigation";
 import ClipLoader from "react-spinners/ClipLoader";
+import Skeleton from "../components/common/skeleton/Skeleton";
+import { capitalizeFirst, statusClass } from "@/plugins/utils";
+import { FaRegEye } from "react-icons/fa";
 
 export default function Home() {
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
@@ -25,8 +28,9 @@ export default function Home() {
 
   if (!userData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        {/* <ClipLoader color="#52bf" size={100} /> */}
+        <Skeleton />
       </div>
     );
   }
@@ -37,8 +41,9 @@ export default function Home() {
 
   if (!contractData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        {/* <ClipLoader color="#52bf" size={100} /> */}
+        <Skeleton />
       </div>
     );
   }
@@ -158,10 +163,18 @@ export default function Home() {
                   <td>{business_name}</td>
                   <td>{employee_id}</td>
                   <td>{payment}</td>
-                  <td>{contract_type}</td>
-                  <td style={{ padding: 0 }}>{status}</td>
+                  <td>{capitalizeFirst(contract_type)}</td>
+                  <td style={{ padding: 0 }}>
+                    <span className={`${statusClass(status)}`}>
+                      {capitalizeFirst(status)}
+                    </span>
+                  </td>
                   <td>
-                    <Button label="View" />
+                    <span className="x-axis cursor">
+                      <FaRegEye className="mr-half" size={18} />
+                      View
+                    </span>
+                    {/* <Button label="View" /> */}
                   </td>
                 </tr>
               );

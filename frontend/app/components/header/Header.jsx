@@ -8,6 +8,7 @@ import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useUserData from "@/app/hooks/useUserData";
 import ClipLoader from "react-spinners/ClipLoader";
+import Preloader from "../common/preloader/Preloader";
 
 const Header = ({ toggleDrawer }) => {
   const { userData, isLoading, error } = useUserData();
@@ -18,8 +19,10 @@ const Header = ({ toggleDrawer }) => {
 
   if (!userData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div 
+        // style={{ width: "100px", margin: "auto", display: "block" }}
+      >
+        <Preloader height={45} />
       </div>
     );
   }
@@ -54,7 +57,7 @@ const Header = ({ toggleDrawer }) => {
             </h5>
             <p>{user_type}</p>
           </div>
-          <FaCaretDown size={24} />
+          {/* <FaCaretDown size={24} /> */}
         </div>
       </div>
     </div>

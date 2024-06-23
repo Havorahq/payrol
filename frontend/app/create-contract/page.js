@@ -17,7 +17,7 @@ const Contract = () => {
   // const [step, setStep] = useState(0)
   const [state, setState] = useState({
     step: 0,
-    contractType: "fixed",
+    contractType: "",
     employeeName: "",
     employeeEmail: "",
     jobTitle: "",
@@ -196,8 +196,8 @@ const Contract = () => {
             <Image
               src={`/images/${details[step]?.asset}`}
               alt="Calculator image"
-              width={340}
-              height={300}
+              width={300}
+              height={280}
             />
           </div>
         </div>

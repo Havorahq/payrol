@@ -33,7 +33,7 @@ const Wrapper = ({ children }) => {
             <div className={styles.sidebar}>
               <Sidebar title={getTitle()} />
             </div>
-            <main>
+            <main style={{ padding: "1em" }}>
                 <Header toggleDrawer={toggleDrawer} />
                 {children}
             </main>

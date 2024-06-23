@@ -59,7 +59,7 @@ const Signin = () => {
       <div className="center-vertical">
         <h1>Welcome 👋🏼</h1>
         <p className={styles.desc}>Please signin to your account</p>
-        <p className="text-medium float-center">
+        <p className="text-medium float-center greyText">
           You will be redirected to the sign up page if you dont have an account
         </p>
       </div>

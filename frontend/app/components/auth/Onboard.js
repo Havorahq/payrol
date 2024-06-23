@@ -66,9 +66,9 @@ const Onboard = () => {
   };
 
   const isDisabled =
-    firstName === "" &&
-    lastName === "" &&
-    businessName === "" &&
+    firstName === "" ||
+    lastName === "" ||
+    businessName === "" ||
     businessEmail === "";
 
   return (
@@ -84,7 +84,7 @@ const Onboard = () => {
           />
         </div>
       </Modal>
-      <div className="center-vertical">
+      <div className={styles.brandContainer}>
         <h1>Sign Up👋🏼</h1>
         {/* <p className={styles.desc}>Create an account below</p> */}
       </div>
@@ -115,7 +115,7 @@ const Onboard = () => {
               required
             />
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -125,7 +125,7 @@ const Onboard = () => {
               onChange={onChange}
               required
             />
-          </div>
+          </div> */}
 
           {activeTab === "business" && (
             <div>

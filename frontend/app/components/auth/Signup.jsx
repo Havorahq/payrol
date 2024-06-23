@@ -12,6 +12,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
 import { useRouter } from "next/navigation";
 import { findUser } from "./../../api/user";
+import Preloader from "../common/preloader/Preloader";
 
 const Signin = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,8 +54,9 @@ const Signin = () => {
   // Render loading state while fetching data
   if (isLoading) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        <Preloader height={100} />
+        {/* <ClipLoader color="#52bf" size={100} /> */}
       </div>
     ); // You can replace this with a loading spinner or any other loading indicator
   }
@@ -65,7 +67,7 @@ const Signin = () => {
         <h1>Welcome 👋🏼</h1>
 
         <p className={styles.desc}>Please Create an account</p>
-        <p className="text-medium">
+        <p className="text-medium greyText">
           You will be signed in if you already have an account
         </p>
         <div className="">

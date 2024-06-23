@@ -11,6 +11,7 @@ import EditProfile from "@/app/components/auth/EditProfile";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import useUserData from "../hooks/useUserData";
+import Preloader from "../components/common/preloader/Preloader";
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +26,9 @@ const Profile = () => {
 
   if (!userData) {
     return (
-      <div style={{ width: "100px", margin: "auto", display: "block" }}>
-        <ClipLoader color="#52bf" size={100} />
+      <div style={{ width: "100%", height: "100%" }}>
+        <Preloader height={100} />
+        {/* <ClipLoader color="#52bf" size={100} /> */}
       </div>
     );
   }
