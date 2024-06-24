@@ -232,6 +232,7 @@ table {
   
   th {
     padding-block: var(--space-xs);
+    padding-right: var(--space-sm);
     text-align: left;
   }
   
@@ -242,6 +243,7 @@ table {
   
   td {
     padding-block: var(--space-md);
+    padding-right: var(--space-sm);
     color: var(--color-black-2);
     font-size: var(--font-size-xs);
   }
