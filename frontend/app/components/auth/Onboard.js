@@ -42,6 +42,7 @@ const Onboard = () => {
   const handleSignUp = async () => {
     const user_type = activeTab;
     try {
+     
       const { data, error } = await handleSignUpServer(
         user_type,
         firstName,
@@ -55,8 +56,8 @@ const Onboard = () => {
       if (error) {
         // Handle error
         console.error(error);
-        // alert("Error signing up ");
-        toast.error("Error signing up. User Already Exist");
+
+        toast.error("There is an Error signing up. Try again");
         return;
       }
       openModal();
@@ -115,17 +116,18 @@ const Onboard = () => {
               required
             />
           </div>
-          {/* <div>
-            <label htmlFor="email">Email</label>
+          <div className="my-1">
+            <label htmlFor="Email">Email</label>
             <input
-              type="email"
+              type="text"
+              id="emai"
               name="email"
               value={email}
-              placeholder="Enter Email Address"
+              placeholder="Enter Email"
               onChange={onChange}
               required
             />
-          </div> */}
+          </div>
 
           {activeTab === "business" && (
             <div>
@@ -158,7 +160,7 @@ const Onboard = () => {
           <Button
             label="Continue"
             onClick={handleSignUp}
-            disabled={isDisabled}
+            // disabled={isDisabled}
           />
         </div>
       </div>

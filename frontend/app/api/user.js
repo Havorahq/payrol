@@ -9,6 +9,7 @@ export const handleSignUpServer = async (
   businessEmail,
   publicAddress
 ) => {
+ 
   try {
     const { data, error } = await supabase.from("user").insert([
       {
@@ -169,14 +170,14 @@ export const handleEmployeeEnterContract = async (
   contractId,
   paymentAddress
 ) => {
-  console.log(paymentAddress, "dsdsd id");
+
   try {
     const contract = await supabase
       .from("contract")
       .update({ status: "active", payment_address: paymentAddress })
       .eq("id", contractId);
 
-    console.log(contract, "the update");
+ 
 
     if (!contract) {
       // User not found, redirect to signup
@@ -197,7 +198,7 @@ export const handleUpdatePayment = async (contractId, payment_status) => {
       .update({ payment_status })
       .eq("id", contractId);
 
-    console.log(contract, "the update");
+ 
 
     if (!contract) {
       // User not found, redirect to signup

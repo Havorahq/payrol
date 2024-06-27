@@ -33,7 +33,7 @@ const Signin = () => {
       try {
         if (address) {
           const userExist = await findUser(address);
-          console.log({ userExist, address });
+
           if (userExist.data.status === 200) {
             router.push("/dashboard");
           } else {
