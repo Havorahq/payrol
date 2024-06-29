@@ -2,8 +2,9 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import styles from "./auth.module.scss";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import Image from "next/image";
+import ClipLoader from "react-spinners/ClipLoader";
 import { useAccount } from "wagmi";
 import { OnboardingContext } from "@/app/(onboarding)/page";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -11,6 +12,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { handleLogin } from "@/app/api/user";
 import { useRouter } from "next/navigation";
 import { findUser } from "./../../api/user";
+import Preloader from "../common/preloader/Preloader";
 
 const Signin = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +53,12 @@ const Signin = () => {
 
   // Render loading state while fetching data
   if (isLoading) {
-    return <div>Loading...</div>; // You can replace this with a loading spinner or any other loading indicator
+    return (
+      <div style={{ width: "100%", height: "100%" }}>
+        <Preloader height={100} />
+        {/* <ClipLoader color="#52bf" size={100} /> */}
+      </div>
+    ); // You can replace this with a loading spinner or any other loading indicator
   }
 
   return (
@@ -60,57 +67,64 @@ const Signin = () => {
         <h1>Welcome 👋🏼</h1>
 
         <p className={styles.desc}>Please Create an account</p>
-        <p>You will be signed in if you already have an account</p>
+        <p className="text-medium greyText">
+          You will be signed in if you already have an account
+        </p>
+        <div className="">
+          <div className="x-axis gap-1 my-1">
+            <div
+              className={`x-axis ${styles.tab} ${
+                activeTab === "business" ? styles.tabActive : styles.tabInactive
+              }`}
+              onClick={() => {
+                onTabChange("business");
+                onReset();
+              }}
+            >
+              <Image
+                src="/icons/dollar.png"
+                alt="icon"
+                width={36}
+                height={36}
+              />
+              <div>
+                <p className={styles.tabTitle}>Business</p>
+                <p className={styles.tabDesc}>Sign In As a Business</p>
+              </div>
+              {/* <Image src='/icons/check.png' className={styles.check} alt="icon" width={15} height={15} /> */}
+            </div>
+            <div
+              className={`x-axis ${styles.tab} ${
+                activeTab === "employee" ? styles.tabActive : styles.tabInactive
+              }`}
+              onClick={() => {
+                onTabChange("employee");
+                onReset();
+              }}
+            >
+              <Image
+                src="/icons/employee.png"
+                alt="icon"
+                width={36}
+                height={36}
+              />
+              <div>
+                <p className={styles.tabTitle}>Employee</p>
+                <p className={styles.tabDesc}>Sign In As an Employee</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="center-vertical">
-        <div className="x-axis gap-1 my-1">
-          <div
-            className={`x-axis ${styles.tab} ${
-              activeTab === "business" ? styles.tabActive : styles.tabInactive
-            }`}
-            onClick={() => {
-              onTabChange("business");
-              onReset();
-            }}
-          >
-            <Image src="/icons/dollar.png" alt="icon" width={36} height={36} />
-            <div>
-              <p className={styles.tabTitle}>Business</p>
-              <p className={styles.tabDesc}>Sign In As a Business</p>
-            </div>
-            {/* <Image src='/icons/check.png' className={styles.check} alt="icon" width={15} height={15} /> */}
-          </div>
-          <div
-            className={`x-axis ${styles.tab} ${
-              activeTab === "employee" ? styles.tabActive : styles.tabInactive
-            }`}
-            onClick={() => {
-              onTabChange("employee");
-              onReset();
-            }}
-          >
-            <Image
-              src="/icons/employee.png"
-              alt="icon"
-              width={36}
-              height={36}
-            />
-            <div>
-              <p className={styles.tabTitle}>Employee</p>
-              <p className={styles.tabDesc}>Sign In As an Employee</p>
-            </div>
-          </div>
-        </div>
-        <div className="center">
-          <ConnectButton />
-        </div>
+      <div className="center">
+        <ConnectButton />
       </div>
 
       <p className={styles.prompt}>
         Already have an account?{" "}
         <span className={styles.action} onClick={() => onRouteChange("signin")}>
-          Sign In
+          Signin
         </span>
       </p>
     </div>

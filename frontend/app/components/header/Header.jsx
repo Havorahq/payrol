@@ -7,20 +7,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useUserData from "@/app/hooks/useUserData";
+import ClipLoader from "react-spinners/ClipLoader";
+import Preloader from "../common/preloader/Preloader";
+import { capitalizeFirst } from "@/plugins/utils";
 
 const Header = ({ toggleDrawer }) => {
   const { userData, isLoading, error } = useUserData();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return (
+      <div 
+        // style={{ width: "100px", margin: "auto", display: "block" }}
+      >
+        <Preloader height={40} />
+      </div>
+    );
   }
 
   const { email, first_name, last_name, public_address, user_type } = userData;
@@ -28,10 +33,10 @@ const Header = ({ toggleDrawer }) => {
     <div>
       <div className={styles.mobileHeader}>
         <Image
-          src="/icons/xalari_logo_dh.png"
+          src="/icons/secondaryLogo.png"
           alt="brand logo"
-          width={104}
-          height={31}
+          width={110}
+          height={28}
         />
         <RiMenu4Fill size={20} className="cursor" onClick={toggleDrawer} />
       </div>
@@ -51,9 +56,9 @@ const Header = ({ toggleDrawer }) => {
             <h5>
               {first_name} {last_name}
             </h5>
-            <p>{user_type}</p>
+            <p>{capitalizeFirst(user_type)}</p>
           </div>
-          <FaCaretDown size={24} />
+          {/* <FaCaretDown size={24} /> */}
         </div>
       </div>
     </div>

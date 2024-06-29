@@ -7,15 +7,7 @@ import Signin from "../components/auth/Signin";
 import Signup from "../components/auth/Signup";
 import Onboard from "../components/auth/Onboard";
 import Home from "../dashboard/page";
-import Link from "next/link";
 
-import { FaPlus } from "react-icons/fa6";
-// import {
-//   CONTRACT_ADDRESS,
-//   TOKEN_CONTRACT_ADDRESS,
-// } from "../smart-contract/constants";
-// import CONTRACT_ABI from "../smart-contract/wordanamain-abi.json";
-// import TOKEN_ABI from "../smart-contract/token-abi.json";
 import { GlobalProvider } from "../context/GlobalContext";
 
 export const OnboardingContext = createContext();
@@ -31,16 +23,7 @@ const Onboarding = () => {
     activeTab: "business",
   });
 
-  const {
-    route,
-    firstName,
-    lastName,
-    businessName,
-    businessEmail,
-    email,
-    activeTab,
-  } = state;
-  console.log(state);
+  const { route } = state;
 
   const renderPages = () => {
     switch (route) {
@@ -71,20 +54,11 @@ const Onboarding = () => {
   };
 
   const onTabChange = (value) => {
-    console.log(value);
     setState((state) => ({
       ...state,
       activeTab: value,
     }));
   };
-
-  // const setPublicAddress = (value) => {
-  //   console.log(value);
-  //   setState((state) => ({
-  //     ...state,
-  //     publicAddress: value,
-  //   }));
-  // };
 
   const onReset = () => {
     setState((state) => ({
@@ -118,9 +92,9 @@ const Onboarding = () => {
       <GlobalProvider>
         <div className={styles.container}>
           <div className={styles.left}>
-            <div className="x-axis gap-1">
+            <div className={`x-axis gap-1 ${styles.brandContainer}`}>
               <Image
-                src="/icons/xalariIcon.png"
+                src="/icons/brandLogo.png"
                 alt="Brand icon"
                 width={50}
                 height={50}
@@ -129,9 +103,7 @@ const Onboarding = () => {
             </div>
             <div>
               <p className={styles.title}>
-                Payroll <br />
-                Management on the <br />
-                blockchain!
+                Payroll Management on the blockchain!
               </p>
               <p className={styles.desc}>
                 Revolutionize Payroll Management with Blockchain Technology!
@@ -144,12 +116,22 @@ const Onboarding = () => {
               <Image
                 src="/images/calculator.png"
                 alt="Calculator image"
-                width={400}
+                width={370}
                 height={350}
               />
             </div>
           </div>
-          <div className={styles.right}>{renderPages()}</div>
+          <div className={styles.right}>
+            <span className={styles.mobileLogo}>
+              <Image
+                src="/icons/secondaryLogo.png"
+                alt="Brand icon"
+                width={110}
+                height={28}
+              />
+            </span>
+            {renderPages()}
+          </div>
         </div>
       </GlobalProvider>
     </OnboardingContext.Provider>

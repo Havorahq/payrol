@@ -1,54 +1,78 @@
 .container {
-   padding: 1em;
-   height: 100%;
-   width: 100%;
-   display: flex;
-   justify-content: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .left {
-    height: 100%;
-    width: 90%;
-    background: linear-gradient(338.14deg, #3B37FF -3.56%, #FF7A21 119.15%);
-    border-radius: 16px;
-    padding: 2em 4em;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(338.14deg, #3b37ff -3.56%, #ff7a21 119.15%);
+  padding: var(--space-ml) var(--space-2xl);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
 
-    .title {
-        font-size: 44px;
-        font-weight: 600;
-    }
+  .brandContainer {
+    align-self: flex-start;
+  }
 
-    .desc {
-        font-size: 12px;
-        line-height: 22px;
-        margin-top: 10px;
-    }
+  .title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+  }
 
-    .asset {
-        align-self: center;
-    }
+  .desc {
+    font-size: var(--font-size-sm);
+    line-height: 22px;
+    margin-top: 10px;
+  }
+
+  //   .asset {
+  //     align-self: center;
+  //   }
 }
 
 .right {
-    height: 100%;
+  height: 100%;
+  width: 100%;
+  background: url("../../public/images/authBg.png") no-repeat center center fixed;
+  background-size: cover;
+  padding: 2em 4em;
+  position: relative;
+
+  .mobileLogo {
+    position: absolute;
+    display: none !important;
+    justify-content: center;
     width: 100%;
-    background: #fff;
-    padding: 2em 4em;
+    top: 30;
+    margin-top: 60px;
+    margin-left: -30px;
+  }
 }
 
-@media(max-width: 912px) {
-    .container {
-        padding: 0 !important;
-    }
-    .left {
-        display: none !important;
-    }
+@media (max-width: 912px) {
+  .container {
+    padding: 0 !important;
+  }
+  .left {
+    display: none !important;
+  }
 
-    .right {
-        padding: var(--space-2xs);
+  .right {
+    padding: var(--space-xs) var(--space-ml);
+    // background-color: black;
+    background-image: url("../../public/images/mobilebg.png") fixed no-repeat !important;
+    background-size: cover;
+
+    .mobileLogo {
+      position: absolute;
+      display: flex !important;
     }
+  }
 }
