@@ -36,4 +36,15 @@ Welcome to the Xalari V2! This README provides an overview of the features and f
 
 ## Other Technical Features
 
+### Funding the Contract/Agreement
+ - Employers transfer tokens (e.g., Ether, Usdt) to the Contract. The smart contract holds these funds in escrow. The contract enforces conditions for withdrawal, ensuring funds are released only upon job completion or at the end of the contract period depending on the contract type.
+
+### Employee Withdrawal
+
+- The employee initiates a withdrawal transaction from the contract. The smart contract verifies the completion conditions (job completion or time elapse) and transfers the funds from the contract’s balance to the employee’s wallet address.
+
+### Batch Payments by Employers
+ - The product architecture  supports batch payment transactions where the employer batch pays multiple open contracts expecting payment in a single transaction. This reduces transaction costs and improves efficiency. The smart contract processes these payments, updating each employee contract accordingly, and holding the funds until the withdrawal conditions are met.
+
+
 
