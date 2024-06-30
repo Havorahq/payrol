@@ -37,7 +37,7 @@ Welcome to the Xalari V2! This README provides an overview of the features and f
 ## Other Technical Features
 
 ### Smart Contract Factory
-- Xalary has implemented a smart contract factory architecture, deploying a new smart contract for each employment agreement. These smart contracts manage key aspects of the agreement, including its status and payment transactions.
+- Xalari adopts a smart contract factory architecture, deploying a new smart contract for each employment agreement. These smart contracts manage key aspects of the agreement, including its status and payment transactions.
   
 ### Funding the Contract/Agreement
  - Employers transfer tokens (e.g., Ether, Usdt) to the Contract. The smart contract holds these funds in escrow. The contract enforces conditions for withdrawal, ensuring funds are released only upon job completion or at the end of the contract period depending on the contract type.
