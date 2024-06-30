@@ -2,7 +2,7 @@
 
 Welcome to the Xalari V2! This README provides an overview of the features and functionalities we are incorporating into Xalari V2. 
 
-## Key Notes:
+## Key Note:
 
 * In line with our roadmap, we are now incorporating TypeScript and Tailwind into our framework. This will slow down the implementation of new features as we focus on bringing V2 up to the level of V1 before introducing additional functionalities.
 
