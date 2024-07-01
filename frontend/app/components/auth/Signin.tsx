@@ -1,10 +1,45 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { OnboardingContext } from "../../contexts/OnboardingContext";
 import Button from "../common/Button";
-
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useDisconnect } from "wagmi";
+import { useRouter } from "next/navigation";
+import { findUser } from "./../../api/user";
 const Signin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const context = useContext(OnboardingContext);
+
+  const account = useAccount();
+  const { address } = account;
+  const { disconnect } = useDisconnect();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        if (address) {
+          const userExist: any = await findUser(address);
+
+          if (userExist.data.status === 200) {
+            router.push("/dashboard");
+          } else {
+            disconnect();
+            onRouteChange("signup");
+          }
+        } else {
+          console.log("no address");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Handle error (e.g., show an error message)
+      } finally {
+        setIsLoading(false); // Mark loading as complete
+      }
+    };
+
+    fetchData();
+  }, [address]);
 
   if (!context) {
     return null; // Or handle the case where context is undefined
@@ -22,9 +57,7 @@ const Signin: React.FC = () => {
           account
         </p>
         <div className="flex justify-center">
-          <Button onClick={() => console.log("Clicked!")}>
-            Connect Wallet
-          </Button>
+          <ConnectButton />
         </div>
       </div>
       <p className="self-center text-sm">
