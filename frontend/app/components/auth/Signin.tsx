@@ -4,7 +4,7 @@ import Button from "../common/Button";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useDisconnect } from "wagmi";
 import { useRouter } from "next/navigation";
-import { findUser } from "./../../api/user";
+import { findUser } from "../../api/helper-functions";
 const Signin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const context = useContext(OnboardingContext);

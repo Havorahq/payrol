@@ -6,6 +6,8 @@ import Button from "../../components/common/Button";
 import Wrapper from "../../components/wrapper/Wrapper";
 import Modal from "../../components/common/Modal";
 import { capitalizeFirst } from "../../../plugins/utils";
+import useContractData from "../../hooks/useContractData";
+import useUserData from "../../hooks/useUserData";
 
 const ContractDetail = () => {
   const router = useRouter();
@@ -15,33 +17,15 @@ const ContractDetail = () => {
   const [contract, setContract] = useState<any>(null);
   const [isEmployer, setIsEmployer] = useState(true);
   const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
-  const userData = { user_type: "business" }; // Mock user data
-  const allContract = [
-    {
-      id: "1",
-      contract_type: "full-time",
-      employee_id: "employee@example.com",
-      job_title: "Developer",
-      job_description: "Develop and maintain web applications.",
-      payment: "$1000",
-      payment_address: "0x1234567890abcdef",
-      status: "active",
-      payment_status: "pending",
-    },
-  ]; // Mock contract data
+  const { userData, isLoading: userLoading, error: userErroer } = useUserData();
+  const { contracts, isLoading, error } = useContractData();
 
   useEffect(() => {
-    if (id && allContract) {
-      const foundContract = allContract.find((contract) => contract.id === id);
+    if (id && contracts) {
+      const foundContract = contracts.find((contract) => contract.id === id);
       setContract(foundContract);
     }
-  }, [id, allContract]);
-
-  useEffect(() => {
-    if (userData) {
-      setIsEmployer(userData.user_type === "business");
-    }
-  }, [userData]);
+  }, [id, contracts]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -73,7 +57,9 @@ const ContractDetail = () => {
         </div>
       </Modal>
       <div className="p-10 text-[#131414] mt-3">
-        <h1 className="text-2xl font-bold text-left mb-4">Contract Details 📄</h1>
+        <h1 className="text-2xl font-bold text-left mb-4">
+          Contract Details 📄
+        </h1>
         <p className="text-gray-600 mt-2">Details of your contract below</p>
         <div className="border-b py-4">
           <p className="font-medium">Contract Type</p>
