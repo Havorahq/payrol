@@ -6,10 +6,9 @@ import React from "react";
 // import { alchemyProvider } from "wagmi/providers/alchemy";
 // import { publicProvider } from "wagmi/providers/public";
 // import { lisk_testnet } from "../lib/network";
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 // const { chains, publicClient } = configureChains(
 //   [lisk_testnet],
@@ -40,14 +39,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <QueryClientProvider client={queryClient}> */}
-        {/* <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider chains={chains} initialChain={lisk_testnet.id}> */}
-        {children}
-        {/* </RainbowKitProvider>
-        </WagmiConfig> */}
-        {/* <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider> */}
+        <QueryClientProvider client={queryClient}>
+          {/* <WagmiConfig config={wagmiConfig}>
+            <RainbowKitProvider chains={chains} initialChain={lisk_testnet.id}> */}
+          {children}
+          {/* </RainbowKitProvider>
+          </WagmiConfig> */}
+        </QueryClientProvider>
       </body>
     </html>
   );
