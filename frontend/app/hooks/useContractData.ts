@@ -1,11 +1,23 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { getContractById, getUserContract } from "../api/helper-functions";
 
-interface Contract {
+export interface Contract {
+   business_name: string;
+  contract_address?: string;
+  contract_type?: string;
+  created_at?: string;
+  employee_id: string;
+  employer_id?: string;
   id: string;
-  description: string;
+  job_description?: string;
+  job_title?: string;
+  payment?: string;
+  payment_address?: string;
+  payment_status?: string;
+  status?: string;
+  token_address?: string;
 }
 
 const useContract = () => {

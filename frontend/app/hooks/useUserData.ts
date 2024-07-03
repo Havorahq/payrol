@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { getEmployeeById, getEmployerById } from "../api/helper-functions";
 
