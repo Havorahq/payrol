@@ -1,17 +1,35 @@
 import React, { useState, useContext, useEffect } from "react";
 import { OnboardingContext } from "../../contexts/OnboardingContext";
 import Button from "../common/Button";
-// import { ConnectButton } from "@rainbow-me/rainbowkit";
-// import { useAccount, useDisconnect } from "wagmi";
+import { useWeb3Auth } from "../../provider";
+
 import { useRouter } from "next/navigation";
 import { findUser } from "../../api/helper-functions";
 const Signin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const context = useContext(OnboardingContext);
+  const {
+    loggedIn,
+    login,
+    logout,
+    getUserInfo,
+    getAccounts,
+    getBalance,
+    signMessage,
+  } = useWeb3Auth();
 
-  // const account = useAccount();
-  // const { address } = account;
-  // const { disconnect } = useDisconnect();
+  const handleLogin = async () => {
+    await login();
+  };
+
+  const handleLogOut = async () => {
+    await logout();
+  };
+
+  const userInfo = async () => {
+    await getUserInfo();
+  };
+
   const router = useRouter();
 
   // useEffect(() => {
@@ -57,6 +75,17 @@ const Signin: React.FC = () => {
           account
         </p>
         <div className="flex justify-center">{/* <ConnectButton /> */}</div>
+        {!loggedIn && (
+          <button onClick={handleLogin} className="card">
+            Login
+          </button>
+        )}
+
+        {loggedIn && (
+          <button onClick={handleLogOut} className="card">
+            Logout
+          </button>
+        )}
       </div>
       <p className="self-center text-sm">
         Need to create an account?{" "}
