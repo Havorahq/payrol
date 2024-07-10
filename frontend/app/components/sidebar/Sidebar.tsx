@@ -7,6 +7,7 @@ import { CiGrid42 } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoReceiptOutline } from "react-icons/io5";
 import { LiaSignOutAltSolid } from "react-icons/lia";
+import { BsGrid } from "react-icons/bs";
 import Swal from "sweetalert2";
 
 interface SidebarProps {
@@ -34,51 +35,51 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
   };
 
   return (
-    <div className="h-full p-8 bg-white">
+    <div className="h-full p-4 pb-0 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
       <div className="mb-8">
         <Image
-          src="/icons/secondaryLogo.png"
+          src="/icons/brandLogo.png"
           alt="Brand icon"
-          width={110}
-          height={28}
+          width={60}
+          height={60}
         />
       </div>
       <div className="mt-16 font-medium">
         <Link href="/dashboard">
           <div
-            className={`flex items-center gap-4 p-4 rounded-md my-3 ${
+            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
               title === "Dashboard"
                 ? "bg-primary text-white"
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            <CiGrid42
-              className={`w-5 h-5 ${
+            <BsGrid
+              className={`w-6 h-6 ${
                 title === "Dashboard" ? "text-white" : "text-gray-400"
               }`}
             />
-            Dashboard
+            
           </div>
         </Link>
         <Link href="/profile">
           <div
-            className={`flex items-center gap-4 p-4 rounded-md my-3 ${
+            className={`flex items-center justify-center p-4 rounded-md my-3 ${
               title === "Profile"
                 ? "bg-primary text-white"
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
             <CgProfile
-              className={`w-5 h-5 ${
+              className={`w-6 h-6 ${
                 title === "Profile" ? "text-white" : "text-gray-400"
               }`}
             />
-            Profile
+            
           </div>
         </Link>
         <Link href="/payslip">
           <div
-            className={`flex items-center gap-4 p-4 rounded-md my-3 ${
+            className={`flex items-center justify-center p-4 rounded-md my-3 ${
               title === "Payslip"
                 ? "bg-primary text-white"
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
@@ -89,16 +90,16 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 title === "Payslip" ? "text-white" : "text-gray-400"
               }`}
             />
-            Payslip
+            
           </div>
         </Link>
         <div
           onClick={handleSignout}
-          className="flex items-center gap-4 p-4 rounded-md mt-16 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
+          className="flex items-center justify-center p-4 rounded-md mt-16 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
         >
-          <LiaSignOutAltSolid className="w-5 h-5 text-gray-400" />
+          <LiaSignOutAltSolid className="w-6 h-6 text-gray-400" />
           <div>
-            <a className="cursor-pointer">Sign out</a>
+            <a className="cursor-pointer"></a>
           </div>
         </div>
       </div>
