@@ -9,6 +9,8 @@ import { IoReceiptOutline } from "react-icons/io5";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { BsGrid } from "react-icons/bs";
 import Swal from "sweetalert2";
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 
 interface SidebarProps {
   title: string;
@@ -47,6 +49,8 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
       <div className="mt-16 font-medium">
         <Link href="/dashboard">
           <div
+            data-tooltip-id="tooltip-dashboard"
+            data-tooltip-content="Dashboard"
             className={`flex items-center justify-center p-3 rounded-lg my-3 ${
               title === "Dashboard"
                 ? "bg-primary text-white"
@@ -63,6 +67,8 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
         </Link>
         <Link href="/profile">
           <div
+            data-tooltip-id="tooltip-profile"
+            data-tooltip-content="Profile"
             className={`flex items-center justify-center p-4 rounded-md my-3 ${
               title === "Profile"
                 ? "bg-primary text-white"
@@ -79,6 +85,8 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
         </Link>
         <Link href="/payslip">
           <div
+            data-tooltip-id="tooltip-payslip"
+            data-tooltip-content="Payslip"
             className={`flex items-center justify-center p-4 rounded-md my-3 ${
               title === "Payslip"
                 ? "bg-primary text-white"
@@ -94,6 +102,8 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
           </div>
         </Link>
         <div
+          data-tooltip-id="tooltip-signout"
+          data-tooltip-content="Sign Out"
           onClick={handleSignout}
           className="flex items-center justify-center p-4 rounded-md mt-16 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
         >
@@ -103,6 +113,10 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
           </div>
         </div>
       </div>
+      <Tooltip id="tooltip-dashboard" place="right" />
+      <Tooltip id="tooltip-profile" place="right" />
+      <Tooltip id="tooltip-payslip" place="right" />
+      <Tooltip id="tooltip-signout" place="right" />
     </div>
   );
 };
