@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
   };
 
   return (
-    <div className="h-full p-4 pb-0 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
+    <div className="h-full p-2 pb-0 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
       <div className="mb-8">
         <Image
           src="/icons/brandLogo.png"

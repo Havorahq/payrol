@@ -88,7 +88,32 @@ export default function Home() {
   const { user_type } = userData;
   return (
     <Wrapper>
-      <div className="flex items-center justify-between p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
+      {/* New UI */}
+      <div className="flex gap-4 text-[#23272E] w-full">
+        <div className="w-8/12">
+          <div className="flex w-full gap-4">
+            <div className="border rounded-lg w-1/2 h-1/4 p-8">Country</div>
+            <div className="border rounded-lg w-1/2 h-1/4 p-8">Employee</div>
+          </div>
+          <div className="mt-2 border rounded-lg p-8">
+            Table
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 w-1/3">
+          <div className="border rounded-lg p-8">
+            summary
+          </div>
+           <div className="border rounded-lg p-8">
+            previous payroll
+          </div>
+           <div className="border rounded-lg p-8">
+            invoice
+          </div>
+        </div>
+      </div>
+
+      {/* Old UI */}
+      {/* <div className="flex items-center justify-between p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
         <p className="text-lg font-medium">
           Total Contract: {contractData?.length}
         </p>
@@ -96,13 +121,11 @@ export default function Home() {
           <Button onClick={() => console.log("Create contract")} primary>
             <FaPlus />
             <span>Contract</span>
-            {/* <div className="flex items-center gap-1 p-2 bg-primary text-white rounded-md cursor-pointer">
-            </div> */}
           </Button>
         </Link>
-      </div>
+      </div> */}
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* <div className="grid grid-cols-2 gap-4">
         <div className="p-4 bg-white rounded-md text-gray-600">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-1">
@@ -132,15 +155,12 @@ export default function Home() {
           </div>
           <div className="text-xl font-semibold">{upcomingPayment}</div>
         </div>
-      </div>
-      <div className="mt-4 p-4 pb-16 bg-white rounded-md">
+      </div> */}
+
+      {/* <div className="mt-4 p-4 pb-16 bg-white rounded-md">
         <div className="flex items-center justify-between mb-4">
           <p className="text-lg font-medium text-[#131414]">All Contracts</p>
           <InputFilter name="search" placeholder="Search" value={search} onChange={onChange} />
-          {/* <div className="flex items-center gap-2">
-            <FaSearch color="#797979" />
-            <input type="text" placeholder="Search" className="input" />
-          </div> */}
         </div>
 
         <div className="flex gap-2 mb-4">
@@ -236,7 +256,7 @@ export default function Home() {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </Wrapper>
   );
 }

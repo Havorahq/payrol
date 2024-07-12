@@ -4,7 +4,7 @@ interface ButtonProps {
   children?: React.ReactNode;
   disabled?: boolean;
   style?: string;
-  onClick: () => void;
+  onClick?: () => void;
   primary?: boolean;
   secondary?: boolean;
   label?: string;

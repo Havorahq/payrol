@@ -35,7 +35,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
         <Sidebar title={getTitle()} />
       </div>
       <main className="flex-1 p-4 bg-[#FFF] border rounded-lg m-2">
-        <Header toggleDrawer={toggleDrawer} />
+        <Header title={getTitle()} toggleDrawer={toggleDrawer} />
         {children}
       </main>
       {isDrawerOpen && (

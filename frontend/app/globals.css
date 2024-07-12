@@ -74,12 +74,13 @@ input,
 }
 
 button {
-  border-radius: 4px !important;
+  border-radius: 9px !important;
   border: none;
   background: #eee;
   margin-block: 2em;
-  padding: 1em 1.6em;
+  padding: .6em 1.2em;
   width: 100%;
+  font-size: var(--font-size-2xs);
 }
 
 button:disabled {
@@ -89,9 +90,10 @@ button:disabled {
 
 .btn-primary {
   /* background: linear-gradient(338.14deg, #3b37ff -3.56%, #ff7a21 119.15%); */
-  background: linear-gradient(90.55deg, #ff7418 -76.45%, #232199 107.58%);
+  /* background: linear-gradient(90.55deg, #ff7418 -76.45%, #232199 107.58%); */
+  background: #0A112F;
   color: #fff;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .btn-secondary {
