@@ -92,8 +92,46 @@ export default function Home() {
       <div className="flex gap-4 text-[#23272E] w-full">
         <div className="w-8/12">
           <div className="flex w-full gap-4">
-            <div className="border rounded-lg w-1/2 h-1/4 p-8">Country</div>
-            <div className="border rounded-lg w-1/2 h-1/4 p-8">Employee</div>
+            <div className="border rounded-lg w-1/2 h-1/4 p-8">
+              <div className="mb-8">
+                <p className="font-semibold text-lg">Team in by country</p>
+                <p className="font-bold text-3xl">100</p>
+              </div>
+              <div>
+                <div className="flex items-center gap-4 my-4">
+                  <Image src="/icons/us.png" alt="contry flag" height={34} width={34} />
+                  <div className="w-full">
+                    <p className="font-semibold text-sm text-[#4B465C]">30</p>
+                    <p className="font-normal text-xs text-[#8B909A]">United states</p>
+                  </div>
+                  <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
+                </div>
+
+                <div className="flex items-center gap-4 my-4">
+                  <Image src="/icons/brazil.png" alt="contry flag" height={34} width={34} />
+                  <div className="w-full">
+                    <p className="font-semibold text-sm text-[#4B465C]">26</p>
+                    <p className="font-normal text-xs text-[#8B909A]">Brazil</p>
+                  </div>
+                  <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
+                </div>
+
+                <div className="flex items-center gap-4 my-4">
+                  <Image src="/icons/india.png" alt="contry flag" height={34} width={34} />
+                  <div className="w-full">
+                    <p className="font-semibold text-sm text-[#4B465C]">22</p>
+                    <p className="font-normal text-xs text-[#8B909A]">India</p>
+                  </div>
+                  <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
+                </div>
+              </div>
+            </div>
+            <div className="border rounded-lg w-1/2 h-1/4 p-8">
+              <div className="flex items-center gap-2 text-[#A3A3A3]">
+                <div className="border p-2 rounded-md">Onboarded</div>
+                <div>Off-boarded</div>
+              </div>
+            </div>
           </div>
           <div className="mt-2 border rounded-lg p-8">
             Table
