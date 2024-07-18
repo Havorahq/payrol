@@ -1,25 +1,47 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 contract BatchPayments {
+    struct Agreement {
+        string contractType;
+        address agreementAddress;
+    }
 
-    event Payment(address indexed from, address indexed to, uint256 amount);
+    address public owner;
+    Agreement[] public agreements;
 
-    function batchPayment(address[] calldata recipients, uint256[] calldata amounts) external payable {
-        require(recipients.length == amounts.length, "Recipients and amounts arrays must have the same length");
-        
-        uint256 totalAmount = 0;
-        for (uint256 i = 0; i < amounts.length; i++) {
-            totalAmount += amounts[i];
-        }
-        
-        require(totalAmount <= msg.value, "Insufficient funds provided");
+    modifier onlyOwner() {
+        require(
+            msg.sender == owner,
+            "You are not allowed to carry out this action"
+        );
+        _;
+    }
 
-        for (uint256 i = 0; i < recipients.length; i++) {
-            payable(recipients[i]).transfer(amounts[i]);
-            emit Payment(msg.sender, recipients[i], amounts[i]);
+    constructor(Agreement[] memory _agreements){
+        owner = msg.sender;
+        for (uint i = 0; i < _agreements.length; i++) {
+            agreements.push(_agreements[i]); // Access by reference, not copying
         }
     }
 
-    receive() external payable {}
+    function addAgreement (string memory _contractType, address _agreementAddress ) public onlyOwner {
+        Agreement memory newAgreement = Agreement({contractType: _contractType, agreementAddress: _agreementAddress});
+        agreements.push(newAgreement);
+    }
+
+    function performBatchPayments() public onlyOwner {
+        // go through the smart contracts in the list and execute their payment methods
+    }
+
+    function getContracts () public view returns (Agreement[] memory) {
+        return agreements;
+    }
+
+    // add agreement contracts to the agreement array
+    // remove agreement contracts from the agreement array
+    // make payments for each agreement contract
+
 }
