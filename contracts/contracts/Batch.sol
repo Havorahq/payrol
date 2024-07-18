@@ -23,7 +23,7 @@ contract BatchPayments {
     constructor(Agreement[] memory _agreements){
         owner = msg.sender;
         for (uint i = 0; i < _agreements.length; i++) {
-            agreements.push(_agreements[i]); // Access by reference, not copying
+            agreements.push(_agreements[i]);
         }
     }
 
@@ -38,6 +38,10 @@ contract BatchPayments {
 
     function getContracts () public view returns (Agreement[] memory) {
         return agreements;
+    }
+
+    function getContractAtIndex (uint _index) public view returns (Agreement memory){
+        return agreements[_index];
     }
 
     // add agreement contracts to the agreement array

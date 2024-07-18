@@ -229,8 +229,8 @@
       ]
     },
     "/Users/davidson/Documents/GitHub/payrol/contracts/contracts/Batch.sol": {
-      "lastModificationDate": 1721338886200,
-      "contentHash": "b89e6e827e65394dc3de62af05bedd8d",
+      "lastModificationDate": 1721341166135,
+      "contentHash": "31a7b6c7234a8a464201fe9daf29c8c4",
       "sourceName": "contracts/Batch.sol",
       "solcConfig": {
         "version": "0.8.24",

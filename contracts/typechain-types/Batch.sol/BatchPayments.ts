@@ -38,6 +38,7 @@ export interface BatchPaymentsInterface extends Interface {
     nameOrSignature:
       | "addAgreement"
       | "agreements"
+      | "getContractAtIndex"
       | "getContracts"
       | "owner"
       | "performBatchPayments"
@@ -49,6 +50,10 @@ export interface BatchPaymentsInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "agreements",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getContractAtIndex",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -66,6 +71,10 @@ export interface BatchPaymentsInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "agreements", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getContractAtIndex",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getContracts",
     data: BytesLike
@@ -132,6 +141,12 @@ export interface BatchPayments extends BaseContract {
     "view"
   >;
 
+  getContractAtIndex: TypedContractMethod<
+    [_index: BigNumberish],
+    [BatchPayments.AgreementStructOutput],
+    "view"
+  >;
+
   getContracts: TypedContractMethod<
     [],
     [BatchPayments.AgreementStructOutput[]],
@@ -158,6 +173,13 @@ export interface BatchPayments extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [[string, string] & { contractType: string; agreementAddress: string }],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getContractAtIndex"
+  ): TypedContractMethod<
+    [_index: BigNumberish],
+    [BatchPayments.AgreementStructOutput],
     "view"
   >;
   getFunction(
