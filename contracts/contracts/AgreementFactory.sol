@@ -29,8 +29,6 @@ contract AgreementFactory {
         );
         fixedRateAgreements.push(agreement);
 
-        console.log(address(agreement), "the agreement contract");
-
         emit FixedRateAgreementDeployed(address(agreement));
         return address(agreement);
     }
@@ -59,7 +57,11 @@ contract AgreementFactory {
         emit PayAsYoGoAgreementDeployed(address(agreement));
     }
 
-    function getNumberOfPayAsYouGoAgreements() public view returns (uint256) {
-        return payAsYouGoAgreements.length;
+    function getFixedRateAgreements () public view returns (FixedRateAgreement[] memory) {
+        return fixedRateAgreements;
+    }
+
+    function getPayAsYouGoAgreements () public view returns (PayAsYouGoAgreement[] memory) {
+        return payAsYouGoAgreements;
     }
 }
