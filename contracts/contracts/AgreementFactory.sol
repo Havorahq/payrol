@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.0;
 
 import "./PayAsYouGoAgreement.sol";
 import "./FixedRateAgreement.sol";
@@ -10,6 +10,8 @@ contract AgreementFactory {
     FixedRateAgreement[] public fixedRateAgreements;
     PayAsYouGoAgreement[] public payAsYouGoAgreements;
 
+
+    // think of a better way to store and retrieve the contracts that have been created
     event FixedRateAgreementDeployed(address indexed contractAddress);
     event PayAsYoGoAgreementDeployed(address indexed contractAddress);
 
@@ -28,8 +30,6 @@ contract AgreementFactory {
             _fixedPayment
         );
         fixedRateAgreements.push(agreement);
-
-        console.log(address(agreement), "the agreement contract");
 
         emit FixedRateAgreementDeployed(address(agreement));
         return address(agreement);
@@ -59,7 +59,11 @@ contract AgreementFactory {
         emit PayAsYoGoAgreementDeployed(address(agreement));
     }
 
-    function getNumberOfPayAsYouGoAgreements() public view returns (uint256) {
-        return payAsYouGoAgreements.length;
+    function getFixedRateAgreements () public view returns (FixedRateAgreement[] memory) {
+        return fixedRateAgreements;
+    }
+
+    function getPayAsYouGoAgreements () public view returns (PayAsYouGoAgreement[] memory) {
+        return payAsYouGoAgreements;
     }
 }
