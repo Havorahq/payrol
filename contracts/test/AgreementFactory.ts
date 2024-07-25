@@ -36,34 +36,29 @@ import { deployToken } from "./FixedRateAgreement";
             )
             expect(await agreementFactory.getNumberOfFixedRateAgreements()).to.above(0)
         })
-
-        // it("should deploy a pay as you go agreement successfully", async function (){
-        //     const {owner, otherAccount, agreementFactory} = await loadFixture(deployAgreementFactory);
-        //     await agreementFactory.createNewPayAsYouGoAgreement(
-        //         'employer id',
-        //         'employee id',
-        //         owner.address,
-        //         otherAccount.address,
-        //         100000
-        //     )
-        //     expect(await agreementFactory.getNumberOfPayAsYouGoAgreements()).to.above(0)
-        // })
     })
 
     describe("making payments from fixed rate contract", function () {
       it ("should make payments from a fixed rate agreement smart contract", async function () {
-        const {owner, agreementFactory} = await loadFixture(deployAgreementFactory);
-        const {tokenSupplyAddress, testToken} = await loadFixture(tokenDeploymentFixture)
-        const agreementAddress = await agreementFactory.createNewFixedRateAgreement(
+        const contractAmount = 100;
+        const {owner, agreementFactory, otherAccount} = await loadFixture(deployAgreementFactory);
+        const {tokenSupplyAccount, testToken} = await loadFixture(tokenDeploymentFixture);
+        await agreementFactory.createNewFixedRateAgreement(
             'employer id',
             'employee id',
             owner.address,
             await testToken.getAddress(),
-            100
-        )
-        console.log(agreementAddress, 'the supposed agreement address')
+            contractAmount
+        );
+        const fixedRateAgreements = await agreementFactory.getFixedRateAgreements()
+        const newAgreementContractAddress = fixedRateAgreements[fixedRateAgreements.length - 1];
         // send money to the agreement address
-        // testToken.transfer(agreementAddress)
+        await testToken.connect(tokenSupplyAccount).transfer(newAgreementContractAddress, contractAmount)
+        const fixedRateContract = await hre.ethers.getContractAt("FixedRateAgreement", newAgreementContractAddress)
+        // enter the agreement an employee
+        await fixedRateContract.connect(otherAccount).employeeEnterContract(otherAccount.address)
+        await fixedRateContract.connect(owner).sendPayment()
+        expect(await testToken.balanceOf(otherAccount.address)).to.equal(contractAmount)
       })
       
     })

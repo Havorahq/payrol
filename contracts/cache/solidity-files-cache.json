@@ -77,8 +77,8 @@
       ]
     },
     "/Users/davidson/Documents/GitHub/payrol/contracts/contracts/AgreementFactory.sol": {
-      "lastModificationDate": 1721344743213,
-      "contentHash": "0ea9bd82296aca925ccf18761007386c",
+      "lastModificationDate": 1721889942323,
+      "contentHash": "64fd23970f5718638043f51c960feb15",
       "sourceName": "contracts/AgreementFactory.sol",
       "solcConfig": {
         "version": "0.8.24",

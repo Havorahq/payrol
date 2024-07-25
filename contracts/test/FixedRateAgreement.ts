@@ -8,10 +8,9 @@ import {
   const initialTokenSupply = 1000000000
 
   export async function deployToken (initialTokenSupply: number) {
-    console.log('deploying the token contract')
-    const [tokenSupplyAddress] = await hre.ethers.getSigners();
+    const [tokenSupplyAccount] = await hre.ethers.getSigners();
     const testToken = await hre.ethers.deployContract("XAToken", [initialTokenSupply])
-    return {tokenSupplyAddress, testToken}
+    return {tokenSupplyAccount, testToken}
   }
 
   async function tokenDeploymentFixture () {
@@ -20,8 +19,8 @@ import {
   
   describe("Fixed Rate Agreement", function () {
     it ("should deploy the token contract successfully", async function () {
-      const {tokenSupplyAddress, testToken} = await loadFixture(tokenDeploymentFixture)
-      expect(await testToken.balanceOf(tokenSupplyAddress)).to.equal(initialTokenSupply)
+      const {tokenSupplyAccount, testToken} = await loadFixture(tokenDeploymentFixture)
+      expect(await testToken.balanceOf(tokenSupplyAccount.address)).to.equal(initialTokenSupply)
     })
   });
   

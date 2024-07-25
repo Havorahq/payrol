@@ -10,6 +10,8 @@ contract AgreementFactory {
     FixedRateAgreement[] public fixedRateAgreements;
     PayAsYouGoAgreement[] public payAsYouGoAgreements;
 
+
+    // think of a better way to store and retrieve the contracts that have been created
     event FixedRateAgreementDeployed(address indexed contractAddress);
     event PayAsYoGoAgreementDeployed(address indexed contractAddress);
 
