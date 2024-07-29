@@ -52,7 +52,7 @@ contract PayAsYouGoAgreement is Agreement {
     }
 
     // sendPayment
-    function sendPayment() public onlyEmployer {
+    function sendPayment() public onlyEmployer returns (bool) {
         require(
             agreementStatus == AgreementStatus.Active,
             "This contract is no longer active"
@@ -62,7 +62,7 @@ contract PayAsYouGoAgreement is Agreement {
         emit PaymentMade(address(this));
         emit PayAsYouGoPaymentMade(paymentAddress, employerAddress);
         // store payment details and add payment event
-        return;
+        return true;
     }
 
     function setMonthlyPayments(

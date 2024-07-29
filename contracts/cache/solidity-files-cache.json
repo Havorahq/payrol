@@ -39,8 +39,8 @@
       ]
     },
     "/Users/davidson/Documents/GitHub/payrol/contracts/contracts/PayAsYouGoAgreement.sol": {
-      "lastModificationDate": 1721127640612,
-      "contentHash": "fd4acf8f2f945507db1def24afab9265",
+      "lastModificationDate": 1722182791523,
+      "contentHash": "fcfdf8ca9328682c8b2c43bf74b9ee4c",
       "sourceName": "contracts/PayAsYouGoAgreement.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -117,8 +117,8 @@
       ]
     },
     "/Users/davidson/Documents/GitHub/payrol/contracts/contracts/FixedRateAgreement.sol": {
-      "lastModificationDate": 1719691532832,
-      "contentHash": "04031c7461e3e488ec025411adb5754a",
+      "lastModificationDate": 1722182815618,
+      "contentHash": "466c7d1af9582e13dd49cabd29a45175",
       "sourceName": "contracts/FixedRateAgreement.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -229,8 +229,8 @@
       ]
     },
     "/Users/davidson/Documents/GitHub/payrol/contracts/contracts/Batch.sol": {
-      "lastModificationDate": 1721341166135,
-      "contentHash": "31a7b6c7234a8a464201fe9daf29c8c4",
+      "lastModificationDate": 1722182938192,
+      "contentHash": "be317d2bc8644d44d5e4bcc0a8574b84",
       "sourceName": "contracts/Batch.sol",
       "solcConfig": {
         "version": "0.8.24",

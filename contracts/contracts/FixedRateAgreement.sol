@@ -44,7 +44,7 @@ contract FixedRateAgreement is Agreement {
     }
 
     // sendPayment
-    function sendPayment() public onlyEmployer {
+    function sendPayment() public onlyEmployer returns (bool) {
         require(
             agreementStatus == AgreementStatus.Active,
             "This contract is no longer active"
@@ -61,6 +61,6 @@ contract FixedRateAgreement is Agreement {
         agreementStatus = AgreementStatus.Closed;
         emit PaymentMade(address(this));
         emit FixedPaymentMade(paymentAddress, employerAddress);
-        return;
+        return true;
     }
 }

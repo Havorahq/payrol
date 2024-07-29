@@ -6,6 +6,10 @@ interface IERC20 {
         address recipient,
         uint256 amount
     ) external returns (bool);
+
+    function balanceOf (
+        address owner
+    ) external returns (uint256);
 }
 
 contract Agreement {
