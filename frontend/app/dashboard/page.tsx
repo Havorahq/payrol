@@ -145,7 +145,7 @@ export default function Home() {
             previous payroll
           </div>
            <div className="border rounded-lg p-8">
-            invoice
+            Invoice
           </div>
         </div>
       </div>
