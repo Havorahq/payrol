@@ -31,9 +31,9 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
   // };
 
   return (
-    <div className="flex flex-col m-8 p-8 h-full justify-center gap-12">
+    <div className="flex flex-col m-0 px-8 py-1 h-fit justify-start gap-12">
       <div className="flex flex-col items-start">
-        <h1>Create Contract📄</h1>
+        <p className="font-semibold text-4xl">Create Contract 📄</p>
         <p className="text-xs font-light text-grey">Create an account below</p>
       </div>
 
@@ -47,7 +47,7 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
           <div className="flex items-center gap-4">
             <Image src="/icons/fixed.png" alt="icon" width={36} height={36} />
             <div>
-              <p className="text-sm font-medium">Fixed Rate</p>
+              <p className="text-sm font-semibold">Fixed Rate</p>
               <p className="text-xs font-light">
                 For contracts that have a fixed rate each payment cycle
               </p>
@@ -81,7 +81,7 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
               height={36}
             />
             <div>
-              <p className="text-sm font-medium">Pay As You Go</p>
+              <p className="text-sm font-semibold">Pay As You Go</p>
               <p className="text-xs font-light">
                 For contracts that have varying rates each payment cycle
               </p>
@@ -102,10 +102,10 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
           />
         </div>
         <div
-          className={`flex justify-between items-center p-4 rounded-md cursor-not-allowed ${
+          className={`flex justify-between items-center p-4 rounded-md cursor-pointer ${
             activeTab === "milestone" ? "activeTab" : "border"
           } hover:border-1 hover:border-gray-600`}
-          // onClick={comingSoon}
+          onClick={() => handleDivClick("milestone")}
         >
           <div className="flex items-center gap-4">
             <Image
@@ -115,9 +115,43 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
               height={36}
             />
             <div>
-              <p className="text-sm font-medium">Milestone</p>
+              <p className="text-sm font-semibold">Milestone</p>
               <p className="text-xs font-light">
                 For contracts that have different phases, each with its own rate
+              </p>
+              <span className="flex items-center gap-1 mt-2">
+                <p className="text-2xs text-primary">Learn more</p>
+                <Image
+                  src="/icons/info.svg"
+                  alt="icon"
+                  width={12}
+                  height={12}
+                />
+              </span>
+            </div>
+          </div>
+          <FaChevronRight
+            size={14}
+            color={activeTab === "milestone" ? "#14125e" : "#1C1B1F"}
+          />
+        </div>
+        <div
+          className={`flex justify-between items-center p-4 rounded-md cursor-pointer ${
+            activeTab === "Hourly Contract" ? "activeTab" : "border"
+          } hover:border-1 hover:border-gray-600`}
+          onClick={() => handleDivClick("Hourly Contract")}
+        >
+          <div className="flex items-center gap-4">
+            <Image
+              src="/icons/milestone.png"
+              alt="icon"
+              width={36}
+              height={36}
+            />
+            <div>
+              <p className="text-sm font-semibold">Hourly Contract</p>
+              <p className="text-xs font-light">
+                For contracts with fixed hourly rate and contract terms
               </p>
               <span className="flex items-center gap-1 mt-2">
                 <p className="text-2xs text-primary">Learn more</p>

@@ -7,6 +7,7 @@ import { CiGrid42 } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoReceiptOutline } from "react-icons/io5";
 import { LiaSignOutAltSolid } from "react-icons/lia";
+import { CgFileRemove } from "react-icons/cg";
 import { BsGrid } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { Tooltip } from 'react-tooltip'
@@ -62,7 +63,23 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 title === "Dashboard" ? "text-white" : "text-gray-400"
               }`}
             />
-            
+          </div>
+        </Link>
+        <Link href="/create-contract">
+          <div
+            data-tooltip-id="tooltip-contract"
+            data-tooltip-content="Contract"
+            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+              title === "Contract"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-400 hover:border hover:border-gray-300"
+            }`}
+          >
+            <CgFileRemove
+              className={`w-6 h-6 ${
+                title === "Contract" ? "text-white" : "text-gray-400"
+              }`}
+            />
           </div>
         </Link>
         <Link href="/profile">
@@ -80,7 +97,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 title === "Profile" ? "text-white" : "text-gray-400"
               }`}
             />
-            
           </div>
         </Link>
         <Link href="/payslip">
@@ -98,7 +114,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 title === "Payslip" ? "text-white" : "text-gray-400"
               }`}
             />
-            
           </div>
         </Link>
         <div
@@ -114,6 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
         </div>
       </div>
       <Tooltip id="tooltip-dashboard" place="right" />
+      <Tooltip id="tooltip-contract" place="right" />
       <Tooltip id="tooltip-profile" place="right" />
       <Tooltip id="tooltip-payslip" place="right" />
       <Tooltip id="tooltip-signout" place="right" />

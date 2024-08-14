@@ -20,9 +20,9 @@ const Personal: React.FC = () => {
         <p className="text-xs">Previous</p>
       </span>
       <div className="flex flex-col items-start">
-        <h1>Personal Details</h1>
+        <p className="font-semibold text-4xl">Personal Details</p>
         <p className="text-xs font-light text-grey">
-          Fill in your personal details below
+          Fill in the employee details below
         </p>
       </div>
       <div className="flex flex-col gap-4">

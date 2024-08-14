@@ -15,6 +15,12 @@ export const capitalizeFirstWord = (words: string) => {
   }
 };
 
+export const tokenOptions = [
+  { value: "USDT", label: "USDT" },
+  { value: "BTC", label: "BTC" },
+  { value: "ETH", label: "ETH" },
+];
+
 export const statusClass = (status: string) => {
   switch (status?.toUpperCase()) {
     case "ACTIVE":

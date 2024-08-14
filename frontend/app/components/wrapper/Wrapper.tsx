@@ -36,7 +36,9 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
       </div>
       <main className="flex-1 p-4 bg-[#FFF] border rounded-lg m-2">
         <Header title={getTitle()} toggleDrawer={toggleDrawer} />
-        {children}
+        <div className="overflow-forced">
+          {children}
+        </div>
       </main>
       {isDrawerOpen && (
         <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} />

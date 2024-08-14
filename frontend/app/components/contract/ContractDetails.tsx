@@ -7,6 +7,7 @@ import moment from "moment";
 import { ContractContext } from "@/app/contexts/ContractContext";
 import Modal from "../common/Modal";
 import { useRouter } from "next/navigation";
+import { capitalizeFirstWord } from "@/plugins/utils";
 
 const ContractDetails: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -19,9 +20,9 @@ const ContractDetails: React.FC = () => {
     <>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <div className="mt-8">
-          <p className="text-xl font-bold">All Done! 🎉</p>
-          <p className="text-xs font-light text-grey mb-6">
-            You’ve successfully signed your contract!{" "}
+          <p className="text-4xl font-bold">All Done! 🎉</p>
+          <p className="text-xs font-light text-grey mb-14">
+            You’ve successfully created a contract!
           </p>
           <Button onClick={() => router.push("/dashboard")} primary>
             Back to Home
@@ -46,7 +47,7 @@ const ContractDetails: React.FC = () => {
           <div className="py-1 my-1 border-b">
             <p className="text-md text-grey-500 font-medium">Contract Type</p>
             <p className="text-sm text-grey">
-              {state?.contractType?.toUpperCase()}
+              {capitalizeFirstWord(state?.contractType?.toUpperCase())}
             </p>
           </div>
           <div className="py-1 my-1 border-b">
@@ -84,6 +85,10 @@ const ContractDetails: React.FC = () => {
           <div className="py-1 my-1 border-b">
             <p className="text-md text-grey-500 font-medium">Monthly Rate</p>
             <p className="text-sm text-grey my-2">{state?.monthlyRate}</p>
+          </div>
+          <div className="py-1 my-1 border-b">
+            <p className="text-md text-grey-500 font-medium">Wallet Address</p>
+            <p className="text-sm text-grey my-2">{state?.walletAddress}</p>
           </div>
           {/* <input
           type="date"

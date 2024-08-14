@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import Button from "../common/Button";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { ContractContext } from "@/app/contexts/ContractContext";
+import Input from "../common/Input";
 
 const Wallet: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -19,11 +20,14 @@ const Wallet: React.FC = () => {
         <p className="text-xs">Previous</p>
       </span>
       <div className="flex flex-col items-start">
-        <h1>Wallet Details</h1>
-        <p className="text-xs font-light text-grey">Fill in your wallet details below</p>
+        <p className="font-semibold text-4xl">Wallet Details</p>
+        <p className="text-xs font-light text-grey">
+          Fill in your wallet details below
+        </p>
       </div>
       <div className="flex flex-col gap-4">
-        <input
+        <Input
+          label="Enter wallet address"
           type="text"
           name="walletAddress"
           value={state.walletAddress}
@@ -33,16 +37,7 @@ const Wallet: React.FC = () => {
         />
       </div>
       <div className="flex justify-between mt-4">
-        {/* <Button
-          text="Back"
-          iconLeft={<FaChevronLeft size={14} />}
-          onClick={handlePrev}
-        /> */}
-        <Button
-          onClick={handleNext}
-          disabled={!state.walletAddress}
-          primary
-        >
+        <Button onClick={handleNext} disabled={!state.walletAddress} primary>
           Continue
         </Button>
       </div>

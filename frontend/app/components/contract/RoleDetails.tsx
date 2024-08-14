@@ -29,7 +29,7 @@ const RoleDetails: React.FC = () => {
         <p className="text-xs">Previous</p>
       </span>
       <div className="flex flex-col items-start">
-        <h1>Role Details</h1>
+        <p className="font-semibold text-4xl">Role Details</p>
         <p className="text-xs font-light text-grey">
           Fill in the role details below
         </p>
@@ -45,15 +45,17 @@ const RoleDetails: React.FC = () => {
           placeholder="Solidity Engineer"
           className="p-2 border border-gray-300 rounded"
         />
-        <label htmlFor="jobDescription">Job Description</label>
-        <textarea
-          name="jobDescription"
-          id="jobDescription"
-          value={state.jobDescription}
-          onChange={onChange}
-          placeholder="Responsible for developing Ethereum-based applications with smart..."
-          className="p-2 border border-gray-300 rounded h-48"
-        />
+        <div className="flex flex-col">
+          <label htmlFor="jobDescription" className="mb-2">Job Description</label>
+          <textarea
+            name="jobDescription"
+            id="jobDescription"
+            value={state.jobDescription}
+            onChange={onChange}
+            placeholder="Responsible for developing Ethereum-based applications with smart..."
+            className="p-2 border border-gray-300 rounded h-48"
+          />
+        </div>
       </div>
       <div className="flex justify-between max-w-full">
         <div className="max-w-full">
