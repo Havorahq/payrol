@@ -38,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
   };
 
   return (
-    <div className="h-full p-2 pb-0 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
+    <div className="h-full p-2 pb-8 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
       <div className="mb-8">
         <Image
           src="/icons/brandLogo.png"
@@ -120,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
           data-tooltip-id="tooltip-signout"
           data-tooltip-content="Sign Out"
           onClick={handleSignout}
-          className="flex items-center justify-center p-4 rounded-md mt-16 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
+          className="flex items-center justify-center p-4 rounded-md mt-64 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
         >
           <LiaSignOutAltSolid className="w-6 h-6 text-gray-400" />
           <div>

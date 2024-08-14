@@ -88,8 +88,11 @@ export default function Home() {
   const { user_type } = userData;
   return (
     <Wrapper>
+      <div>
+        
+      </div>
       {/* New UI */}
-      <div className="flex gap-4 text-[#23272E] w-full">
+      {/* <div className="flex gap-4 text-[#23272E] w-full">
         <div className="w-8/12">
           <div className="flex w-full gap-4">
             <div className="border rounded-lg w-1/2 h-1/4 p-8">
@@ -148,7 +151,7 @@ export default function Home() {
             Invoice
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Old UI */}
       {/* <div className="flex items-center justify-between p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">

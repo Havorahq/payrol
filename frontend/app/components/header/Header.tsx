@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
 
   return (
     <div className="mb-8">
-      <div className="flex md:hidden items-center justify-between bg-white rounded-md p-4 mb-4">
+      <div className="flex md:hidden items-center justify-between bg-white rounded-md p-4 mb-12">
         <Image
           src="/icons/secondaryLogo.png"
           alt="brand logo"
@@ -47,9 +47,9 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
            <div className="flex items-center justify-center rounded-full p-2 border">
             <HiDotsHorizontal color="#0A112F" size={20} />
           </div>
-          <Button primary>
+          {/* <Button primary>
             Create A Contract <HiMiniPlusCircle size={28} />
-          </Button>
+          </Button> */}
           {/* <div className="flex items-center gap-4">
             <div className="flex items-center justify-center rounded-full p-4 bg-primary">
               <p className="text-white font-medium">

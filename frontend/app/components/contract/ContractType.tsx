@@ -33,7 +33,7 @@ const ContractType: React.FC<ContractTypeProps> = ({ setState }) => {
   return (
     <div className="flex flex-col m-0 px-8 py-1 h-fit justify-start gap-12">
       <div className="flex flex-col items-start">
-        <p className="font-semibold text-4xl">Create Contract 📄</p>
+        <p className="font-semibold text-xl">Create Contract📄</p>
         <p className="text-xs font-light text-grey">Create an account below</p>
       </div>
 
