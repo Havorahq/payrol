@@ -27,7 +27,7 @@ const Payments: React.FC = () => {
         setLabel("Enter Rate");
         break;
     }
-  }, [])
+  }, [state?.contractType]);
 
   return (
     <div className="flex flex-col m-8 p-8 h-full justify-center gap-12">

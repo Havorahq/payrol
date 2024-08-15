@@ -43,7 +43,7 @@ const InputSelect: React.FC<InputProps> = ({
           style={{ border: "none", outline: "none" }}
         >
           {tokenOptions?.map((token) => (
-            <option value={token.value}>{token.label}</option>
+            <option value={token.value} key={token.value}>{token.label}</option>
           ))}
         </select>
         <input
