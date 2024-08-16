@@ -36,8 +36,8 @@ const Onboarding: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full w-full justify-center">
-      <div className="flex h-full w-4/5 flex-col justify-evenly p-8 px-16 text-white md:w-1/2 primary-bg">
+    <div className="flex flex-col h-fit w-full justify-center items-center contractBg">
+      {/* <div className="flex h-full w-4/5 flex-col justify-evenly p-8 px-16 text-white md:w-1/2 primary-bg">
         <div className="flex items-center gap-4">
           <Image
             src="/icons/brandLogo.png"
@@ -68,8 +68,8 @@ const Onboarding: React.FC = () => {
             height={350}
           />
         </div>
-      </div>
-      <div className="h-full w-full authBg text-black p-8 md:w-1/2">
+      </div> */}
+      <div className="h-fit w-full text-black p-8 md:w-1/2 bg-white border border-1 rounded-xl">
         {renderPages()}
       </div>
     </div>

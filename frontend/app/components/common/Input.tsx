@@ -28,9 +28,11 @@ const Input: React.FC<InputProps> = ({
   className,
 }) => {
   return (
-    <>
+    <div className="w-100 flex flex-col">
       {label && (
-        <label className="text-grey-500 text-md font-medium" htmlFor={id}>{label}</label>
+        <label className="text-grey-500 text-md font-medium mb-1" htmlFor={id}>
+          {label}
+        </label>
       )}
       <input
         className={className}
@@ -44,7 +46,7 @@ const Input: React.FC<InputProps> = ({
         onKeyUp={onKeyUp}
         onKeyDown={onKeyDown}
       />
-    </>
+    </div>
   );
 };
 

@@ -11,6 +11,7 @@ export interface ContractState {
   startDate: Date | null;
   endDate: Date | null;
   monthlyRate: string;
+  milestoneTitle: string;
   milestoneTitles: string[];
   milestoneRates: string[];
   walletAddress: string;
@@ -46,11 +47,14 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
       startDate: null,
       endDate: null,
       monthlyRate: "",
+      milestoneTitle: "",
       milestoneTitles: [],
       milestoneRates: [],
       walletAddress: "",
       isPasswordShown: false,
     });
+
+    console.log("State: ", state);
 
     const handleNext = () => {
       if (state.step < 5) {

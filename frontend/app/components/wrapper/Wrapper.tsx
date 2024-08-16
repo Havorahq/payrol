@@ -31,12 +31,14 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
 
   return (
     <div className="flex w-full h-full relative overflow-hidden">
-      <div className="hidden md:block w-1/4">
+      <div className="hidden md:block">
         <Sidebar title={getTitle()} />
       </div>
-      <main className="flex-1 p-4 bg-[#F6F6F6]">
-        <Header toggleDrawer={toggleDrawer} />
-        {children}
+      <main className="flex-1 p-4 bg-[#FFF] border rounded-lg m-2">
+        <Header title={getTitle()} toggleDrawer={toggleDrawer} />
+        <div className="overflow-forced">
+          {children}
+        </div>
       </main>
       {isDrawerOpen && (
         <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} />

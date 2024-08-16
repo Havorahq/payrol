@@ -48,10 +48,10 @@ const Signin: React.FC = () => {
   const { onRouteChange } = context;
 
   return (
-    <div className="m-8 p-8 h-full flex flex-col justify-center overflow-y-scroll gap-16">
+    <div className="flex flex-col m-0 px-8 py-1 h-fit justify-center overflow-y-scroll gap-16">
       <div className="flex flex-col items-center">
         <h1>Welcome 👋🏼</h1>
-        <p className="">Please sign in to your account</p>
+        <p className="text-sm">Please sign in to your account</p>
         <p className="mt-2 text-gray-400 text-xs">
           You will be redirected to the sign up page if you don&apos;t have an
           account

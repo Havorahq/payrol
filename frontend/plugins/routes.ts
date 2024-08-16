@@ -9,6 +9,10 @@ const routes: Route[] = [
     title: "Dashboard",
   },
   {
+    path: "/create-contract",
+    title: "Contract",
+  },
+  {
     path: "/profile",
     title: "Profile",
   },
