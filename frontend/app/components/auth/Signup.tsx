@@ -73,9 +73,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center">
-      <Button onClick={() => console.log("Clicked!")}>
-            <DynamicWidget />
-          </Button>
+          <Button onClick={() => onRouteChange("onboard")}>Sign Up</Button>
         </div>
       </div>
 

@@ -58,15 +58,13 @@ const Signin: React.FC = () => {
           account
         </p>
         <div className="flex justify-center">
-     
-          <DynamicWidget
-            innerButtonComponent={
-              <Button>My Custom Connect Wallet Button</Button>
-            }
-          >
-        
-          </DynamicWidget>
-          
+          <Button>
+            <DynamicWidget
+              innerButtonComponent={
+                <button>Sign In with Wallet or Email</button>
+              }
+            ></DynamicWidget>
+          </Button>
         </div>
       </div>
       <p className="self-center text-sm">
