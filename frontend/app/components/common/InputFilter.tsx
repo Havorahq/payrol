@@ -24,7 +24,7 @@ const InputFilter: React.FC<InputFilterProps> = ({
   required,
   onKeyUp,
   onKeyDown,
-  height = "48px",
+  height = "38px",
 }) => {
   return (
     <div
@@ -41,7 +41,7 @@ const InputFilter: React.FC<InputFilterProps> = ({
         required={required}
         onKeyUp={onKeyUp}
         onKeyDown={onKeyDown}
-        className="w-full border-none h-11 focus:outline-none"
+        className="w-full border-none h-8 focus:outline-none"
       />
     </div>
   );

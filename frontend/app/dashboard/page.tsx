@@ -14,6 +14,8 @@ import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import Button from "../components/common/Button";
 import InputFilter from "../components/common/InputFilter";
+import { TiArrowRight } from "react-icons/ti";
+import { useRouter } from "next/navigation";
 
 interface Contract {
   id: number;
@@ -48,6 +50,7 @@ export default function Home() {
   
   const [search, setSearch] = useState<string>("")
   const [activeFilter, setActiveFilter] = useState<string>("");
+  const router = useRouter()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -88,8 +91,78 @@ export default function Home() {
   const { user_type } = userData;
   return (
     <Wrapper>
-      <div>
-        
+      <div className="text-black font-bricolage grid place-items-center h-full pt-20">
+        <div className="flex items-center gap-10">
+          <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+            <Image
+              src="/icons/clipboard-text.png"
+              alt="Brand icon"
+              width={58}
+              height={58}
+              style={{ marginLeft: -13 }}
+            />
+            <p className="font-medium text-2xl">Xalari Contracts</p>
+            <p>
+              Create and manage contracts <br />
+              contacts effortlessly.
+            </p>
+            <div
+              className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+              onClick={() => router.push("/create-contract")}
+            >
+              <p>Create Contract</p>
+              <TiArrowRight />
+            </div>
+          </div>
+          <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+            <Image
+              src="/icons/video-time.png"
+              alt="Brand icon"
+              width={58}
+              height={58}
+              style={{ marginLeft: -5 }}
+            />
+            <p className="font-medium text-2xl">Xalari Time</p>
+            <p>
+              Manage Time effectively and <br />
+              track work done.
+            </p>
+            <div className="flex items-center gap-1">
+              <p>Track Time</p>
+              <TiArrowRight />
+            </div>
+          </div>
+          <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+            <Image
+              src="/icons/block.png"
+              alt="Brand icon"
+              width={48}
+              height={48}
+              style={{ marginLeft: 0 }}
+            />
+            <p className="font-medium text-2xl">Xalari Block</p>
+            <p>
+              Settle employee and Contractors <br />
+              globally with crypto.
+            </p>
+            <div
+              className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+              onClick={() => router.push("/payslip")}
+            >
+              <p>Make Payment</p>
+              <TiArrowRight />
+            </div>
+          </div>
+        </div>
+
+        <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 w-[60%]">
+          <p className="font-medium text-2xl">Xalari Support</p>
+          <p>For assistance, Contact support@xalari.com</p>
+          <div className="flex items-center gap-1">
+            <p>Contact Us</p>
+            <TiArrowRight />
+          </div>
+        </div>
       </div>
       {/* New UI */}
       {/* <div className="flex gap-4 text-[#23272E] w-full">
@@ -164,9 +237,9 @@ export default function Home() {
             <span>Contract</span>
           </Button>
         </Link>
-      </div> */}
+      </div>
 
-      {/* <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div className="p-4 bg-white rounded-md text-gray-600">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-1">
@@ -196,9 +269,9 @@ export default function Home() {
           </div>
           <div className="text-xl font-semibold">{upcomingPayment}</div>
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className="mt-4 p-4 pb-16 bg-white rounded-md">
+      <div className="mt-4 p-4 pb-16 bg-white rounded-md">
         <div className="flex items-center justify-between mb-4">
           <p className="text-lg font-medium text-[#131414]">All Contracts</p>
           <InputFilter name="search" placeholder="Search" value={search} onChange={onChange} />

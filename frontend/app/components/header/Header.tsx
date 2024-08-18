@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
         />
       </div>
       <div className="flex items-center justify-between px-12">
-        <p className="text-[#0A112F] text-3xl font-medium">{title}</p>
+        <p className="text-[#0A112F] text-3xl font-medium headerTitle">{title}</p>
         {pathName !== "/create-contract" && <div className="flex items-center justify-end p-4 bg-white rounded-md gap-4 md:gap-8">
           {/* <button className="bg-blue-500 text-white px-2 py-1 rounded w-fit">
             Connect

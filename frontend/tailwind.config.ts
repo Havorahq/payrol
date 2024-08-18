@@ -16,6 +16,10 @@ const config: Config = {
       fontFamily: {
         "sharp-grotesk": ['"Sharp Grotesk"', "sans-serif"],
         "dm-sans": ['"DM Sans"', "sans-serif"],
+        "bricolage": ["Bricolage Grotesque", "sans - serif"],
+      },
+      colors: {
+        "brandgray": "#70707A",
       },
       lineHeight: {
         custom: "33px",
