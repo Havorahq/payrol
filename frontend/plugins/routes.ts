@@ -13,6 +13,10 @@ const routes: Route[] = [
     title: "Contract",
   },
   {
+    path: "/team",
+    title: "Team",
+  },
+  {
     path: "/profile",
     title: "Profile",
   },

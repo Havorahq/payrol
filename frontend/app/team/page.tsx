@@ -2,7 +2,6 @@
 
 import React, { ChangeEvent, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import PayslipDocument from "./PayslipDocument";
 import useContractData from "../hooks/useContractData";
 import Wrapper from "../components/wrapper/Wrapper";
 import { FaSearch } from "react-icons/fa";
@@ -17,7 +16,7 @@ import { DatePicker, SelectPicker } from "rsuite";
 import CustomDatePicker from "../components/common/Datepicker";
 import Swal from "sweetalert2";
 
-const Payslip: React.FC = () => {
+const Team: React.FC = () => {
   const { contracts, isLoading, error } = useContractData();
   const [payslip, setPayslip] = useState<Contract | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -77,47 +76,6 @@ const Payslip: React.FC = () => {
 
   return (
     <Wrapper>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="p-6 text-[#131414]">
-          <h2 className="text-xl font-bold">
-            {payslip?.business_name}
-            Payslip 🧾
-          </h2>
-          <p className="text-sm text-gray-500 my-2">
-            You have successfully generated your payslip
-          </p>
-          {payslip && (
-            <PDFViewer width="100%" height="400">
-              {/* <PayslipDocument contracts={payslip} /> */}
-            </PDFViewer>
-          )}
-          <div className="flex gap-2 mt-4">
-            <PDFDownloadLink
-              document={<PayslipDocument contractData={payslip as Contract} />}
-              fileName={`${payslip?.name}-payslip.pdf`}
-            >
-              {({ loading }) =>
-                loading ? (
-                  "Loading document..."
-                ) : (
-                  <Button
-                    label="Download Payslip"
-                    onClick={() => console.log("Slip")}
-                    primary
-                  />
-                )
-              }
-            </PDFDownloadLink>
-            <Button
-              label="Send to Email"
-              onClick={closeModal}
-              secondary
-              style="w-fit"
-              disabled
-            />
-          </div>
-        </div>
-      </Modal>
       <Modal isOpen={isPaymentModalOpen} onClose={closePaymentModal}>
         <div className="mt-16 p-4">
           <div className="flex items-center justify-between">
@@ -217,7 +175,7 @@ const Payslip: React.FC = () => {
           </div>
           <InputFilter
             name="search"
-            placeholder="Search"
+            placeholder="Search team"
             value={search}
             onChange={onChange}
           />
@@ -233,7 +191,7 @@ const Payslip: React.FC = () => {
                 <th className="pr-3 py-1">End Date</th>
                 <th className="pr-3 py-1">Doc</th>
                 <th className="pr-3 py-1">Type</th>
-                <th className="pr-3 py-1">Payslip</th>
+                {/* <th className="pr-3 py-1">Payslip</th> */}
                 <th className="pr-3 py-1"></th>
                 <th className="pr-3 py-1"></th>
                 <th className="pr-3 py-1"></th>
@@ -278,19 +236,19 @@ const Payslip: React.FC = () => {
                     <td className="pr-1 py-3">{updated_at}</td>
                     <td className="pr-1 py-3">{doc}</td>
                     <td className="pr-1 py-3">{contract_type}</td>
-                    <td className="pr-1 py-3">
+                    {/* <td className="pr-1 py-3">
                       <span onClick={() => handleGenerateSlip(item.id)}>
                         <p className="text-[#5EAA22] font-medium">
                           View Payslip
                         </p>
                       </span>
-                    </td>
+                    </td> */}
                     <td>
                       <div
-                        className="bg-black w-fit p-2 px-3 rounded-md"
+                        className="bg-[#232199] w-fit p-2 px-3 rounded-md"
                         onClick={() => handlePayment(item.id)}
                       >
-                        <p className="text-white text-xs">Approve Payment</p>
+                        <p className="text-white text-xs">Active</p>
                       </div>
                     </td>
                     <td>
@@ -339,4 +297,4 @@ const Payslip: React.FC = () => {
   );
 };
 
-export default Payslip;
+export default Team;
