@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { OnboardingContext } from "../../contexts/OnboardingContext";
 import Button from "../common/Button";
 import Image from "next/image";
+import { DynamicWidget } from "../../../lib/dynamic";
 
 const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,9 +73,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button onClick={() => console.log("Clicked!")}>
-            Connect Wallet
-          </Button>
+          <Button onClick={() => onRouteChange("onboard")}>Sign Up</Button>
         </div>
       </div>
 
