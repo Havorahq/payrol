@@ -14,14 +14,12 @@ import {
 const queryClient = new QueryClient();
 
 export function Providers(props: { children: ReactNode }) {
- 
   return (
     <DynamicContextProvider
       settings={{
-        environmentId: "c7411994-65f6-4ddb-ac5f-51c884b9344c",
+        environmentId: process.env.ENVIRONMENT_ID as string,
         walletConnectors: [EthereumWalletConnectors],
       }}
-  
     >
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
