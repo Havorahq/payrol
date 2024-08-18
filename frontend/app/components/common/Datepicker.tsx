@@ -5,9 +5,8 @@ import "rsuite/dist/rsuite.min.css";
 
 interface CustomDatePickerProps {
   label?: string;
-  size?: string;
   value?: Date | null;
-  onChange?: (value: Date | null) => void;
+  onChange: (value: Date | null) => void;
   placeholder?: string;
   style?: React.CSSProperties;
 }
@@ -17,8 +16,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   value,
   onChange,
   placeholder,
-  style,
-  size
+  style
 }) => {
   return (
     <div style={{ marginBottom: "16px" }} className="overflow-forced">
@@ -28,7 +26,6 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
         onChange={(date) => onChange(date ? new Date(date) : null)}
         placeholder={placeholder}
         style={style}
-        size={size}
       />
     </div>
   );
