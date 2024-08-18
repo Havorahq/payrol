@@ -22,14 +22,14 @@ export interface OldContract {
 
 export interface Contract {
   name?: string;
-  business_name?: string;
+  business_name: string;
   contract_address?: string;
   contract_type?: string;
   created_at?: string;
   updated_at?: string;
   doc?: string;
   type?: string;
-  employee_id?: string;
+  employee_id: string;
   employer_id?: string;
   id: string;
   job_description?: string;
@@ -46,6 +46,8 @@ const dummyContracts = [
     id: "1",
     status: "Pending",
     name: "John Paul",
+    business_name: "Havora",
+    employee_id: "R1234",
     created_at: "23-03-2024",
     updated_at: "23-03-2024",
     doc: "DOC.PDF",
@@ -55,6 +57,8 @@ const dummyContracts = [
     id: "1",
     status: "Pending",
     name: "John Paul",
+    business_name: "Havora",
+    employee_id: "R1234",
     created_at: "23-03-2024",
     updated_at: "23-03-2024",
     doc: "DOC.PDF",
@@ -64,6 +68,8 @@ const dummyContracts = [
     id: "1",
     status: "Pending",
     name: "John Paul",
+    business_name: "Havora",
+    employee_id: "R1234",
     created_at: "23-03-2024",
     updated_at: "23-03-2024",
     doc: "DOC.PDF",
@@ -73,6 +79,8 @@ const dummyContracts = [
     id: "1",
     status: "Pending",
     name: "John Paul",
+    business_name: "Havora",
+    employee_id: "R1234",
     created_at: "23-03-2024",
     updated_at: "23-03-2024",
     doc: "DOC.PDF",
