@@ -65,9 +65,9 @@ const Contract: React.FC = () => {
         return <RoleDetails />;
       case 3:
         return <Payments />;
-      case 4: 
-        return <Wallet />
-      case 5:
+      // case 4: 
+      //   return <Wallet />
+      case 4:
         return <ContractDetails />;
       default:
         return <ContractType setState={setState} />;

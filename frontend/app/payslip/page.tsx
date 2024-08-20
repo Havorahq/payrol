@@ -10,12 +10,13 @@ import { Contract } from "../hooks/useContractData";
 import Button from "../components/common/Button";
 import Modal from "../components/common/Modal";
 import Preloader from "../components/common/Preloader";
-import { capitalizeFirst } from "@/plugins/utils";
+import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { DatePicker, SelectPicker } from "rsuite";
 import CustomDatePicker from "../components/common/Datepicker";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Payslip: React.FC = () => {
   const { contracts, isLoading, error } = useContractData();
@@ -23,9 +24,11 @@ const Payslip: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
-  const [QR, setQR] = useState<boolean>(false);
+  const [complete, setComplete] = useState<boolean>(false);
 
   const [search, setSearch] = useState<string>("");
+
+  const router = useRouter();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -119,69 +122,73 @@ const Payslip: React.FC = () => {
         </div>
       </Modal>
       <Modal isOpen={isPaymentModalOpen} onClose={closePaymentModal}>
-        <div className="mt-16 p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <Image
-                src="/icons/invoice.png"
-                alt="Invoice icon"
-                height={24}
-                width={24}
-              />
-              <p className="text-brandgray font-bricolage">Invoice</p>
-            </div>
-            <p className="text-base text-[#3981F7]">July 1, 2024</p>
-          </div>
-          <div className="flex items-center justify-between my-2">
-            <div className="flex items-center gap-1">
-              <p className="text-[#0A112F] text-2xl font-medium font-bricolage">
-                $2,670<span className="text-[#9096A2] text-base">.50</span>
-              </p>
-            </div>
-            <span className="p-2 px-4 bg-[#FEEDDA] rounded-xl">
-              <p className="text-sm text-[#FAA745]">PENDING</p>
-            </span>
-          </div>
-        </div>
-        {!QR ? (
-          <div className="p-4 mx-2 rounded-xl border">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-brandgray font-bricolage">Contractor</p>
-              <p className="text-brandgray font-bricolage">Preview Invoice</p>
-            </div>
-            <div className="w-full flex items-center justify-evenly">
-              <Image
-                src="/icons/Avatar.png"
-                alt="Avatar"
-                height={48}
-                width={48}
-              />
-              <div>
-                <p className="text-base text-[#0A112F] ">Angela Nagelsman</p>
-                <p className="text-sm text-brandgray">Product Designer</p>
+        {!complete ? (
+          <div>
+            <div className="mt-16 p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <Image
+                    src="/icons/invoice.png"
+                    alt="Invoice icon"
+                    height={24}
+                    width={24}
+                  />
+                  <p className="text-brandgray font-bricolage">Invoice</p>
+                </div>
+                <p className="text-base text-[#3981F7]">July 1, 2024</p>
               </div>
-              <div
-                className={`${
-                  payment ? "bg-[#4A851C]" : "bg-black"
-                } w-fit p-2 px-3 rounded-lg cursor-pointer`}
-                onClick={() => {
-                  setPayment(!payment);
-                  payment && setQR(true);
-                }}
-              >
-                <p className="text-white text-sm">
-                  {payment ? "Make Payment" : "Approve Payment"}
-                </p>
+              <div className="flex items-center justify-between my-2">
+                <div className="flex items-center gap-1">
+                  <p className="text-[#0A112F] text-2xl font-medium font-bricolage">
+                    $2,670<span className="text-[#9096A2] text-base">.50</span>
+                  </p>
+                </div>
+                <span className="p-2 px-4 bg-[#FEEDDA] rounded-xl">
+                  <p className="text-sm text-[#FAA745]">PENDING</p>
+                </span>
+              </div>
+            </div>
+            <div className="p-4 mx-2 rounded-xl border">
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-brandgray font-bricolage">Contractor</p>
+                <p className="text-brandgray font-bricolage">Preview Invoice</p>
+              </div>
+              <div className="w-full flex items-center justify-evenly">
+                <Image
+                  src="/icons/Avatar.png"
+                  alt="Avatar"
+                  height={48}
+                  width={48}
+                />
+                <div>
+                  <p className="text-base text-[#0A112F] ">Angela Nagelsman</p>
+                  <p className="text-sm text-brandgray">Product Designer</p>
+                </div>
+                <div
+                  className={`${
+                    payment ? "bg-[#4A851C]" : "bg-black"
+                  } w-fit p-2 px-3 rounded-lg cursor-pointer`}
+                  onClick={() => {
+                    setPayment(!payment);
+                    payment && setComplete(true);
+                  }}
+                >
+                  <p className="text-white text-sm">
+                    {payment ? "Make Payment" : "Approve Payment"}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="p-4 mx-2 rounded-xl border">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-brandgray font-bricolage">Scan to Pay</p>
-              {/* <p className="text-brandgray font-bricolage">Preview Invoice</p> */}
-            </div>
-            <Image src="/icons/Qr.png" alt="qr code" width={390} height={390} />
+          <div className="p-8">
+            <p className="text-3xl text-black font-semibold font-sharp-grotesk">
+              All done!🎉
+            </p>
+            <p className="text-sm text-[#8F9299] font-dm-sans">
+              You’ve successfully approved payment
+            </p>
+            <Button primary onClick={() => router.push("/dashboard")}>Back to Home</Button>
           </div>
         )}
       </Modal>
@@ -231,13 +238,13 @@ const Payslip: React.FC = () => {
                 <th className="pr-3 py-1">Name</th>
                 <th className="pr-3 py-1">Start Date</th>
                 <th className="pr-3 py-1">End Date</th>
-                <th className="pr-3 py-1">Doc</th>
+                {/* <th className="pr-3 py-1">Doc</th> */}
                 <th className="pr-3 py-1">Type</th>
                 <th className="pr-3 py-1">Payslip</th>
                 <th className="pr-3 py-1"></th>
+                {/* <th className="pr-3 py-1"></th>
                 <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
+                <th className="pr-3 py-1"></th> */}
               </tr>
             </thead>
             <tbody>
@@ -271,12 +278,14 @@ const Payslip: React.FC = () => {
                   >
                     <td className="pr-1 py-3">{index + 1}</td>
                     <td className="pr-1 py-3 capitalize">
-                      {capitalizeFirst(status)}
+                      <span className={`${statusClass(status)}`}>
+                        {capitalizeFirst(status)}
+                      </span>
                     </td>
                     <td className="pr-1 py-3">{name}</td>
                     <td className="pr-1 py-3">{created_at}</td>
                     <td className="pr-1 py-3">{updated_at}</td>
-                    <td className="pr-1 py-3">{doc}</td>
+                    {/* <td className="pr-1 py-3">{doc}</td> */}
                     <td className="pr-1 py-3">{contract_type}</td>
                     <td className="pr-1 py-3">
                       <span onClick={() => handleGenerateSlip(item.id)}>
@@ -293,7 +302,7 @@ const Payslip: React.FC = () => {
                         <p className="text-white text-xs">Approve Payment</p>
                       </div>
                     </td>
-                    <td>
+                    {/* <td>
                       <Image
                         src="/icons/edit.png"
                         alt="edit icon"
@@ -317,7 +326,7 @@ const Payslip: React.FC = () => {
                         height={3}
                         width={4}
                       />
-                    </td>
+                    </td> */}
 
                     <td className="pr-2 py-3">
                       {/* <Button
