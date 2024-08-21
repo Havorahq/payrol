@@ -66,6 +66,23 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
             />
           </div>
         </Link>
+        <Link href="/profile">
+          <div
+            data-tooltip-id="tooltip-profile"
+            data-tooltip-content="Profile"
+            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+              title === "Profile"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-400 hover:border hover:border-gray-300"
+            }`}
+          >
+            <CgProfile
+              className={`w-6 h-6 ${
+                title === "Profile" ? "text-white" : "text-gray-400"
+              }`}
+            />
+          </div>
+        </Link>
         <Link href="/create-contract">
           <div
             data-tooltip-id="tooltip-contract"
@@ -130,6 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
         </div>
       </div>
       <Tooltip id="tooltip-dashboard" place="right" />
+      <Tooltip id="tooltip-profile" place="right" />
       <Tooltip id="tooltip-contract" place="right" />
       <Tooltip id="tooltip-team" place="right" />
       <Tooltip id="tooltip-payslip" place="right" />

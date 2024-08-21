@@ -86,6 +86,7 @@ button {
   padding: 1.3em 1.6em;
   width: 100%;
   font-size: var(--font-size-2xs);
+  font-weight: 600 !important;
 }
 
 button:disabled {
@@ -211,6 +212,7 @@ thead {
 
 th {
   padding-block: var(--space-xs);
+  padding-left: var(--space-2xs) !important;
   padding-right: var(--space-sm);
   text-align: left;
 }
@@ -223,11 +225,15 @@ tr {
 tbody > tr {
   margin-block: 1em !important;
   border-radius: 6px !important;
+  padding: var(--space-xl) !important;
+  border-radius: var(--space-sm) !important;
+  margin-block: var(--space-sm) !important;
   /* background-color: #131414; */
 }
 
 td {
-  padding-block: var(--space-ml);
+  padding-block: var(--space-ml) !important;
+  padding-left: var(--space-2xs) !important;
   padding-right: var(--space-sm);
   color: var(--color-black-2);
   /* font-size: var(--font-size-xs); */

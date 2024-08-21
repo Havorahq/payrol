@@ -91,57 +91,68 @@ const Profile = () => {
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full bg-gray-100"
               />
             </div>
-            <Button label="Save Changes" onClick={handleUpdateProfile} primary />
+            <Button
+              label="Save Changes"
+              onClick={handleUpdateProfile}
+              primary
+            />
           </div>
         </Modal>
-        <div className="flex items-center justify-between p-4 bg-white rounded-md shadow-md mb-4 text-gray-700">
-          <div className="flex items-center gap-2">
-            <div
-              className="p-2 bg-gray-200 rounded-full cursor-pointer"
-              onClick={() => router.push("/")}
-            >
-              <FaArrowLeft />
+        <div className="px-14">
+          <div className="flex items-center justify-between p-8 px-16 bg-white rounded-md shadow mb-4 text-gray-700">
+            <div className="flex items-center gap-4">
+              <div
+                className="p-4 bg-gray-200 rounded-full cursor-pointer"
+                onClick={() => router.push("/dashboard")}
+              >
+                <FaArrowLeft size={24} />
+              </div>
+              {/* <p className="text-xl font-medium">Profile</p> */}
             </div>
-            <p className="text-lg font-medium">Profile</p>
+            <Button
+              label="Update Profile"
+              onClick={openModal}
+              style="w-fit"
+              primary
+            />
           </div>
-          <Button label="Update Profile" onClick={openModal} style="w-fit" primary />
-        </div>
-        <div className="p-4 bg-white rounded-md shadow-md text-gray-700">
-          {isEmployee && (
-            <div className="mb-4">
-              <p className="text-sm font-medium">Name</p>
-              <p className="text-lg font-semibold">
-                {first_name} {last_name}
-              </p>
+          <div className="p-16 bg-white rounded-md shadow border text-gray-700">
+            {isEmployee && (
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">Name</p>
+                <p className="text-xl font-semibold">
+                  {first_name} {last_name}
+                </p>
+              </div>
+            )}
+            {isEmployer && (
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">First Name</p>
+                <p className="text-xl font-semibold">
+                  {first_name} {last_name}
+                </p>
+              </div>
+            )}
+            {isEmployer && (
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">Business Email</p>
+                <p className="text-xl font-semibold">{email}</p>
+              </div>
+            )}
+            {isEmployee && (
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">Email</p>
+                <p className="text-xl font-semibold">{email}</p>
+              </div>
+            )}
+            <div className="mb-8">
+              <p className="text-sm font-semibold text-brandgray">Account Type</p>
+              <p className="text-xl font-semibold">{user_type}</p>
             </div>
-          )}
-          {isEmployer && (
-            <div className="mb-4">
-              <p className="text-sm font-medium">Business Name</p>
-              <p className="text-lg font-semibold">
-                {first_name} {last_name}
-              </p>
+            <div className="mb-8">
+              <p className="text-sm font-semibold text-brandgray">Public Address</p>
+              <p className="text-xl font-semibold">{public_address}</p>
             </div>
-          )}
-          {isEmployer && (
-            <div className="mb-4">
-              <p className="text-sm font-medium">Business Email</p>
-              <p className="text-lg font-semibold">{email}</p>
-            </div>
-          )}
-          {isEmployee && (
-            <div className="mb-4">
-              <p className="text-sm font-medium">Email</p>
-              <p className="text-lg font-semibold">{email}</p>
-            </div>
-          )}
-          <div className="mb-4">
-            <p className="text-sm font-medium">Account Type</p>
-            <p className="text-lg font-semibold">{user_type}</p>
-          </div>
-          <div className="mb-4">
-            <p className="text-sm font-medium">Public Address</p>
-            <p className="text-lg font-semibold">{public_address}</p>
           </div>
         </div>
       </Wrapper>

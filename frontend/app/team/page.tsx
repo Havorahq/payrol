@@ -9,7 +9,7 @@ import { Contract } from "../hooks/useContractData";
 import Button from "../components/common/Button";
 import Modal from "../components/common/Modal";
 import Preloader from "../components/common/Preloader";
-import { capitalizeFirst } from "@/plugins/utils";
+import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { DatePicker, SelectPicker } from "rsuite";
@@ -185,17 +185,17 @@ const Team: React.FC = () => {
             <thead className="mb-20">
               <tr className="text-[#878790] mb-20 text-xs">
                 <th className="pr-3 py-1">S/N</th>
-                <th className="pr-3 py-1">Status</th>
+                {/* <th className="pr-3 py-1">Status</th> */}
                 <th className="pr-3 py-1">Name</th>
                 <th className="pr-3 py-1">Start Date</th>
                 <th className="pr-3 py-1">End Date</th>
-                <th className="pr-3 py-1">Doc</th>
+                {/* <th className="pr-3 py-1">Doc</th> */}
                 <th className="pr-3 py-1">Type</th>
                 {/* <th className="pr-3 py-1">Payslip</th> */}
+                <th className="pr-3 py-1">Status</th>
+                {/* <th className="pr-3 py-1"></th>
                 <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
+                <th className="pr-3 py-1"></th> */}
               </tr>
             </thead>
             <tbody>
@@ -225,16 +225,16 @@ const Team: React.FC = () => {
                     //   );
                     // }}
                     className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 p-3 px-2 my-4 rounded-lg"
-                    style={{ marginBlock: "2em", paddingInline: "1em" }}
+                    // style={{ marginBlock: "2em", paddingInline: "1em" }}
                   >
                     <td className="pr-1 py-3">{index + 1}</td>
-                    <td className="pr-1 py-3 capitalize">
+                    {/* <td className="pr-1 py-3 capitalize">
                       {capitalizeFirst(status)}
-                    </td>
+                    </td> */}
                     <td className="pr-1 py-3">{name}</td>
                     <td className="pr-1 py-3">{created_at}</td>
                     <td className="pr-1 py-3">{updated_at}</td>
-                    <td className="pr-1 py-3">{doc}</td>
+                    {/* <td className="pr-1 py-3">{doc}</td> */}
                     <td className="pr-1 py-3">{contract_type}</td>
                     {/* <td className="pr-1 py-3">
                       <span onClick={() => handleGenerateSlip(item.id)}>
@@ -243,15 +243,12 @@ const Team: React.FC = () => {
                         </p>
                       </span>
                     </td> */}
-                    <td>
-                      <div
-                        className="bg-[#232199] w-fit p-2 px-3 rounded-md"
-                        onClick={() => handlePayment(item.id)}
-                      >
-                        <p className="text-white text-xs">Active</p>
-                      </div>
+                    <td className="pr-1 py-3 capitalize">
+                      <span className={`${statusClass(status)}`}>
+                        {capitalizeFirst(status)}
+                      </span>
                     </td>
-                    <td>
+                    {/* <td>
                       <Image
                         src="/icons/edit.png"
                         alt="edit icon"
@@ -275,7 +272,7 @@ const Team: React.FC = () => {
                         height={3}
                         width={4}
                       />
-                    </td>
+                    </td> */}
 
                     <td className="pr-2 py-3">
                       {/* <Button
