@@ -42,10 +42,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Agreement__factory>;
     getContractFactory(
-      name: "IERC20",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC20__factory>;
-    getContractFactory(
       name: "AgreementFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AgreementFactory__factory>;
@@ -53,6 +49,106 @@ declare module "hardhat/types/runtime" {
       name: "BatchPayments",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BatchPayments__factory>;
+    getContractFactory(
+      name: "Base",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Base__factory>;
+    getContractFactory(
+      name: "CCTPAndTokenBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPAndTokenBase__factory>;
+    getContractFactory(
+      name: "CCTPAndTokenReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPAndTokenReceiver__factory>;
+    getContractFactory(
+      name: "CCTPAndTokenSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPAndTokenSender__factory>;
+    getContractFactory(
+      name: "CCTPBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPBase__factory>;
+    getContractFactory(
+      name: "CCTPReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPReceiver__factory>;
+    getContractFactory(
+      name: "CCTPSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CCTPSender__factory>;
+    getContractFactory(
+      name: "IMessageTransmitter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IMessageTransmitter__factory>;
+    getContractFactory(
+      name: "IReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IReceiver__factory>;
+    getContractFactory(
+      name: "IRelayer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRelayer__factory>;
+    getContractFactory(
+      name: "ITokenMessenger",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITokenMessenger__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "ITokenBridge",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITokenBridge__factory>;
+    getContractFactory(
+      name: "IWETH",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWETH__factory>;
+    getContractFactory(
+      name: "IWormhole",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormhole__factory>;
+    getContractFactory(
+      name: "IWormholeReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormholeReceiver__factory>;
+    getContractFactory(
+      name: "IWormholeRelayer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormholeRelayer__factory>;
+    getContractFactory(
+      name: "IWormholeRelayerBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormholeRelayerBase__factory>;
+    getContractFactory(
+      name: "IWormholeRelayerDelivery",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormholeRelayerDelivery__factory>;
+    getContractFactory(
+      name: "IWormholeRelayerSend",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWormholeRelayerSend__factory>;
+    getContractFactory(
+      name: "BytesParsing",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BytesParsing__factory>;
+    getContractFactory(
+      name: "QueryResponse",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.QueryResponse__factory>;
+    getContractFactory(
+      name: "TokenBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenBase__factory>;
+    getContractFactory(
+      name: "TokenReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenReceiver__factory>;
+    getContractFactory(
+      name: "TokenSender",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenSender__factory>;
     getContractFactory(
       name: "FixedRateAgreement",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -110,11 +206,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Agreement>;
     getContractAt(
-      name: "IERC20",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC20>;
-    getContractAt(
       name: "AgreementFactory",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -124,6 +215,131 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.BatchPayments>;
+    getContractAt(
+      name: "Base",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Base>;
+    getContractAt(
+      name: "CCTPAndTokenBase",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPAndTokenBase>;
+    getContractAt(
+      name: "CCTPAndTokenReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPAndTokenReceiver>;
+    getContractAt(
+      name: "CCTPAndTokenSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPAndTokenSender>;
+    getContractAt(
+      name: "CCTPBase",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPBase>;
+    getContractAt(
+      name: "CCTPReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPReceiver>;
+    getContractAt(
+      name: "CCTPSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CCTPSender>;
+    getContractAt(
+      name: "IMessageTransmitter",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IMessageTransmitter>;
+    getContractAt(
+      name: "IReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IReceiver>;
+    getContractAt(
+      name: "IRelayer",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRelayer>;
+    getContractAt(
+      name: "ITokenMessenger",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITokenMessenger>;
+    getContractAt(
+      name: "IERC20",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "ITokenBridge",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITokenBridge>;
+    getContractAt(
+      name: "IWETH",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWETH>;
+    getContractAt(
+      name: "IWormhole",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormhole>;
+    getContractAt(
+      name: "IWormholeReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormholeReceiver>;
+    getContractAt(
+      name: "IWormholeRelayer",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormholeRelayer>;
+    getContractAt(
+      name: "IWormholeRelayerBase",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormholeRelayerBase>;
+    getContractAt(
+      name: "IWormholeRelayerDelivery",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormholeRelayerDelivery>;
+    getContractAt(
+      name: "IWormholeRelayerSend",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWormholeRelayerSend>;
+    getContractAt(
+      name: "BytesParsing",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BytesParsing>;
+    getContractAt(
+      name: "QueryResponse",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.QueryResponse>;
+    getContractAt(
+      name: "TokenBase",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenBase>;
+    getContractAt(
+      name: "TokenReceiver",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenReceiver>;
+    getContractAt(
+      name: "TokenSender",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenSender>;
     getContractAt(
       name: "FixedRateAgreement",
       address: string | ethers.Addressable,
@@ -179,10 +395,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Agreement>;
     deployContract(
-      name: "IERC20",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
       name: "AgreementFactory",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.AgreementFactory>;
@@ -190,6 +402,106 @@ declare module "hardhat/types/runtime" {
       name: "BatchPayments",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.BatchPayments>;
+    deployContract(
+      name: "Base",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Base>;
+    deployContract(
+      name: "CCTPAndTokenBase",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenBase>;
+    deployContract(
+      name: "CCTPAndTokenReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenReceiver>;
+    deployContract(
+      name: "CCTPAndTokenSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenSender>;
+    deployContract(
+      name: "CCTPBase",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPBase>;
+    deployContract(
+      name: "CCTPReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPReceiver>;
+    deployContract(
+      name: "CCTPSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPSender>;
+    deployContract(
+      name: "IMessageTransmitter",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IMessageTransmitter>;
+    deployContract(
+      name: "IReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IReceiver>;
+    deployContract(
+      name: "IRelayer",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRelayer>;
+    deployContract(
+      name: "ITokenMessenger",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITokenMessenger>;
+    deployContract(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "ITokenBridge",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITokenBridge>;
+    deployContract(
+      name: "IWETH",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWETH>;
+    deployContract(
+      name: "IWormhole",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormhole>;
+    deployContract(
+      name: "IWormholeReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeReceiver>;
+    deployContract(
+      name: "IWormholeRelayer",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayer>;
+    deployContract(
+      name: "IWormholeRelayerBase",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerBase>;
+    deployContract(
+      name: "IWormholeRelayerDelivery",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerDelivery>;
+    deployContract(
+      name: "IWormholeRelayerSend",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerSend>;
+    deployContract(
+      name: "BytesParsing",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BytesParsing>;
+    deployContract(
+      name: "QueryResponse",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.QueryResponse>;
+    deployContract(
+      name: "TokenBase",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenBase>;
+    deployContract(
+      name: "TokenReceiver",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenReceiver>;
+    deployContract(
+      name: "TokenSender",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenSender>;
     deployContract(
       name: "FixedRateAgreement",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -247,11 +559,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Agreement>;
     deployContract(
-      name: "IERC20",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
       name: "AgreementFactory",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -261,6 +568,131 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.BatchPayments>;
+    deployContract(
+      name: "Base",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Base>;
+    deployContract(
+      name: "CCTPAndTokenBase",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenBase>;
+    deployContract(
+      name: "CCTPAndTokenReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenReceiver>;
+    deployContract(
+      name: "CCTPAndTokenSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPAndTokenSender>;
+    deployContract(
+      name: "CCTPBase",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPBase>;
+    deployContract(
+      name: "CCTPReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPReceiver>;
+    deployContract(
+      name: "CCTPSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.CCTPSender>;
+    deployContract(
+      name: "IMessageTransmitter",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IMessageTransmitter>;
+    deployContract(
+      name: "IReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IReceiver>;
+    deployContract(
+      name: "IRelayer",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IRelayer>;
+    deployContract(
+      name: "ITokenMessenger",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITokenMessenger>;
+    deployContract(
+      name: "IERC20",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IERC20>;
+    deployContract(
+      name: "ITokenBridge",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ITokenBridge>;
+    deployContract(
+      name: "IWETH",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWETH>;
+    deployContract(
+      name: "IWormhole",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormhole>;
+    deployContract(
+      name: "IWormholeReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeReceiver>;
+    deployContract(
+      name: "IWormholeRelayer",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayer>;
+    deployContract(
+      name: "IWormholeRelayerBase",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerBase>;
+    deployContract(
+      name: "IWormholeRelayerDelivery",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerDelivery>;
+    deployContract(
+      name: "IWormholeRelayerSend",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IWormholeRelayerSend>;
+    deployContract(
+      name: "BytesParsing",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.BytesParsing>;
+    deployContract(
+      name: "QueryResponse",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.QueryResponse>;
+    deployContract(
+      name: "TokenBase",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenBase>;
+    deployContract(
+      name: "TokenReceiver",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenReceiver>;
+    deployContract(
+      name: "TokenSender",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.TokenSender>;
     deployContract(
       name: "FixedRateAgreement",
       args: any[],

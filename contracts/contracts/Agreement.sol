@@ -1,16 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-interface IERC20 {
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) external returns (bool);
-
-    function balanceOf (
-        address owner
-    ) external returns (uint256);
-}
+import "./contract-deps/wormhole-sdk/src/interfaces/IERC20.sol";
 
 contract Agreement {
     enum AgreementStatus {
@@ -106,5 +97,25 @@ contract Agreement {
 
     function withdrawFunds() public view onlyEmployer {
         // this contract is a safety contract used by the employer to remove funds from the agreement contract
+    }
+
+    function collectTokens(
+        address tokenAddress,
+        uint256 requiredAmount
+    ) public returns (bool) {
+
+        // Ensure sufficient token balance:
+        IERC20 token = IERC20(tokenAddress);
+        require(
+            token.allowance(msg.sender, address(this)) >= requiredAmount,
+            "Insufficient token allowance"
+        );
+
+        require(token.balanceOf(msg.sender) >= requiredAmount, "Insufficient balance");
+
+        //  Transfer tokens from employer to contract:
+        token.transferFrom(msg.sender, address(this), requiredAmount);
+
+        return true;
     }
 }

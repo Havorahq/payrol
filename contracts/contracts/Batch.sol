@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
+import "./contract-deps/wormhole-sdk/src/interfaces/IERC20.sol";
 
 contract BatchPayments {
     struct Agreement {
@@ -66,7 +67,7 @@ contract BatchPayments {
         return agreements[_index];
     }
 
-    function withdrawFunds () onlyOwner() {
+    function withdrawFunds () public onlyOwner() {
 
     }
 

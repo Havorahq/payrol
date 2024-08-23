@@ -44,14 +44,20 @@ contract AgreementFactory {
         string memory _employeeId,
         address _employerAddress,
         address _currency,
-        uint256 _monthlyPayment
+        uint256 _monthlyPayment,
+        address _wormholeRelayer,
+        address _tokenBridge,
+        address _wormhole
     ) public {
         PayAsYouGoAgreement agreement = new PayAsYouGoAgreement(
             _employerId,
             _employeeId,
             _employerAddress,
             _currency,
-            _monthlyPayment
+            _monthlyPayment, // the wormhole integration stuff
+            _wormholeRelayer,
+            _tokenBridge,
+            _wormhole
         );
 
         payAsYouGoAgreements.push(agreement);

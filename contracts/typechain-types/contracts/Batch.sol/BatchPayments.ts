@@ -44,6 +44,7 @@ export interface BatchPaymentsInterface extends Interface {
       | "performBatchPayments"
       | "tokenAddress"
       | "used"
+      | "withdrawFunds"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -72,6 +73,10 @@ export interface BatchPaymentsInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "used", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "withdrawFunds",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "addAgreement",
@@ -96,6 +101,10 @@ export interface BatchPaymentsInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "used", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawFunds",
+    data: BytesLike
+  ): Result;
 }
 
 export interface BatchPayments extends BaseContract {
@@ -173,6 +182,8 @@ export interface BatchPayments extends BaseContract {
 
   used: TypedContractMethod<[], [boolean], "view">;
 
+  withdrawFunds: TypedContractMethod<[], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -213,6 +224,9 @@ export interface BatchPayments extends BaseContract {
   getFunction(
     nameOrSignature: "used"
   ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "withdrawFunds"
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   filters: {};
 }

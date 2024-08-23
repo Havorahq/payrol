@@ -27,20 +27,31 @@ export interface PayAsYouGoAgreementInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "agreementStatus"
+      | "approveForPayment"
       | "cancel"
       | "close"
+      | "collectTokens"
       | "contractType"
       | "currency"
       | "employeeEnterContract"
       | "employeeId"
       | "employerAddress"
       | "employerId"
+      | "numberOfPaymentApprovals"
+      | "numberOfWithdrawals"
       | "paymentAddress"
       | "payments"
+      | "quoteCrossChainDeposit"
+      | "receiveWormholeMessages"
+      | "sendCrossChainDeposit"
       | "sendPayment"
       | "setMonthlyPayments"
+      | "setRegisteredSender"
       | "suspend"
+      | "tokenBridge"
       | "withdrawFunds"
+      | "wormhole"
+      | "wormholeRelayer"
   ): FunctionFragment;
 
   getEvent(
@@ -51,8 +62,16 @@ export interface PayAsYouGoAgreementInterface extends Interface {
     functionFragment: "agreementStatus",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "approveForPayment",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "cancel", values?: undefined): string;
   encodeFunctionData(functionFragment: "close", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "collectTokens",
+    values: [AddressLike, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "contractType",
     values?: undefined
@@ -75,12 +94,32 @@ export interface PayAsYouGoAgreementInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "numberOfPaymentApprovals",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "numberOfWithdrawals",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "paymentAddress",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "payments",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "quoteCrossChainDeposit",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "receiveWormholeMessages",
+    values: [BytesLike, BytesLike[], BytesLike, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "sendCrossChainDeposit",
+    values: [BigNumberish, AddressLike, AddressLike, BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "sendPayment",
@@ -90,9 +129,22 @@ export interface PayAsYouGoAgreementInterface extends Interface {
     functionFragment: "setMonthlyPayments",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setRegisteredSender",
+    values: [BigNumberish, BytesLike]
+  ): string;
   encodeFunctionData(functionFragment: "suspend", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "tokenBridge",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdrawFunds",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "wormhole", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "wormholeRelayer",
     values?: undefined
   ): string;
 
@@ -100,8 +152,16 @@ export interface PayAsYouGoAgreementInterface extends Interface {
     functionFragment: "agreementStatus",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "approveForPayment",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "cancel", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "close", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "collectTokens",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "contractType",
     data: BytesLike
@@ -118,10 +178,30 @@ export interface PayAsYouGoAgreementInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "employerId", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "numberOfPaymentApprovals",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "numberOfWithdrawals",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "paymentAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "payments", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "quoteCrossChainDeposit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "receiveWormholeMessages",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "sendCrossChainDeposit",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "sendPayment",
     data: BytesLike
@@ -130,9 +210,22 @@ export interface PayAsYouGoAgreementInterface extends Interface {
     functionFragment: "setMonthlyPayments",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRegisteredSender",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "suspend", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "tokenBridge",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "withdrawFunds",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "wormhole", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "wormholeRelayer",
     data: BytesLike
   ): Result;
 }
@@ -210,9 +303,17 @@ export interface PayAsYouGoAgreement extends BaseContract {
 
   agreementStatus: TypedContractMethod<[], [bigint], "view">;
 
+  approveForPayment: TypedContractMethod<[], [boolean], "nonpayable">;
+
   cancel: TypedContractMethod<[], [void], "nonpayable">;
 
   close: TypedContractMethod<[], [void], "nonpayable">;
+
+  collectTokens: TypedContractMethod<
+    [tokenAddress: AddressLike, requiredAmount: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
 
   contractType: TypedContractMethod<[], [string], "view">;
 
@@ -230,12 +331,46 @@ export interface PayAsYouGoAgreement extends BaseContract {
 
   employerId: TypedContractMethod<[], [string], "view">;
 
+  numberOfPaymentApprovals: TypedContractMethod<[], [bigint], "view">;
+
+  numberOfWithdrawals: TypedContractMethod<[], [bigint], "view">;
+
   paymentAddress: TypedContractMethod<[], [string], "view">;
 
   payments: TypedContractMethod<
     [arg0: BigNumberish],
     [[bigint, string] & { amount: bigint; payeeAddress: string }],
     "view"
+  >;
+
+  quoteCrossChainDeposit: TypedContractMethod<
+    [targetChain: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  receiveWormholeMessages: TypedContractMethod<
+    [
+      payload: BytesLike,
+      additionalVaas: BytesLike[],
+      sourceAddress: BytesLike,
+      sourceChain: BigNumberish,
+      deliveryHash: BytesLike
+    ],
+    [void],
+    "payable"
+  >;
+
+  sendCrossChainDeposit: TypedContractMethod<
+    [
+      targetChain: BigNumberish,
+      targetHelloToken: AddressLike,
+      recipient: AddressLike,
+      amount: BigNumberish,
+      token: AddressLike
+    ],
+    [void],
+    "payable"
   >;
 
   sendPayment: TypedContractMethod<[], [boolean], "nonpayable">;
@@ -246,9 +381,21 @@ export interface PayAsYouGoAgreement extends BaseContract {
     "nonpayable"
   >;
 
+  setRegisteredSender: TypedContractMethod<
+    [sourceChain: BigNumberish, sourceAddress: BytesLike],
+    [void],
+    "nonpayable"
+  >;
+
   suspend: TypedContractMethod<[], [void], "nonpayable">;
 
+  tokenBridge: TypedContractMethod<[], [string], "view">;
+
   withdrawFunds: TypedContractMethod<[], [void], "view">;
+
+  wormhole: TypedContractMethod<[], [string], "view">;
+
+  wormholeRelayer: TypedContractMethod<[], [string], "view">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -258,11 +405,21 @@ export interface PayAsYouGoAgreement extends BaseContract {
     nameOrSignature: "agreementStatus"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
+    nameOrSignature: "approveForPayment"
+  ): TypedContractMethod<[], [boolean], "nonpayable">;
+  getFunction(
     nameOrSignature: "cancel"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "close"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "collectTokens"
+  ): TypedContractMethod<
+    [tokenAddress: AddressLike, requiredAmount: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "contractType"
   ): TypedContractMethod<[], [string], "view">;
@@ -282,6 +439,12 @@ export interface PayAsYouGoAgreement extends BaseContract {
     nameOrSignature: "employerId"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "numberOfPaymentApprovals"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "numberOfWithdrawals"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "paymentAddress"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
@@ -290,6 +453,35 @@ export interface PayAsYouGoAgreement extends BaseContract {
     [arg0: BigNumberish],
     [[bigint, string] & { amount: bigint; payeeAddress: string }],
     "view"
+  >;
+  getFunction(
+    nameOrSignature: "quoteCrossChainDeposit"
+  ): TypedContractMethod<[targetChain: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "receiveWormholeMessages"
+  ): TypedContractMethod<
+    [
+      payload: BytesLike,
+      additionalVaas: BytesLike[],
+      sourceAddress: BytesLike,
+      sourceChain: BigNumberish,
+      deliveryHash: BytesLike
+    ],
+    [void],
+    "payable"
+  >;
+  getFunction(
+    nameOrSignature: "sendCrossChainDeposit"
+  ): TypedContractMethod<
+    [
+      targetChain: BigNumberish,
+      targetHelloToken: AddressLike,
+      recipient: AddressLike,
+      amount: BigNumberish,
+      token: AddressLike
+    ],
+    [void],
+    "payable"
   >;
   getFunction(
     nameOrSignature: "sendPayment"
@@ -302,11 +494,27 @@ export interface PayAsYouGoAgreement extends BaseContract {
     "nonpayable"
   >;
   getFunction(
+    nameOrSignature: "setRegisteredSender"
+  ): TypedContractMethod<
+    [sourceChain: BigNumberish, sourceAddress: BytesLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
     nameOrSignature: "suspend"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "tokenBridge"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
     nameOrSignature: "withdrawFunds"
   ): TypedContractMethod<[], [void], "view">;
+  getFunction(
+    nameOrSignature: "wormhole"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "wormholeRelayer"
+  ): TypedContractMethod<[], [string], "view">;
 
   getEvent(
     key: "PayAsYouGoPaymentMade"

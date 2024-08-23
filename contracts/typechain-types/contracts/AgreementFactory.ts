@@ -47,7 +47,16 @@ export interface AgreementFactoryInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "createNewPayAsYouGoAgreement",
-    values: [string, string, AddressLike, AddressLike, BigNumberish]
+    values: [
+      string,
+      string,
+      AddressLike,
+      AddressLike,
+      BigNumberish,
+      AddressLike,
+      AddressLike,
+      AddressLike
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "fixedRateAgreements",
@@ -185,7 +194,10 @@ export interface AgreementFactory extends BaseContract {
       _employeeId: string,
       _employerAddress: AddressLike,
       _currency: AddressLike,
-      _monthlyPayment: BigNumberish
+      _monthlyPayment: BigNumberish,
+      _wormholeRelayer: AddressLike,
+      _tokenBridge: AddressLike,
+      _wormhole: AddressLike
     ],
     [void],
     "nonpayable"
@@ -234,7 +246,10 @@ export interface AgreementFactory extends BaseContract {
       _employeeId: string,
       _employerAddress: AddressLike,
       _currency: AddressLike,
-      _monthlyPayment: BigNumberish
+      _monthlyPayment: BigNumberish,
+      _wormholeRelayer: AddressLike,
+      _tokenBridge: AddressLike,
+      _wormhole: AddressLike
     ],
     [void],
     "nonpayable"

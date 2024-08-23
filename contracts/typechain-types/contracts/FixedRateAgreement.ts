@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumberish,
   BytesLike,
   FunctionFragment,
   Result,
@@ -28,6 +29,7 @@ export interface FixedRateAgreementInterface extends Interface {
       | "agreementStatus"
       | "cancel"
       | "close"
+      | "collectTokens"
       | "contractType"
       | "currency"
       | "employeeEnterContract"
@@ -51,6 +53,10 @@ export interface FixedRateAgreementInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "cancel", values?: undefined): string;
   encodeFunctionData(functionFragment: "close", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "collectTokens",
+    values: [AddressLike, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "contractType",
     values?: undefined
@@ -96,6 +102,10 @@ export interface FixedRateAgreementInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cancel", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "close", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "collectTokens",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "contractType",
     data: BytesLike
@@ -207,6 +217,12 @@ export interface FixedRateAgreement extends BaseContract {
 
   close: TypedContractMethod<[], [void], "nonpayable">;
 
+  collectTokens: TypedContractMethod<
+    [tokenAddress: AddressLike, requiredAmount: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
+
   contractType: TypedContractMethod<[], [string], "view">;
 
   currency: TypedContractMethod<[], [string], "view">;
@@ -246,6 +262,13 @@ export interface FixedRateAgreement extends BaseContract {
   getFunction(
     nameOrSignature: "close"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "collectTokens"
+  ): TypedContractMethod<
+    [tokenAddress: AddressLike, requiredAmount: BigNumberish],
+    [boolean],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "contractType"
   ): TypedContractMethod<[], [string], "view">;
