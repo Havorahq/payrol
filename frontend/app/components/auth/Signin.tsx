@@ -31,6 +31,10 @@ const Signin: React.FC = () => {
 
   fetchUserData();
 
+  if (!context) {
+    return null; // Or handle the case where context is undefined
+  }
+
   const { onRouteChange } = context;
 
   // If the user exists, route to the dashboard
@@ -38,10 +42,6 @@ const Signin: React.FC = () => {
     router.push("/dashboard");
   } else if (userExist === "not-found") {
     onRouteChange("signup");
-  }
-
-  if (!context) {
-    return null; // Or handle the case where context is undefined
   }
 
   return (
