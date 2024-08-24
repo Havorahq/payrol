@@ -11,13 +11,13 @@ const Signin: React.FC = () => {
   const context = useContext(OnboardingContext);
 
   const { user } = useDynamicContext();
-  const [userExist, setUserExist] = useState(null);
+  const [userExist, setUserExist] = useState("");
 
   console.log("Logged in user", user);
   const router = useRouter();
 
   const fetchUserData = async () => {
-    if (user) {
+    if (user && user.email) {
       try {
         const fetchedUser = await findUser(user.email);
         setUserExist(
