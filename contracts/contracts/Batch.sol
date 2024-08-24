@@ -14,7 +14,6 @@ contract BatchPayments {
     Agreement[] public agreements;
     bool public used = false;
     address public tokenAddress;
-    mapping(address => string) paymentResults; // the results after making batch payments
 
 
     // batch payments object
@@ -46,7 +45,7 @@ contract BatchPayments {
         agreements.push(newAgreement);
     }
 
-    function performBatchPayments() public onlyOwner {
+    function performBatchPayments(uint256 amount) public onlyOwner {
         require (!used, "the batch payments contract has already been used");
         used = true;
 
@@ -54,7 +53,9 @@ contract BatchPayments {
         IERC20 token = IERC20(tokenAddress);
         require(token.balanceOf(address(this)) > 0, "Not enough balance");
 
-
+        for (uint256 i=0; i<agreements.length; i++){
+            require(token.transferFrom(address(this), agreements[i].agreementAddress, amount));
+        }
         // go through the smart contracts in the list and execute their payment methods
         // implement a new batch payments object
     }
