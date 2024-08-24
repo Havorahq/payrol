@@ -123,7 +123,7 @@ export default function Home() {
         {/* EMPLOYER UI */}
         <div className="text-black font-bricolage grid place-items-center h-full pt-20">
           <div className="flex items-center gap-10">
-            <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+            <div className="card-gradient-border border border-gray-400 p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal">
               <Image
                 src="/icons/clipboard-text.png"
                 alt="Brand icon"
@@ -185,7 +185,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 w-[60%]">
+          <div className="border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 w-[63%]">
             <p className="font-medium text-2xl">Xalari Support</p>
             <p>For assistance, Contact support@xalari.com</p>
             <div className="flex items-center gap-1">
@@ -194,7 +194,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
 
         {/* Analytics UI */}
         {/* <div className="flex gap-4 text-[#23272E] w-full">
@@ -257,9 +256,6 @@ export default function Home() {
             </div>
           </div>
         </div> */}
-
-
-
 
         {/* EMPLOYEE UI */}
         {/* <div className="px-14">
@@ -420,7 +416,6 @@ export default function Home() {
             </div>
           </div>
         </div> */}
-
       </Wrapper>
     </>
   );

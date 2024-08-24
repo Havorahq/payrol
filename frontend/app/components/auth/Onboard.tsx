@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { OnboardingContext } from "../../contexts/OnboardingContext";
 import Button from "../common/Button";
+import { DynamicWidget } from "../../../lib/dynamic";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const Onboard: React.FC = () => {
   const context = useContext(OnboardingContext);
+  const { user } = useDynamicContext();
 
   if (!context) {
     return null; // Or handle the case where context is undefined
@@ -51,11 +54,12 @@ const Onboard: React.FC = () => {
             type="email"
             name="email"
             id="email"
-            value={email}
+            value={user?.verifiedCredentials[1].email}
             placeholder="Enter your email"
             onChange={onChange}
             className="input"
             required
+            disabled
           />
         </div>
         {activeTab === "business" && (
