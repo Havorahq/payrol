@@ -46,7 +46,15 @@ contract Agreement {
         _;
     }
 
-    // cancelContract
+    modifier onlyEmployee() {
+        require(
+            msg.sender == paymentAddress,
+            "You are not alowed to carry out this action"
+        );
+        _;
+    }
+
+    // TODO: cancelContract
     function cancel() public onlyEmployer {
         require(
             agreementStatus != AgreementStatus.Cancelled,
@@ -56,7 +64,7 @@ contract Agreement {
         return;
     }
 
-    // suspendContract
+    // TODO: suspendContract
     function suspend() public onlyEmployer {
         require(
             agreementStatus != AgreementStatus.Cancelled,
@@ -70,7 +78,7 @@ contract Agreement {
         return;
     }
 
-    // close the contract
+    // TODO: close the contract
     function close() public onlyEmployer {
         require(
             agreementStatus != AgreementStatus.Cancelled,
@@ -83,7 +91,7 @@ contract Agreement {
 
     // changePaymentAddress
 
-    // employee enter contract
+    // TODO: allow the employee enter the agreement after it has been created
     function employeeEnterContract(address _paymentAddress) public {
         require(
             agreementStatus == AgreementStatus.Pending,

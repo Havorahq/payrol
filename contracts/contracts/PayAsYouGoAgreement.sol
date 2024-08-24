@@ -62,7 +62,7 @@ contract PayAsYouGoAgreement is Agreement, TokenSender, TokenReceiver {
         require(token.transfer(_to, _amount), "Token transfer failed");
     }
 
-    function approveForPayment() public onlyEmployer() returns (bool) {
+    function approveForPayment() public returns (bool) {
         require(
             agreementStatus == AgreementStatus.Active,
             "This contract is no longer active"
@@ -71,6 +71,7 @@ contract PayAsYouGoAgreement is Agreement, TokenSender, TokenReceiver {
         return true;
     }
 
+    //TODO: for intra-chain payments
     // sendPayment
     function sendPayment() public returns (bool) {
         require(
@@ -94,7 +95,7 @@ contract PayAsYouGoAgreement is Agreement, TokenSender, TokenReceiver {
         uint256 newMonthlyPayment
     ) public onlyEmployer {}
 
-
+    //TODO: to enable cross-chain payments
     // cross-chain token transfer functions
     function sendCrossChainDeposit(
         uint16 targetChain,
@@ -103,11 +104,20 @@ contract PayAsYouGoAgreement is Agreement, TokenSender, TokenReceiver {
         uint256 amount,
         address token
     ) public payable {
+        require(
+            agreementStatus == AgreementStatus.Active,
+            "This contract is no longer active"
+        );
+        require (
+            numberOfPaymentApprovals > numberOfWithdrawals,
+            "this payment has not been approved"
+        );
+
         uint256 cost = quoteCrossChainDeposit(targetChain);
-        require(msg.value == cost,
+        require(amount == cost,
         "msg.value != quoteCrossChainDeposit(targetChain)");
 
-        IERC20(token).transferFrom(msg.sender, address(this), amount);
+        // IERC20(token).transferFrom(msg.sender, address(this), amount);
 
         bytes memory payload = abi.encode(recipient);
         sendTokenWithPayloadToEvm(
@@ -119,6 +129,9 @@ contract PayAsYouGoAgreement is Agreement, TokenSender, TokenReceiver {
         token, // address of IERC20 token contract
         amount
         );
+        emit PaymentMade(address(this));
+        emit PayAsYouGoPaymentMade(paymentAddress, employerAddress);
+        ++ numberOfWithdrawals;
     }
 
     function quoteCrossChainDeposit(uint16 targetChain)
