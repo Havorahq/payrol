@@ -4,11 +4,25 @@ require('dotenv').config();
 
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.24",
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  },
   networks: {
     // for testnet
     'lisk-sepolia': {
       url: 'https://rpc.sepolia-api.lisk.com',
+      accounts: [process.env.WALLET_KEY as string],
+      gasPrice: 1000000000,
+    },
+    'bsc-testnet': {
+      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      chainId: 97,
       accounts: [process.env.WALLET_KEY as string],
       gasPrice: 1000000000,
     },
@@ -32,5 +46,7 @@ const config: HardhatUserConfig = {
     enabled: false
   },
 };
+
+// current bsc deployment address: 0x64e5F7D8b70ba9D6801d7B818f4b448B3c0f0043
 
 export default config;
