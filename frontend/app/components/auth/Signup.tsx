@@ -73,19 +73,9 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button onClick={() => onRouteChange("onboard")}>Sign Up</Button>
+          <Button onClick={() => onRouteChange("onboard")}>Continue</Button>
         </div>
       </div>
-
-      <p className="self-center text-sm">
-        Already have an account?{" "}
-        <span
-          className="text-gradient font-medium cursor-pointer"
-          onClick={() => onRouteChange("signin")}
-        >
-          Sign In
-        </span>
-      </p>
     </div>
   );
 };
