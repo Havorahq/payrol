@@ -268,12 +268,12 @@ export const getPaymentById = async (paymentId: string) => {
   }
 };
 
-export const findUser = async (publicAddress: string) => {
+export const findUser = async (email_address: string) => {
   try {
     const user = await supabase
       .from("user")
       .select("*") // Select all user columns (adjust as needed)
-      .eq("public_address", publicAddress)
+      .eq("email", email_address)
       .single();
 
     if (!user) {
