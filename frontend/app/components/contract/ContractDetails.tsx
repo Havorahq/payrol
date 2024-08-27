@@ -29,7 +29,7 @@ const ContractDetails: React.FC = () => {
           </Button>
         </div>
       </Modal>
-      <div className="flex flex-col m-8 p-8 h-full justify-center gap-2">
+      <div className="flex flex-col m-8 lg:p-8 p-0 h-full justify-center gap-2">
         <span
           className="flex items-center gap-2 text-primary cursor-pointer"
           onClick={handlePrev}
@@ -38,7 +38,9 @@ const ContractDetails: React.FC = () => {
           <p className="text-xs">Previous</p>
         </span>
         <div className="flex flex-col items-start">
-          <h1>Contract Details📄</h1>
+          <p className="font-semibold lg:text-4xl text-3xl">
+            Contract Details 📄
+          </p>
           <p className="text-xs font-light text-grey">
             Details of your contract below
           </p>
@@ -86,10 +88,10 @@ const ContractDetails: React.FC = () => {
             <p className="text-md text-grey-500 font-medium">Monthly Rate</p>
             <p className="text-sm text-grey my-2">{state?.monthlyRate}</p>
           </div>
-          <div className="py-1 my-1 border-b">
+          {/* <div className="py-1 my-1 border-b">
             <p className="text-md text-grey-500 font-medium">Wallet Address</p>
             <p className="text-sm text-grey my-2">{state?.walletAddress}</p>
-          </div>
+          </div> */}
           {/* <input
           type="date"
           name="endDate"

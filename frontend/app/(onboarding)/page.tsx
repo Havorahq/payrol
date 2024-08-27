@@ -69,7 +69,7 @@ const Onboarding: React.FC = () => {
           />
         </div>
       </div> */}
-      <div className="w-fit text-black p-16 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit">
+      <div className="w-fit text-black p-16 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit lg:m-0 m-4">
         {renderPages()}
       </div>
     </div>

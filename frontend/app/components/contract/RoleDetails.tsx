@@ -20,7 +20,7 @@ const RoleDetails: React.FC = () => {
   } = useContext(ContractContext)!;
 
   return (
-    <div className="flex flex-col m-8 p-8 h-full justify-center gap-12">
+    <div className="flex flex-col m-8 lg:p-8 p-0 h-full justify-center gap-12">
       <span
         className="flex items-center gap-2 text-primary cursor-pointer"
         onClick={handlePrev}
@@ -29,7 +29,7 @@ const RoleDetails: React.FC = () => {
         <p className="text-xs">Previous</p>
       </span>
       <div className="flex flex-col items-start">
-        <p className="font-semibold text-4xl">Role Details</p>
+        <p className="font-semibold lg:text-4xl text-3xl">Role Details</p>
         <p className="text-xs font-light text-grey">
           Fill in the role details below
         </p>
@@ -46,7 +46,9 @@ const RoleDetails: React.FC = () => {
           className="p-2 border border-gray-300 rounded"
         />
         <div className="flex flex-col">
-          <label htmlFor="jobDescription" className="mb-2">Job Description</label>
+          <label htmlFor="jobDescription" className="mb-2">
+            Job Description
+          </label>
           <textarea
             name="jobDescription"
             id="jobDescription"
