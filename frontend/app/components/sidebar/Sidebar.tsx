@@ -12,6 +12,7 @@ import { BsGrid } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import { FaUsers } from "react-icons/fa";
 
 interface SidebarProps {
   title: string;
@@ -38,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
   };
 
   return (
-    <div className="h-full p-2 pb-8 bg-white flex flex-col items-center m-2 mb-4 border rounded-lg">
+    <div className="h-[98%] p-2 pb-8 bg-white flex flex-col items-center z-20 m-2 mb-4 border rounded-lg">
       <div className="mb-8">
         <Image
           src="/icons/brandLogo.png"
@@ -47,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
           height={60}
         />
       </div>
-      <div className="mt-16 font-medium">
+      <div className="mt-16 font-medium z-20">
         <Link href="/dashboard">
           <div
             data-tooltip-id="tooltip-dashboard"
@@ -58,35 +59,33 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            <BsGrid
+            {/* <BsGrid
               className={`w-6 h-6 ${
                 title === "Dashboard" ? "text-white" : "text-gray-400"
               }`}
-            />
+            /> */}
+            {title === "Dashboard" ? (
+              <Image
+                src="/icons/dashboard.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/icons/dashboardInactive.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            )}
           </div>
         </Link>
-        <Link href="/create-contract">
-          <div
-            data-tooltip-id="tooltip-contract"
-            data-tooltip-content="Contract"
-            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
-              title === "Contract"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            <CgFileRemove
-              className={`w-6 h-6 ${
-                title === "Contract" ? "text-white" : "text-gray-400"
-              }`}
-            />
-          </div>
-        </Link>
-        <Link href="/profile">
+        {/* <Link href="/profile">
           <div
             data-tooltip-id="tooltip-profile"
             data-tooltip-content="Profile"
-            className={`flex items-center justify-center p-4 rounded-md my-3 ${
+            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
               title === "Profile"
                 ? "bg-primary text-white"
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
@@ -97,6 +96,70 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 title === "Profile" ? "text-white" : "text-gray-400"
               }`}
             />
+          </div>
+        </Link> */}
+        <Link href="/create-contract">
+          <div
+            data-tooltip-id="tooltip-contract"
+            data-tooltip-content="Contract"
+            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+              title === "Contract"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-400 hover:border hover:border-gray-300"
+            }`}
+          >
+            {/* <CgFileRemove
+              className={`w-6 h-6 ${
+                title === "Contract" ? "text-white" : "text-gray-400"
+              }`}
+            /> */}
+            {title === "Contract" ? (
+              <Image
+                src="/icons/contractIcon.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/icons/contractIconInactive.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            )}
+          </div>
+        </Link>
+        <Link href="/team">
+          <div
+            data-tooltip-id="tooltip-team"
+            data-tooltip-content="Team"
+            className={`flex items-center justify-center p-4 rounded-md my-3 ${
+              title === "Team"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-400 hover:border hover:border-gray-300"
+            }`}
+          >
+            {/* <FaUsers
+              className={`w-5 h-5 ${
+                title === "Team" ? "text-white" : "text-gray-400"
+              }`}
+            /> */}
+            {title === "Team" ? (
+              <Image
+                src="/icons/teamIcon.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/icons/teamIconInactive.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            )}
           </div>
         </Link>
         <Link href="/payslip">
@@ -109,28 +172,78 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            <IoReceiptOutline
+            {/* <IoReceiptOutline
               className={`w-5 h-5 ${
                 title === "Payslip" ? "text-white" : "text-gray-400"
               }`}
-            />
+            /> */}
+            {title === "Payslip" ? (
+              <Image
+                src="/icons/payslipIcon.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/icons/payslipIconInactive.svg"
+                alt="dashboard icon"
+                width={24}
+                height={24}
+              />
+            )}
+          </div>
+        </Link>
+        <Link href="/profile">
+          <div
+            data-tooltip-id="tooltip-profile"
+            data-tooltip-content="Profile"
+            className={`mt-72 flex items-center justify-center p-3 rounded-lg my-3 ${
+              title === "Profile"
+                ? "bg-primary text-white"
+                : "bg-white text-gray-400 hover:border hover:border-gray-300"
+            }`}
+          >
+            {/* <CgProfile
+              className={`w-6 h-6 ${
+                title === "Profile" ? "text-white" : "text-gray-400"
+              }`}
+            /> */}
+            {title === "Profile" ? (
+              <Image
+                src="/icons/user.svg"
+                alt="profile icon"
+                width={24}
+                height={24}
+              />
+            ) : (
+              <Image
+                src="/icons/userInactive.svg"
+                alt="profile icon"
+                width={24}
+                height={24}
+              />
+            )}
           </div>
         </Link>
         <div
           data-tooltip-id="tooltip-signout"
           data-tooltip-content="Sign Out"
           onClick={handleSignout}
-          className="flex items-center justify-center p-4 rounded-md mt-64 cursor-pointer text-gray-400 hover:border hover:border-gray-300"
+          className="flex items-center justify-center p-4 rounded-md cursor-pointer text-gray-400 hover:border hover:border-gray-300"
         >
-          <LiaSignOutAltSolid className="w-6 h-6 text-gray-400" />
-          <div>
-            <a className="cursor-pointer"></a>
-          </div>
+          <Image
+            src="/icons/logoutInactive.svg"
+            alt="logout icon"
+            width={24}
+            height={24}
+          />
         </div>
       </div>
       <Tooltip id="tooltip-dashboard" place="right" />
-      <Tooltip id="tooltip-contract" place="right" />
       <Tooltip id="tooltip-profile" place="right" />
+      <Tooltip id="tooltip-contract" place="right" />
+      <Tooltip id="tooltip-team" place="right" />
       <Tooltip id="tooltip-payslip" place="right" />
       <Tooltip id="tooltip-signout" place="right" />
     </div>

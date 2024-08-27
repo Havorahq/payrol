@@ -54,7 +54,7 @@ export const ContractProvider = ({ children }: { children: ReactNode }) => {
       isPasswordShown: false,
     });
 
-    console.log("State: ", state);
+    // console.log("State: ", state);
 
     const handleNext = () => {
       if (state.step < 5) {

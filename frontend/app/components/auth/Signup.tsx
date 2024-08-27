@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { OnboardingContext } from "../../contexts/OnboardingContext";
 import Button from "../common/Button";
 import Image from "next/image";
+import { DynamicWidget } from "../../../lib/dynamic";
 
 const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,21 +73,9 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button onClick={() => console.log("Clicked!")}>
-            Connect Wallet
-          </Button>
+          <Button onClick={() => onRouteChange("onboard")}>Continue</Button>
         </div>
       </div>
-
-      <p className="self-center text-sm">
-        Already have an account?{" "}
-        <span
-          className="text-gradient font-medium cursor-pointer"
-          onClick={() => onRouteChange("signin")}
-        >
-          Sign In
-        </span>
-      </p>
     </div>
   );
 };
