@@ -99,6 +99,12 @@ const ContractDetails: React.FC = () => {
         /> */}
         </div>
         <div className="flex justify-between mt-4">
+          {/* 
+          TODO: 
+          call createNewPayAsYouGoAgreement for pay as you go contract
+          call createNewFixedRateAgreement for fixed rate contract
+          call employeeEnterContract(address _paymentAddress) to enter contract as employee
+          */}
           <Button
             onClick={() => setModalOpen(true)}
             // disabled={!state.startDate || !state.endDate}
