@@ -57,14 +57,14 @@ const Signin: React.FC = () => {
           You will be redirected to the sign up page if you don&apos;t have an
           account
         </p>
-        <div className="flex justify-center">
-          <Button>
+        <div className="flex justify-center mt-8">
             <DynamicWidget
               innerButtonComponent={
                 <button>Sign In with Wallet or Email</button>
               }
             ></DynamicWidget>
-          </Button>
+          {/* <Button>
+          </Button> */}
         </div>
       </div>
       <p className="self-center text-sm">

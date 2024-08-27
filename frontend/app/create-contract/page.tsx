@@ -77,7 +77,7 @@ const Contract: React.FC = () => {
   return (
     <>
       <Wrapper>
-        <div className="flex flex-col items-center h-fit w-full contractBg overflow-forced">
+        <div className="flex flex-col items-center h-full w-full overflow-forced">
           {/* <div className="flex h-full w-4/5 flex-col justify-evenly p-8 px-16 text-white md:w-1/2 primary-bg overflow-hidden-forced">
             <div className="flex items-center gap-2">
               <Image
@@ -105,7 +105,7 @@ const Contract: React.FC = () => {
               />
             </div>
           </div> */}
-          <div className="w-full text-black p-8 pb-12 md:w-1/2 bg-white border border-1 rounded-xl h-fit">
+          <div className="w-full text-black p-8 pb-12 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit">
             {renderStep()}
           </div>
           <div className="my-16 flex items-center gap-4">

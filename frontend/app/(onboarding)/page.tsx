@@ -36,7 +36,7 @@ const Onboarding: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-fit w-full justify-center items-center contractBg">
+    <div className="flex flex-col items-center justify-center h-full w-full contractBg">
       {/* <div className="flex h-full w-4/5 flex-col justify-evenly p-8 px-16 text-white md:w-1/2 primary-bg">
         <div className="flex items-center gap-4">
           <Image
@@ -69,7 +69,7 @@ const Onboarding: React.FC = () => {
           />
         </div>
       </div> */}
-      <div className="h-fit w-full text-black p-8 md:w-1/2 bg-white border border-1 rounded-xl">
+      <div className="w-fit text-black p-16 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit">
         {renderPages()}
       </div>
     </div>

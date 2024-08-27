@@ -174,9 +174,9 @@ button:disabled {
   font-size: 10px;
 }
 
-.h-fit {
+/* .h-fit {
   height: inherit !important;
-}
+} */
 
 .authBg {
   background: url("/images/authBg.png") no-repeat center fixed;
@@ -184,11 +184,37 @@ button:disabled {
   background-size: cover;
 }
 
-.contractBg {
-  /* background: url("/images/authBg.png") no-repeat center fixed; */
-  background: url("/images/contractBg.png") no-repeat center fixed;
-  background-size: cover;
+.contractVector {
+  margin-bottom: -10;
+  right: 0;
+  bottom: 0 !important;
+  z-index: -1;
 }
+
+/* .contractBg {
+  background: url("/images/Placeholder.png") no-repeat center fixed;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.855) !important;
+} */
+
+/* Global stylesheet */
+.contractBg {
+  position: relative;
+}
+
+.contractBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/images/xalariBackground.png") no-repeat center center fixed;
+  background-size: cover;
+  opacity: 0.5;
+  z-index: -1; 
+}
+
 
 .tableContainer {
   width: inherit;
@@ -281,12 +307,15 @@ td {
   border: none;
 }
 
+/* Custom CSS */
 .card-gradient-border {
-  /* border-width: 4px; Adjust as needed */
-  border-radius: 12px !important;
+  border-width: 1px; /* Adjust border width as needed */
+  border-radius: 12px !important; /* Ensures the rounded corners are applied */
   border-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)) 1;
-  border-color: rgba(0, 0, 0, 0.107) !important;
+  border-color: #cfcccc; /* Removes solid border color, using the gradient instead */
 }
+
+
 
 
 @layer utilities {

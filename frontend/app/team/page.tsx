@@ -143,7 +143,7 @@ const Team: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className="bg-white rounded-md shadow-md p-4 mt-3 text-[#131414]">
+      <div className="bg-white rounded-md shadow-md p-8 mt-3 text-[#131414]">
         <div className="flex items-center gap-8 mb-8">
           {/* <p className="text-lg font-medium">Payslips</p> */}
           <SelectPicker
