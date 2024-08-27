@@ -121,77 +121,82 @@ export default function Home() {
       </Modal>
       <Wrapper>
         {/* EMPLOYER UI */}
-        <div className="text-black font-bricolage grid place-items-center h-full pt-20">
-          <div className="flex items-center gap-10">
-            <div className="card-gradient-border border border-gray-400 p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal">
-              <Image
-                src="/icons/clipboard-text.png"
-                alt="Brand icon"
-                width={58}
-                height={58}
-                style={{ marginLeft: -13 }}
-              />
-              <p className="font-medium text-2xl">Xalari Contracts</p>
-              <p>
-                Create and manage contracts <br />
-                contacts effortlessly.
-              </p>
-              <div
-                className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
-                onClick={() => router.push("/create-contract")}
-              >
-                <p>Create Contract</p>
-                <TiArrowRight />
+        <div className="">
+          <div className="text-black relative bg-red font-bricolage h-full pt-20 flex flex-col items-center justify-center">
+            <div className="">
+              <div className="flex items-center gap-10">
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+                  <Image
+                    src="/icons/clipboard-text.png"
+                    alt="Brand icon"
+                    width={58}
+                    height={58}
+                    style={{ marginLeft: -13 }}
+                  />
+                  <p className="font-medium text-2xl">Xalari Contracts</p>
+                  <p>
+                    Create and manage contracts <br />
+                    contacts effortlessly.
+                  </p>
+                  <div
+                    className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+                    onClick={() => router.push("/create-contract")}
+                  >
+                    <p>Create Contract</p>
+                    <TiArrowRight />
+                  </div>
+                </div>
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+                  <Image
+                    src="/icons/video-time.png"
+                    alt="Brand icon"
+                    width={58}
+                    height={58}
+                    style={{ marginLeft: -5 }}
+                  />
+                  <p className="font-medium text-2xl">Xalari Time</p>
+                  <p>
+                    Manage Time effectively and <br />
+                    track work done.
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <p>Track Time</p>
+                    <TiArrowRight />
+                  </div>
+                </div>
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+                  <Image
+                    src="/icons/block.png"
+                    alt="Brand icon"
+                    width={48}
+                    height={48}
+                    style={{ marginLeft: 0 }}
+                  />
+                  <p className="font-medium text-2xl">Xalari Block</p>
+                  <p>
+                    Settle employee and Contractors <br />
+                    globally with crypto.
+                  </p>
+                  <div
+                    className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+                    onClick={() => router.push("/payslip")}
+                  >
+                    <p>Make Payment</p>
+                    <TiArrowRight />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
-              <Image
-                src="/icons/video-time.png"
-                alt="Brand icon"
-                width={58}
-                height={58}
-                style={{ marginLeft: -5 }}
-              />
-              <p className="font-medium text-2xl">Xalari Time</p>
-              <p>
-                Manage Time effectively and <br />
-                track work done.
-              </p>
-              <div className="flex items-center gap-1">
-                <p>Track Time</p>
-                <TiArrowRight />
-              </div>
-            </div>
-            <div className="border p-10 rounded-lg flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
-              <Image
-                src="/icons/block.png"
-                alt="Brand icon"
-                width={48}
-                height={48}
-                style={{ marginLeft: 0 }}
-              />
-              <p className="font-medium text-2xl">Xalari Block</p>
-              <p>
-                Settle employee and Contractors <br />
-                globally with crypto.
-              </p>
-              <div
-                className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
-                onClick={() => router.push("/payslip")}
-              >
-                <p>Make Payment</p>
-                <TiArrowRight />
-              </div>
-            </div>
-          </div>
 
-          <div className="border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 w-[63%]">
-            <p className="font-medium text-2xl">Xalari Support</p>
-            <p>For assistance, Contact support@xalari.com</p>
-            <div className="flex items-center gap-1">
-              <p>Contact Us</p>
-              <TiArrowRight />
+              <div className="bg-white border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10">
+                <p className="font-medium text-2xl">Xalari Support</p>
+                <p>For assistance, Contact support@xalari.com</p>
+                <div className="flex items-center gap-1">
+                  <p>Contact Us</p>
+                  <TiArrowRight />
+                </div>
+              </div>
             </div>
+            
           </div>
         </div>
 
