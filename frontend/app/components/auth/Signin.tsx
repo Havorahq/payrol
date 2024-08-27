@@ -44,18 +44,37 @@ const Signin: React.FC = () => {
     onRouteChange("signup");
   }
 
-        <p className="mt-2 text-gray-400 text-xs">
-          You will be redirected to the sign up page if you don&apos;t have an
-          account
-        </p>
-        <div className="flex justify-center mt-8">
-            <DynamicWidget
-              innerButtonComponent={
-                <button>Sign In with Wallet or Email</button>
-              }
-            ></DynamicWidget>
-          {/* <Button>
-          </Button> */}
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="flex flex-col m-0 px-8 py-1 h-fit justify-center overflow-y-scroll gap-16">
+          <div className="flex flex-col items-center">
+            <h1>Welcome 👋🏼</h1>
+            <p className="text-sm">Please sign in to your account </p>
+
+            <p className="mt-2 text-gray-400 text-xs">
+              You will be redirected to the sign up page if you don&apos;t have
+              an account
+            </p>
+            <div className="flex justify-center mt-8">
+                <DynamicWidget
+                  innerButtonComponent={
+                    <button>Sign In with Wallet or Email</button>
+                  }
+                ></DynamicWidget>
+              {/* <Button>
+              </Button> */}
+            </div>
+          </div>
+          <p className="self-center text-sm">
+            Need to create an account?{" "}
+            <span
+              className="text-gradient font-medium cursor-pointer"
+              onClick={() => onRouteChange("signup")}
+            >
+              Sign up
+            </span>
+          </p>
         </div>
       </Suspense>
     </>
