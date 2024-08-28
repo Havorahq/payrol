@@ -4,7 +4,7 @@ export const createCompany = async (
   firstName: string,
   lastName: string,
   email: string,
-  address: string = "",
+  address: string,
   userType: string,
   businessName: string,
   businessEmail: string,
@@ -266,9 +266,12 @@ export const getPaymentById = async (paymentId: string) => {
 };
 
 export const findUser = async (email_address: string) => {
+  if (!email_address) {
+    return null; // or some default value
+  }
   try {
     const user = await supabase
-      .from("user")
+      .from("users")
       .select("*") // Select all user columns (adjust as needed)
       .eq("email", email_address)
       .single();

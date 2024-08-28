@@ -8,29 +8,35 @@ import Wrapper from "../components/wrapper/Wrapper";
 import Modal from "../components/common/Modal";
 import Button from "../components/common/Button";
 import Preloader from "../components/common/Preloader";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { findUser } from "../api/helper-functions";
 
-interface UserData {
-  email: string;
-  first_name: string;
-  last_name: string;
-  public_address: string;
-  user_type: string;
-}
+// interface UserData {
+//   email: string;
+//   first_name: string;
+//   last_name: string;
+//   public_address: string;
+//   user_type: string;
+// }
 
-const mockUserData: UserData = {
-  email: "user@example.com",
-  first_name: "John",
-  last_name: "Doe",
-  public_address: "0x1234567890abcdef",
-  user_type: "business", // or "employee"
-};
+// const mockUserData: UserData = {
+//   email: "user@example.com",
+//   first_name: "John",
+//   last_name: "Doe",
+//   public_address: "0x1234567890abcdef",
+//   user_type: "business", // or "employee"
+// };
 
 const Profile = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [userData, setUserData] = useState<UserData | null>(mockUserData);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const { user } = useDynamicContext();
+
+  const userEmail = user!.email as string;
+  const userData: any = findUser(userEmail);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -59,7 +65,9 @@ const Profile = () => {
       <Wrapper>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-6">
-            <h1 className="text-xl font-bold text-left mb-8">Update Profile Details</h1>
+            <h1 className="text-xl font-bold text-left mb-8">
+              Update Profile Details
+            </h1>
             <div className="my-2">
               <label className="block text-sm font-medium text-gray-700">
                 First Name
@@ -127,7 +135,9 @@ const Profile = () => {
             )}
             {isEmployer && (
               <div className="mb-8">
-                <p className="text-sm font-semibold text-brandgray">First Name</p>
+                <p className="text-sm font-semibold text-brandgray">
+                  First Name
+                </p>
                 <p className="text-xl font-semibold">
                   {first_name} {last_name}
                 </p>
@@ -135,7 +145,9 @@ const Profile = () => {
             )}
             {isEmployer && (
               <div className="mb-8">
-                <p className="text-sm font-semibold text-brandgray">Business Email</p>
+                <p className="text-sm font-semibold text-brandgray">
+                  Business Email
+                </p>
                 <p className="text-xl font-semibold">{email}</p>
               </div>
             )}
@@ -146,11 +158,15 @@ const Profile = () => {
               </div>
             )}
             <div className="mb-8">
-              <p className="text-sm font-semibold text-brandgray">Account Type</p>
+              <p className="text-sm font-semibold text-brandgray">
+                Account Type
+              </p>
               <p className="text-xl font-semibold">{user_type}</p>
             </div>
             <div className="mb-8">
-              <p className="text-sm font-semibold text-brandgray">Public Address</p>
+              <p className="text-sm font-semibold text-brandgray">
+                Public Address
+              </p>
               <p className="text-xl font-semibold">{public_address}</p>
             </div>
           </div>

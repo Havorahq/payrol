@@ -18,6 +18,8 @@ import DatePicker from "react-datepicker";
 import CustomDatePicker from "../components/common/Datepicker";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { findUser } from "../api/helper-functions";
 
 const Payslip: React.FC = () => {
   const { contracts, isLoading, error } = useContractData();
@@ -26,6 +28,10 @@ const Payslip: React.FC = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
+  const { user } = useDynamicContext();
+
+  const userEmail = user!.email as string;
+  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
 

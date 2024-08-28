@@ -18,6 +18,8 @@ import { TiArrowRight } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import { findUser } from "../api/helper-functions";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 interface Contract {
   id: number;
@@ -28,10 +30,6 @@ interface Contract {
   payment: string;
   contract_address: string;
 }
-
-const mockUserData = {
-  user_type: "admin",
-};
 
 const mockContractData: Contract[] = [
   {
@@ -47,8 +45,11 @@ const mockContractData: Contract[] = [
 ];
 
 export default function Home() {
-  const userData = mockUserData; // Mock user data
   const contractData = mockContractData; // Mock contract data
+  const { user } = useDynamicContext();
+
+  const userEmail = user!.email as string;
+  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<string>("");
@@ -189,10 +190,7 @@ export default function Home() {
 
               <div className="bg-white border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 lg:w-fit w-[300px]">
                 <p className="font-medium text-2xl">Xalari Support</p>
-                <p>
-                  Enjoy our 24/7 support by our dedicated
-                  team.
-                </p>
+                <p>Enjoy our 24/7 support by our dedicated team.</p>
                 <div className="flex items-center gap-1">
                   <p>Contact Us</p>
                   <TiArrowRight />
