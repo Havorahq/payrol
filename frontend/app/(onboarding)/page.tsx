@@ -37,38 +37,6 @@ const Onboarding: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full contractBg">
-      {/* <div className="flex h-full w-4/5 flex-col justify-evenly p-8 px-16 text-white md:w-1/2 primary-bg">
-        <div className="flex items-center gap-4">
-          <Image
-            src="/icons/brandLogo.png"
-            alt="Brand icon"
-            width={50}
-            height={50}
-          />
-          <h1 className="text-2xl font-bold">Xalari</h1>
-        </div>
-        <div>
-          <p className="text-4xl font-semibold">
-            Payroll <br />
-            Management on the <br />
-            blockchain!
-          </p>
-          <p className="mt-2 text-sm leading-6">
-            Revolutionize Payroll Management with Blockchain Technology!
-            Discover a secure, transparent, and efficient way to handle payroll,
-            ensuring accuracy, trust, and simplicity for businesses of all
-            sizes.
-          </p>
-        </div>
-        <div className="self-center">
-          <Image
-            src="/images/calculator.png"
-            alt="Calculator image"
-            width={400}
-            height={350}
-          />
-        </div>
-      </div> */}
       <div className="font-bricolage w-fit text-black p-16 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit lg:m-0 m-4">
         {renderPages()}
       </div>
