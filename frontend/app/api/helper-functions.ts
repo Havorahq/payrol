@@ -1,73 +1,70 @@
 import { supabase } from "../../lib/supabaseClient";
 
 export const createCompany = async (
-  name: string,
+  firstName: string,
+  lastName: string,
   email: string,
-  headquartersLocation: string,
-  numberOfEmployees: number
-) => {
+  address: string = "",
+  userType: string,
+  businessName: string,
+  businessEmail: string,
+  businessSize: string,
+  industry: string
+): Promise<{
+  companyData: any | null;
+  userData: any | null;
+  error: string | null;
+}> => {
   try {
-    const newCompany = {
-      name,
-      email,
-      headquarters_location: headquartersLocation,
-      number_of_employees: numberOfEmployees,
+    // Create company
+
+    const company = {
+      businessName,
+      businessEmail,
+      businessSize,
+      industry,
     };
-    const { data, error } = await supabase
+    const { data: companyData, error: companyError } = await supabase
       .from("companies")
-      .insert([newCompany]);
+      .insert([company]);
 
-    if (error) {
-      throw new Error(error.message);
-    }
+    if (companyError)
+      throw new Error(`Failed to create company: ${companyError.message}`);
 
-    return { data, error: null };
+    // Create user (employer) using the createUser function
+    const { data: userData, error: userError } = await createUser(
+      firstName,
+      lastName,
+      email,
+      address,
+      userType
+    );
+
+    if (userError) throw new Error(userError);
+
+    return { companyData, userData, error: null };
   } catch (error) {
-    return { data: null, error: "An error occurred" };
+    return { companyData: null, userData: null, error: "Rollback_transaction" };
   }
 };
-
-export const createEmployer = async (
-  legalName: string,
+export const createUser = async (
+  firstName: string,
+  lastName: string,
   email: string,
-  position: string,
-  companyId: string
+  address: string,
+  userType: string,
+  companyId?: string
 ) => {
   try {
-    const newEmployer = {
-      legal_name: legalName,
+    const user = {
+      firstName,
+      lastName,
       email,
-      position,
-      company_id: companyId,
+      address,
+      userType,
+      companyId,
     };
-    const { data, error } = await supabase
-      .from("employers")
-      .insert([newEmployer]);
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    return { data, error: null };
-  } catch (error) {
-    return { data: null, error: "An error occurred" };
-  }
-};
-
-export const createEmployee = async (
-  legalName: string,
-  email: string,
-  location: string
-) => {
-  try {
-    const newEmployee = {
-      legal_name: legalName,
-      email,
-      location,
-    };
-    const { data, error } = await supabase
-      .from("employees")
-      .insert([newEmployee]);
+    const { data, error } = await supabase.from("users").insert([user]);
 
     if (error) {
       throw new Error(error.message);

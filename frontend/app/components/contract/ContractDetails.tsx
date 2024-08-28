@@ -12,6 +12,7 @@ import useUserData from "@/app/hooks/useUserData";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
+import { bscTestnet } from "viem/chains";
 
 const ContractDetails: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -51,17 +52,18 @@ const ContractDetails: React.FC = () => {
 
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
         "johnson", // employer id
         "jj", // employee id
-        "account.address", // employer address,
+        "0x8810df59BE2F2e585F8085586eB70340f3E7E103", // employer address,
         "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda", // usdt address
-        "rate",
+        1000,
         ...wormhole_ags,
       ],
+      chain: bscTestnet || walletClient.chain,
     });
 
     return hash;
@@ -72,7 +74,7 @@ const ContractDetails: React.FC = () => {
 
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
@@ -173,7 +175,12 @@ const ContractDetails: React.FC = () => {
     if (!primaryWallet) {
       return console.error("user not loaded yet");
     }
+
     if (state.contractType === "fixed") {
+      console.log(
+        { primaryWallet },
+        "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F"
+      );
       deployFixedAgreement();
     } else if (state.contractType.toLowerCase() === "pay as you go") {
       deployPAYGAgreement();
