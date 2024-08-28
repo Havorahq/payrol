@@ -8,6 +8,10 @@ import Modal from "../../components/common/Modal";
 import { capitalizeFirst } from "../../../plugins/utils";
 import useContractData from "../../hooks/useContractData";
 import useUserData from "../../hooks/useUserData";
+import { bscTestnet } from "viem/chains";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+
+const agreementAbi = require("@/lib/contract/AgreementAbi.json");
 
 const ContractDetail = () => {
   const router = useRouter();
@@ -19,6 +23,21 @@ const ContractDetail = () => {
   const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
   const { contracts, isLoading, error } = useContractData();
+  const { primaryWallet } = useDynamicContext();
+
+  const enterContract = async () => {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+    // Use the walletClient to write data to the smart contract
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      abi: agreementAbi,
+      functionName: "employeeEnterContract",
+      chain: bscTestnet || walletClient.chain,
+    });
+
+    return hash;
+  };
 
   useEffect(() => {
     if (id && contracts) {
@@ -39,6 +58,7 @@ const ContractDetail = () => {
 
   const handleEnterAgreement = () => {
     console.log("Agreement entered");
+    enterContract()
     openModal();
   };
 
