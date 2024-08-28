@@ -59,7 +59,7 @@ const Profile = () => {
       <Wrapper>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-6">
-            <h1 className="text-xl font-bold">Update Profile Details</h1>
+            <h1 className="text-xl font-bold text-left mb-8">Update Profile Details</h1>
             <div className="my-2">
               <label className="block text-sm font-medium text-gray-700">
                 First Name
@@ -80,7 +80,7 @@ const Profile = () => {
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               />
             </div>
-            <div className="my-2">
+            <div className="my-2 mb-8">
               <label className="block text-sm font-medium text-gray-700">
                 Email Address
               </label>
@@ -98,8 +98,8 @@ const Profile = () => {
             />
           </div>
         </Modal>
-        <div className="px-14">
-          <div className="flex items-center justify-between p-8 px-16 bg-white rounded-md shadow mb-4 text-gray-700">
+        <div className="lg:px-14 px-2">
+          <div className="flex items-center justify-between p-8 lg:px-16 px-4 bg-white rounded-md shadow mb-4 text-gray-700">
             <div className="flex items-center gap-4">
               <div
                 className="p-4 bg-gray-200 rounded-full cursor-pointer"
@@ -116,7 +116,7 @@ const Profile = () => {
               primary
             />
           </div>
-          <div className="p-16 bg-white rounded-md shadow border text-gray-700">
+          <div className="lg:p-16 p-8 bg-white rounded-md shadow border text-gray-700">
             {isEmployee && (
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Name</p>

@@ -3,15 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
 import { CiGrid42 } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoReceiptOutline } from "react-icons/io5";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { CgFileRemove } from "react-icons/cg";
 import { BsGrid } from "react-icons/bs";
-import Swal from "sweetalert2";
-import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css'
 import { FaUsers } from "react-icons/fa";
 
 interface SidebarProps {
@@ -19,9 +20,6 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ title }) => {
-//   const handleSignout = () => {
-//     console.log("Signed out");
-//   };
 
   const handleSignout = () => {
     Swal.fire({
@@ -59,11 +57,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            {/* <BsGrid
-              className={`w-6 h-6 ${
-                title === "Dashboard" ? "text-white" : "text-gray-400"
-              }`}
-            /> */}
             {title === "Dashboard" ? (
               <Image
                 src="/icons/dashboard.svg"
@@ -81,23 +74,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
             )}
           </div>
         </Link>
-        {/* <Link href="/profile">
-          <div
-            data-tooltip-id="tooltip-profile"
-            data-tooltip-content="Profile"
-            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
-              title === "Profile"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            <CgProfile
-              className={`w-6 h-6 ${
-                title === "Profile" ? "text-white" : "text-gray-400"
-              }`}
-            />
-          </div>
-        </Link> */}
         <Link href="/create-contract">
           <div
             data-tooltip-id="tooltip-contract"
@@ -108,11 +84,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            {/* <CgFileRemove
-              className={`w-6 h-6 ${
-                title === "Contract" ? "text-white" : "text-gray-400"
-              }`}
-            /> */}
             {title === "Contract" ? (
               <Image
                 src="/icons/contractIcon.svg"
@@ -140,11 +111,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            {/* <FaUsers
-              className={`w-5 h-5 ${
-                title === "Team" ? "text-white" : "text-gray-400"
-              }`}
-            /> */}
             {title === "Team" ? (
               <Image
                 src="/icons/teamIcon.svg"
@@ -172,11 +138,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            {/* <IoReceiptOutline
-              className={`w-5 h-5 ${
-                title === "Payslip" ? "text-white" : "text-gray-400"
-              }`}
-            /> */}
             {title === "Payslip" ? (
               <Image
                 src="/icons/payslipIcon.svg"
@@ -204,11 +165,6 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
                 : "bg-white text-gray-400 hover:border hover:border-gray-300"
             }`}
           >
-            {/* <CgProfile
-              className={`w-6 h-6 ${
-                title === "Profile" ? "text-white" : "text-gray-400"
-              }`}
-            /> */}
             {title === "Profile" ? (
               <Image
                 src="/icons/user.svg"

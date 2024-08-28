@@ -192,9 +192,8 @@ const Payslip: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className="bg-white rounded-md shadow-md p-8 mt-3 text-[#131414]">
-        <div className="flex items-center gap-8 mb-8">
-          {/* <p className="text-lg font-medium">Payslips</p> */}
+      <div className="bg-white rounded-md shadow-lg border lg:p-8 p-2 mt-8 text-[#131414]">
+        <div className="flex lg:flex-row flex-wrap items-center lg:gap-8 gap-2 mb-8">
           <SelectPicker
             data={[]}
             placeholder="Status"
@@ -230,21 +229,17 @@ const Payslip: React.FC = () => {
           />
         </div>
         <div className="overflow-x-auto mt-3">
-          <table className="min-w-full bg-white">
-            <thead className="mb-20">
-              <tr className="text-[#878790] mb-20 text-xs">
+          <table className="min-w-full bg-white rounded-md">
+            <thead className="mb-20 py-8">
+              <tr className="text-[#878790] mb-20 pb-16 text-xs">
                 <th className="pr-3 py-1">S/N</th>
                 <th className="pr-3 py-1">Status</th>
                 <th className="pr-3 py-1">Name</th>
                 <th className="pr-3 py-1">Start Date</th>
                 <th className="pr-3 py-1">End Date</th>
-                {/* <th className="pr-3 py-1">Doc</th> */}
                 <th className="pr-3 py-1">Type</th>
                 <th className="pr-3 py-1">Payslip</th>
                 <th className="pr-3 py-1"></th>
-                {/* <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th>
-                <th className="pr-3 py-1"></th> */}
               </tr>
             </thead>
             <tbody>
@@ -273,7 +268,7 @@ const Payslip: React.FC = () => {
                     //     })
                     //   );
                     // }}
-                    className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 p-3 px-2 my-4 rounded-lg"
+                    className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 border-gray-100 p-3 px-2 my-4 rounded-lg"
                     style={{ marginBlock: "2em", paddingInline: "1em" }}
                   >
                     <td className="pr-1 py-3">{index + 1}</td>
@@ -327,16 +322,6 @@ const Payslip: React.FC = () => {
                         width={4}
                       />
                     </td> */}
-
-                    <td className="pr-2 py-3">
-                      {/* <Button
-                        label="Generate Payslip"
-                        key={item.id}
-                        onClick={() => handleGenerateSlip(item.id)}
-                        style="w-fit"
-                        primary
-                      /> */}
-                    </td>
                   </tr>
                 );
               })}

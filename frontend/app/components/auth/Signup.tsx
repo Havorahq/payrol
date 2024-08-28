@@ -16,17 +16,17 @@ const Signup: React.FC = () => {
   const { activeTab } = state;
 
   return (
-    <div className="m-8 p-8 h-full flex flex-col justify-center overflow-y-scroll gap-12">
+    <div className="lg:m-8 m-2 lg:p-8 p-0 h-full flex flex-col justify-center overflow-y-scroll gap-12">
       <div className="flex flex-col items-center">
         <h1>Welcome 👋🏼</h1>
-        <p className="">Please Create an account</p>
-        <p className="mt-2 text-gray-400 text-xs">
+        <p className="">Please create an account</p>
+        <p className="mt-2 text-gray-400 text-xs text-center">
           You will be signed in if you already have an account
         </p>
       </div>
 
       <div className="flex flex-col items-center">
-        <div className="flex gap-4 my-4">
+        <div className="flex lg:flex-row flex-col gap-4 my-4">
           <div
             className={`p-4 rounded cursor-pointer flex items-center gap-3 ${
               activeTab === "business" ? "activeTab" : "border"
@@ -73,7 +73,7 @@ const Signup: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button onClick={() => onRouteChange("onboard")}>Continue</Button>
+          <Button onClick={() => onRouteChange("onboard")} style="w-full" primary>Continue</Button>
         </div>
       </div>
     </div>
