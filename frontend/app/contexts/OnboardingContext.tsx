@@ -1,7 +1,8 @@
-import React, { createContext, useState, ChangeEvent, ReactNode } from "react";
+import React, { createContext, useState, ChangeEvent, ReactNode, ChangeEventHandler } from "react";
 
 interface OnboardingContextType {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onRouteChange: (value: string) => void;
   onTabChange: (value: string) => void;
   onReset: () => void;
@@ -15,6 +16,8 @@ interface StateType {
   lastName: string;
   businessName: string;
   businessEmail: string;
+  businessSize: number;
+  industry: string;
   activeTab: string;
 }
 
@@ -28,6 +31,8 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     lastName: "",
     businessName: "",
     businessEmail: "",
+    businessSize: 0,
+    industry: "",
     activeTab: "business",
   });
 
@@ -64,8 +69,15 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   return (
-    <OnboardingContext.Provider value={{ onChange, onRouteChange, onTabChange, onReset, state }}>
+    <OnboardingContext.Provider value={{ onChange, onSelectChange, onRouteChange, onTabChange, onReset, state }}>
       {children}
     </OnboardingContext.Provider>
   );
