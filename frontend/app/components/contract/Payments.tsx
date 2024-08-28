@@ -30,7 +30,7 @@ const Payments: React.FC = () => {
   }, [state?.contractType]);
 
   return (
-    <div className="flex flex-col m-8 p-8 h-full justify-center gap-12">
+    <div className="flex flex-col m-8 lg:p-8 p-0 h-full justify-center gap-12">
       <span
         className="flex items-center gap-2 text-primary cursor-pointer"
         onClick={handlePrev}
@@ -39,7 +39,7 @@ const Payments: React.FC = () => {
         <p className="text-xs">Previous</p>
       </span>
       <div className="flex flex-col items-start">
-        <p className="font-semibold text-4xl">Payment Schedule</p>
+        <p className="font-semibold lg:text-4xl text-3xl">Payment Schedule</p>
         <p className="text-xs font-light text-grey">
           Fill in the payment details below
         </p>

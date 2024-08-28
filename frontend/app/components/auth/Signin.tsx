@@ -52,7 +52,7 @@ const Signin: React.FC = () => {
             <h1>Welcome 👋🏼</h1>
             <p className="text-sm">Please sign in to your account </p>
 
-            <p className="mt-2 text-gray-400 text-xs">
+            <p className="mt-2 text-gray-400 text-xs text-center">
               You will be redirected to the sign up page if you don&apos;t have
               an account
             </p>

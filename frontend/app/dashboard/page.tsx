@@ -124,8 +124,8 @@ export default function Home() {
         <div className="">
           <div className="text-black relative bg-red font-bricolage h-full pt-20 flex flex-col items-center justify-center">
             <div className="">
-              <div className="flex items-center gap-10">
-                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+              <div className="flex lg:flex-row flex-col items-center gap-10">
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow w-[300px]">
                   <Image
                     src="/icons/clipboard-text.png"
                     alt="Brand icon"
@@ -146,7 +146,7 @@ export default function Home() {
                     <TiArrowRight />
                   </div>
                 </div>
-                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow w-[300px]">
                   <Image
                     src="/icons/video-time.png"
                     alt="Brand icon"
@@ -164,7 +164,7 @@ export default function Home() {
                     <TiArrowRight />
                   </div>
                 </div>
-                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow">
+                <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow w-[300px]">
                   <Image
                     src="/icons/block.png"
                     alt="Brand icon"
@@ -187,80 +187,20 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-white border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10">
+              <div className="bg-white border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 lg:w-fit w-[300px]">
                 <p className="font-medium text-2xl">Xalari Support</p>
-                <p>For assistance, Contact support@xalari.com</p>
+                <p>
+                  Enjoy our 24/7 support by our dedicated
+                  team.
+                </p>
                 <div className="flex items-center gap-1">
                   <p>Contact Us</p>
                   <TiArrowRight />
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
-
-        {/* Analytics UI */}
-        {/* <div className="flex gap-4 text-[#23272E] w-full">
-          <div className="w-8/12">
-            <div className="flex w-full gap-4">
-              <div className="border rounded-lg w-1/2 h-1/4 p-8">
-                <div className="mb-8">
-                  <p className="font-semibold text-lg">Team in by country</p>
-                  <p className="font-bold text-3xl">100</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-4 my-4">
-                    <Image src="/icons/us.png" alt="contry flag" height={34} width={34} />
-                    <div className="w-full">
-                      <p className="font-semibold text-sm text-[#4B465C]">30</p>
-                      <p className="font-normal text-xs text-[#8B909A]">United states</p>
-                    </div>
-                    <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
-                  </div>
-
-                  <div className="flex items-center gap-4 my-4">
-                    <Image src="/icons/brazil.png" alt="contry flag" height={34} width={34} />
-                    <div className="w-full">
-                      <p className="font-semibold text-sm text-[#4B465C]">26</p>
-                      <p className="font-normal text-xs text-[#8B909A]">Brazil</p>
-                    </div>
-                    <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
-                  </div>
-
-                  <div className="flex items-center gap-4 my-4">
-                    <Image src="/icons/india.png" alt="contry flag" height={34} width={34} />
-                    <div className="w-full">
-                      <p className="font-semibold text-sm text-[#4B465C]">22</p>
-                      <p className="font-normal text-xs text-[#8B909A]">India</p>
-                    </div>
-                    <Image src="/icons/line.png" alt="Progress bar" height={6} width={168} />
-                  </div>
-                </div>
-              </div>
-              <div className="border rounded-lg w-1/2 h-1/4 p-8">
-                <div className="flex items-center gap-2 text-[#A3A3A3]">
-                  <div className="border p-2 rounded-md">Onboarded</div>
-                  <div>Off-boarded</div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2 border rounded-lg p-8">
-              Table
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 w-1/3">
-            <div className="border rounded-lg p-8">
-              summary
-            </div>
-            <div className="border rounded-lg p-8">
-              previous payroll
-            </div>
-            <div className="border rounded-lg p-8">
-              Invoice
-            </div>
-          </div>
-        </div> */}
 
         {/* EMPLOYEE UI */}
         {/* <div className="px-14">
