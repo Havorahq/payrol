@@ -16,7 +16,7 @@ interface StateType {
   lastName: string;
   businessName: string;
   businessEmail: string;
-  businessSize: number;
+  businessSize: string;
   industry: string;
   activeTab: string;
 }
@@ -31,7 +31,7 @@ export const OnboardingProvider = ({ children }: { children: ReactNode }) => {
     lastName: "",
     businessName: "",
     businessEmail: "",
-    businessSize: 0,
+    businessSize: "",
     industry: "",
     activeTab: "business",
   });

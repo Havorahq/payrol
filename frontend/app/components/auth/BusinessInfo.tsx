@@ -8,7 +8,7 @@ interface BusinessInfoProps {
   //   lastName: string;
   businessName: string;
   businessEmail: string;
-  businessSize: number;
+  businessSize: string;
   industry: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void;
