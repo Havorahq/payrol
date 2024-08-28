@@ -59,7 +59,7 @@ const Signin: React.FC = () => {
             <div className="flex justify-center mt-8">
                 <DynamicWidget
                   innerButtonComponent={
-                    <button>Sign In with Wallet or Email</button>
+                    <button>Sign In</button>
                   }
                 ></DynamicWidget>
               {/* <Button>
