@@ -75,10 +75,12 @@ const Payments: React.FC = () => {
           <div>
             <div className="flex items-center justify-between">
               <div>
-                <p>Milestones</p>
-                <p>Add Milestone below</p>
+                <p className="mb-2">Milestones</p>
+                <p className="text-xs font-light text-grey">
+                  Add Milestone below
+                </p>
               </div>
-              <div>Add Milestone +</div>
+              <div className="p-1 px-2 bg-black rounded text-white text-xs font-semibold cursor-pointer">Add Milestone +</div>
             </div>
 
             <div className="mt-2 w-100">
@@ -98,10 +100,10 @@ const Payments: React.FC = () => {
                   type="text"
                   name="monthlyRate"
                   id="monthlyRate"
-                  value={state.monthlyRate}
+                  value={""}
                   onChange={onChange}
                   placeholder="1000"
-                  className="p-2 border border-gray-300 rounded w-100"
+                  className="border border-gray-300 rounded w-100"
                 />
               </div>
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import Button from "../common/Button";
 import { useRouter } from "next/navigation";
+import { createCompany, createUser } from "../../api/helper-functions";
 
 interface ReviewProps {
   email: string;
@@ -9,7 +10,7 @@ interface ReviewProps {
   lastName: string;
   businessName: string;
   businessEmail: string;
-  businessSize: number;
+  businessSize: string;
   industry: string;
   activeTab: string;
 }
@@ -26,6 +27,63 @@ const Review: React.FC<ReviewProps> = ({
 }) => {
   const { user } = useDynamicContext();
   const router = useRouter();
+
+  const handleSignup = async () => {
+    alert("clicked button");
+    const address = user?.verifiedCredentials[0].address;
+    const email = user?.email;
+    if (activeTab == "business") {
+      const userType = "business";
+      try {
+        const result = await createCompany(
+          firstName,
+          lastName,
+          email || "",
+          address || "",
+          userType,
+          businessName,
+          businessEmail,
+          businessSize,
+          industry
+        );
+
+        if (result.error) {
+          alert("Error user");
+          console.error("Error creating company:", result.error);
+          return;
+        }
+
+        // Handle successful company creation
+        console.log("Company created successfully:", result);
+        alert("created user");
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+      }
+    } else {
+      const userType = "employee";
+      try {
+        const result = await createUser(
+          firstName,
+          lastName,
+          email || "",
+          address || "",
+          userType
+        );
+
+        if (result.error) {
+          alert("Error user");
+          console.error("Error creating company:", result.error);
+          return;
+        }
+
+        // Handle successful company creation
+        console.log("Company created successfully:", result.data);
+        alert("created user");
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+      }
+    }
+  };
 
   return (
     <div className="my-4 w-full lg:m-0 m-2">
@@ -76,7 +134,7 @@ const Review: React.FC<ReviewProps> = ({
         {/* <Button onClick={() => router.push("/dashboard")} style="md:m-0">
           Previous
         </Button> */}
-        <Button primary onClick={() => router.push("/dashboard")}>
+        <Button primary onClick={() => handleSignup()}>
           Sign Up
         </Button>
       </div>

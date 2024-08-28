@@ -13,7 +13,8 @@ import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
-import { DatePicker, SelectPicker } from "rsuite";
+import { SelectPicker } from "rsuite";
+import DatePicker from "react-datepicker";
 import CustomDatePicker from "../components/common/Datepicker";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -188,7 +189,9 @@ const Payslip: React.FC = () => {
             <p className="text-sm text-[#8F9299] font-dm-sans">
               You’ve successfully approved payment
             </p>
-            <Button primary onClick={() => router.push("/dashboard")}>Back to Home</Button>
+            <Button primary onClick={() => router.push("/dashboard")}>
+              Back to Home
+            </Button>
           </div>
         )}
       </Modal>
@@ -203,9 +206,8 @@ const Payslip: React.FC = () => {
             <DatePicker
               // value={state?.startDate || null}
               // onChange={onFromDateChange}
-              size="md"
-              placeholder="Start Date"
-              style={{ width: 163, zIndex: 0 }}
+              placeholderText="Start Date"
+              className="w-full border border-gray-300 rounded h-9"
             />
             <Image
               src="/icons/arrowRight.png"
@@ -216,9 +218,8 @@ const Payslip: React.FC = () => {
             <DatePicker
               // value={state?.startDate || null}
               // onChange={onFromDateChange}
-              size="md"
-              placeholder="End Date"
-              style={{ width: 163, zIndex: 0 }}
+              placeholderText="End Date"
+              className="w-full border border-gray-300 rounded h-9"
             />
           </div>
           <InputFilter

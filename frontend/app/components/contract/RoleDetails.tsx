@@ -66,7 +66,7 @@ const RoleDetails: React.FC = () => {
             value={state?.startDate || null}
             onChange={onFromDateChange}
             placeholder="Select Start Date"
-            style={{ width: "100%" }}
+            // style={{ width: "100%" }}
           />
         </div>
         <div className="max-w-full">
@@ -75,7 +75,7 @@ const RoleDetails: React.FC = () => {
             value={state?.endDate || null}
             onChange={onToDateChange}
             placeholder="Select End Date"
-            style={{ width: "100%" }}
+            // style={{ width: "100%" }}
           />
         </div>
       </div>
