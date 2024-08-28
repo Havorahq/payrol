@@ -8,6 +8,7 @@ import BusinessInfo from "./BusinessInfo";
 import Review from "./Review";
 
 const Onboard: React.FC = () => {
+  const [step, setStep] = useState(0);
   const context = useContext(OnboardingContext);
   const { user } = useDynamicContext();
 
@@ -19,7 +20,6 @@ const Onboard: React.FC = () => {
   const { firstName, lastName, businessName, businessEmail, businessSize, industry, email, activeTab } =
     state;
 
-  const [step, setStep] = useState(0);
 
   const renderPages = () => {
     switch (step) {
