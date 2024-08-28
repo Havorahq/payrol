@@ -10,9 +10,9 @@ interface DrawerProps {
 const Drawer: React.FC<DrawerProps> = ({ isOpen, closeDrawer }) => {
   return (
     <div
-      className={`fixed top-0 right-0 w-80 h-full transition-transform transform ${
+      className={`fixed top-0 right-0 w-40 h-full transition-transform transform ${
         isOpen ? "translate-x-0" : "translate-x-full"
-      } bg-white`}
+      } bg-white z-20`}
     >
       <MdOutlineCancel
         className="absolute top-6 right-5 cursor-pointer text-gray-400"

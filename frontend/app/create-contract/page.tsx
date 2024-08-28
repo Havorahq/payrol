@@ -108,7 +108,7 @@ const Contract: React.FC = () => {
           <div className="w-full text-black p-8 pb-12 md:w-1/2 bg-white border border-1 shadow-lg rounded-xl h-fit">
             {renderStep()}
           </div>
-          <div className="my-16 flex items-center gap-4">
+          <div className="my-16 items-center gap-4 lg:flex hidden">
             {[0, 1, 2, 3, 4].map((value) => (
               <div
                 key={value}
