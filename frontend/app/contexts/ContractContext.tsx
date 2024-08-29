@@ -8,8 +8,8 @@ export interface ContractState {
   employeeEmail: string;
   jobTitle: string;
   jobDescription: string;
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: any;
+  endDate: any;
   monthlyRate: string;
   milestoneTitle: string;
   milestoneTitles: string[];

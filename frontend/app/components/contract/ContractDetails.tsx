@@ -13,6 +13,7 @@ import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
 import { bscTestnet } from "viem/chains";
+import { createContract } from "@/app/api/helper-functions";
 
 const ContractDetails: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -171,19 +172,52 @@ const ContractDetails: React.FC = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const handleSubmit = () => {
-    if (!primaryWallet) {
+  const handleSubmit = async () => {
+    if (!primaryWallet || !userData?.data) {
       return console.error("user not loaded yet");
     }
 
-    if (state.contractType === "fixed") {
-      console.log(
-        { primaryWallet },
-        "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F"
+    const {
+      contractType,
+      employeeEmail,
+      endDate,
+      jobDescription,
+      jobTitle,
+      milestoneRates,
+      milestoneTitle,
+      monthlyRate,
+      startDate,
+    } = state;
+    const employerEmail = userData?.data.data.email;
+    const status: string = "Pending";
+    const payment_status: string = "Pending";
+
+    try {
+      let hash;
+      if (state.contractType === "fixed") {
+        hash = await deployFixedAgreement();
+      } else if (contractType.toLowerCase() === "pay as you go") {
+        hash = await deployPAYGAgreement();
+      }
+      const contract = await createContract(
+        contractType,
+        employerEmail,
+        employeeEmail,
+        jobTitle,
+        jobDescription,
+        monthlyRate,
+        status,
+        payment_status,
+        milestoneTitle,
+        milestoneRates,
+        startDate,
+        endDate,
+        hash
       );
-      deployFixedAgreement();
-    } else if (state.contractType.toLowerCase() === "pay as you go") {
-      deployPAYGAgreement();
+
+      return { contract, hash };
+    } catch {
+      console.error("error creating contract");
     }
   };
 

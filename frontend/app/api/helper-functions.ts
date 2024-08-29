@@ -77,27 +77,35 @@ export const createUser = async (
 };
 
 export const createContract = async (
-  employerId: string,
-  employeeId: string,
-  jobDescription: string,
   contractType: string,
-  startDate: string,
-  balance: number,
+  employerEmail: string,
+  employeeEmail: string,
+  jobTitle: string,
+  jobDescription: string,
+  monthlyRate: string,
   status: string,
-  endDate?: string,
-  milestoneReviewDate?: string
+  payment_status: string,
+  milestoneTitle: string,
+  milestoneRates: string[],
+  startDate?: Date | null,
+  endDate?: Date | null,
+  hash?: string
 ) => {
   try {
     const newContract = {
-      employer_id: employerId,
-      employee_id: employeeId,
+      employer_id: employerEmail,
+      employee_id: employeeEmail,
       job_description: jobDescription,
       contract_type: contractType,
       start_date: startDate,
       end_date: endDate,
-      milestone_review_date: milestoneReviewDate,
-      balance,
+      job_title: jobTitle,
+      amount: monthlyRate,
       status,
+      payment_status,
+      milestoneTitle,
+      milestoneRates,
+      hash,
     };
     const { data, error } = await supabase
       .from("contracts")
