@@ -89,7 +89,7 @@ export default function Home() {
   };
 
   const fetchUserData = useCallback(async () => {
-    if (!userEmail) return; // Ensure we have a userEmail before attempting to fetch
+    if (!userEmail) return;
     try {
       const userData = await findUser(userEmail);
 

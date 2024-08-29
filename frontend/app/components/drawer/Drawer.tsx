@@ -5,9 +5,10 @@ import Sidebar from "../sidebar/Sidebar";
 interface DrawerProps {
   isOpen: boolean;
   closeDrawer: () => void;
+  user: any;
 }
 
-const Drawer: React.FC<DrawerProps> = ({ isOpen, closeDrawer }) => {
+const Drawer: React.FC<DrawerProps> = ({ isOpen, closeDrawer, user }) => {
   return (
     <div
       className={`fixed top-0 right-0 w-40 h-full transition-transform transform ${
@@ -19,7 +20,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, closeDrawer }) => {
         size={24}
         onClick={closeDrawer}
       />
-      <Sidebar title="Menu" />
+      <Sidebar title="Menu" user={user} />
     </div>
   );
 };

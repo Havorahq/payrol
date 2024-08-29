@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import Button from "../components/common/Button";
 import Preloader from "../components/common/Preloader";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { findUser } from "../api/helper-functions";
+import { capitalizeFirst } from "@/plugins/utils";
 
 // interface UserData {
 //   email: string;
@@ -30,6 +31,7 @@ import { findUser } from "../api/helper-functions";
 const Profile = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [accountType, setAccountType] = useState<any>({});
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -59,6 +61,22 @@ const Profile = () => {
 
   const isEmployer = user_type === "business";
   const isEmployee = user_type === "employee";
+
+  const fetchUserData = useCallback(async () => {
+    if (!userEmail) return;
+    try {
+      const userData = await findUser(userEmail);
+
+      const userType = userData?.data?.data;
+      setAccountType(userType);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, [userEmail]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
 
   return (
     <>
@@ -124,52 +142,59 @@ const Profile = () => {
               primary
             />
           </div>
-          <div className="lg:p-16 p-8 bg-white rounded-md shadow border text-gray-700">
-            {isEmployee && (
+          {accountType !== null ? (
+            <div className="lg:p-16 p-8 bg-white rounded-md shadow border text-gray-700">
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Name</p>
                 <p className="text-xl font-semibold">
-                  {first_name} {last_name}
+                  {accountType?.firstName} {accountType?.lastName}
                 </p>
               </div>
-            )}
-            {isEmployer && (
-              <div className="mb-8">
-                <p className="text-sm font-semibold text-brandgray">
-                  First Name
-                </p>
-                <p className="text-xl font-semibold">
-                  {first_name} {last_name}
-                </p>
-              </div>
-            )}
-            {isEmployer && (
-              <div className="mb-8">
-                <p className="text-sm font-semibold text-brandgray">
-                  Business Email
-                </p>
-                <p className="text-xl font-semibold">{email}</p>
-              </div>
-            )}
-            {isEmployee && (
+
+              {isEmployer && (
+                <div className="mb-8">
+                  <p className="text-sm font-semibold text-brandgray">
+                    First Name
+                  </p>
+                  <p className="text-xl font-semibold">
+                    {first_name} {last_name}
+                  </p>
+                </div>
+              )}
+              {isEmployer && (
+                <div className="mb-8">
+                  <p className="text-sm font-semibold text-brandgray">
+                    Business Email
+                  </p>
+                  <p className="text-xl font-semibold">{email}</p>
+                </div>
+              )}
+
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Email</p>
-                <p className="text-xl font-semibold">{email}</p>
+                <p className="text-xl font-semibold">{accountType?.email}</p>
               </div>
-            )}
-            <div className="mb-8">
-              <p className="text-sm font-semibold text-brandgray">
-                Account Type
-              </p>
-              <p className="text-xl font-semibold">{user_type}</p>
+
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">
+                  Account Type
+                </p>
+                <p className="text-xl font-semibold">
+                  {capitalizeFirst(accountType?.userType)}
+                </p>
+              </div>
+              <div className="mb-8">
+                <p className="text-sm font-semibold text-brandgray">
+                  Public Address
+                </p>
+                <p className="text-xl font-semibold">{accountType?.address}</p>
+              </div>
             </div>
-            <div className="mb-8">
-              <p className="text-sm font-semibold text-brandgray">
-                Public Address
-              </p>
-              <p className="text-xl font-semibold">{public_address}</p>
+          ) : (
+            <div className="block">
+              <Preloader />
             </div>
-          </div>
+          )}
         </div>
       </Wrapper>
     </>

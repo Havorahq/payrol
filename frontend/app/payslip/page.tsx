@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import PayslipDocument from "./PayslipDocument";
 import useContractData from "../hooks/useContractData";

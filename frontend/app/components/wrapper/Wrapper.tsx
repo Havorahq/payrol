@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useCallback, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Sidebar from "../sidebar/Sidebar";
 import Header from "../header/Header";
 import routes, { Route } from "../../../plugins/routes";
 import Drawer from "../drawer/Drawer";
 import Image from "next/image";
+import { findUser } from "@/app/api/helper-functions";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import Preloader from "../common/Preloader";
 
 interface WrapperProps {
   children: ReactNode;
@@ -15,6 +18,11 @@ interface WrapperProps {
 const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [accountType, setAccountType] = useState(null);
+  const { user } = useDynamicContext();
+
+  const userEmail = user!.email as string;
+  const userData = findUser(userEmail);
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -30,28 +38,50 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
     return title;
   };
 
+  const fetchUserData = useCallback(async () => {
+    if (!userEmail) return;
+    try {
+      const userData = await findUser(userEmail);
+
+      const userType = userData?.data?.data;
+      setAccountType(userType);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }, [userEmail]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
   return (
     <div className="flex w-full h-full relative overflow-hidden">
       <div className="hidden md:block relative z-40">
-        <Sidebar title={getTitle()} />
+        <Sidebar title={getTitle()} user={accountType} />
       </div>
       <div className="contractBg w-full">
-        <main className="flex-1 p-4 bg-[inherit] border relative z-10 rounded-lg m-2 h-[98%]">
-          <Header title={getTitle()} toggleDrawer={toggleDrawer} />
-          <div className="overflow-forced">{children}</div>
-          {
-          pathname === "/dashboard" &&
-          <Image
-            src="/images/signing-contract.png"
-            alt="Contract illustration"
-            width={500}
-            height={450}
-            className="absolute contractVector"
-          />}
-        </main>
+        {user ? (
+          <main className="flex-1 p-4 bg-[inherit] border relative z-10 rounded-lg m-2 h-[98%]">
+            <Header title={getTitle()} toggleDrawer={toggleDrawer} user={accountType} />
+            <div className="overflow-forced">{children}</div>
+            {pathname === "/dashboard" && (
+              <Image
+                src="/images/signing-contract.png"
+                alt="Contract illustration"
+                width={500}
+                height={450}
+                className="absolute contractVector"
+              />
+            )}
+          </main>
+        ) : (
+          <div>
+            <Preloader />
+          </div>
+        )}
       </div>
       {isDrawerOpen && (
-        <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} />
+        <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} user={accountType} />
       )}
     </div>
   );
