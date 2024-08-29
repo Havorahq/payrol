@@ -27,16 +27,6 @@ const Personal: React.FC = () => {
       </div>
       <div className="flex flex-col gap-4">
         <Input
-          label="Employee Name"
-          type="text"
-          name="employeeName"
-          id="employeeName"
-          value={state.employeeName}
-          onChange={onChange}
-          placeholder="Jonathan Wick"
-          className="p-2 border border-gray-300 rounded"
-        />
-        <Input
           label="Employee Email"
           type="email"
           name="employeeEmail"
@@ -48,16 +38,7 @@ const Personal: React.FC = () => {
         />
       </div>
       <div className="flex justify-between mt-4">
-        {/* <Button
-          text="Back"
-          iconLeft={<FaChevronLeft size={14} />}
-          onClick={handlePrev}
-        /> */}
-        <Button
-          onClick={handleNext}
-          disabled={!state.employeeName || !state.employeeEmail}
-          primary
-        >
+        <Button onClick={handleNext} disabled={!state.employeeEmail} primary>
           Continue
         </Button>
       </div>

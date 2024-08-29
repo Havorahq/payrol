@@ -224,10 +224,6 @@ const ContractDetails: React.FC = () => {
             </p>
           </div>
           <div className="py-1 my-1 border-b">
-            <p className="text-md text-grey-500 font-medium">Employee Name</p>
-            <p className="text-sm text-grey">{state?.employeeName}</p>
-          </div>
-          <div className="py-1 my-1 border-b">
             <p className="text-md text-grey-500 font-medium">Employee Email</p>
             <p className="text-sm text-grey">{state?.employeeEmail}</p>
           </div>
