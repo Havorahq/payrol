@@ -7,7 +7,7 @@ import Wrapper from "../../components/wrapper/Wrapper";
 import Modal from "../../components/common/Modal";
 import { capitalizeFirst } from "../../../plugins/utils";
 import useContractData from "../../hooks/useContractData";
-import useUserData from "../../hooks/useUserData";
+import { useUserData } from "../../hooks/useUserData";
 import { bscTestnet } from "viem/chains";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
@@ -58,7 +58,7 @@ const ContractDetail = () => {
 
   const handleEnterAgreement = () => {
     console.log("Agreement entered");
-    enterContract()
+    enterContract();
     openModal();
   };
 
@@ -96,7 +96,9 @@ const ContractDetail = () => {
           </div>
           <div className="border-b py-4">
             <p className="font-medium">Job Title</p>
-            <p className="text-gray-600">{contract ? contract.job_title : ""}</p>
+            <p className="text-gray-600">
+              {contract ? contract.job_title : ""}
+            </p>
           </div>
           <div className="border-b py-4">
             <p className="font-medium">Job Description</p>

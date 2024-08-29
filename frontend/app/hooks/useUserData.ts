@@ -1,51 +1,48 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-// import { useAccount } from "wagmi";
-import { getEmployeeById, getEmployerById } from "../api/helper-functions";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { findUser } from "../api/helper-functions";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
-const useUserData = () => {
-  // const account = useAccount();
-  // const { address } = account;
-  const [userData, setUserData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const router = useRouter();
+type UserData = {
+  data: PostgrestSingleResponse<any> | null;
+  error: string | null;
+} | null;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     setError(null);
+type UseUserDataReturn = {
+  userData: UserData;
+  isLoading: boolean;
+  error: string | null;
+};
 
-  //     try {
-  //       if (address) {
-  //         let userExist;
-  //         userExist = await getEmployeeById(address); // Assuming this function fetches employee data
-  //         if (!userExist.data) {
-  //           userExist = await getEmployerById(address); // Assuming this function fetches employer data
-  //         }
+// Custom hook
+export const useUserData = (): UseUserDataReturn => {
+  const { user } = useDynamicContext();
+  const [userData, setUserData] = useState<UserData>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  //         if (userExist.data) {
-  //           console.log("User Data:", userExist.data);
-  //           setUserData(userExist.data);
-  //         } else {
-  //           console.log("User not found");
-  //           setUserData(null);
-  //         }
-  //       } else {
-  //         router.push("/");
-  //       }
-  //     } catch (error: any) {
-  //       console.error("Error fetching user data:", error);
-  //       setError(error.message || "An error occurred while fetching user data");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user?.email) {
+        setIsLoading(false);
+        setError("User not logged in");
+        return;
+      }
 
-  //   fetchData();
-  // }, [address, router]);
+      try {
+        const result = await findUser(user.email);
+        setUserData(result);
+        setError(result?.error || null);
+      } catch (err) {
+        setError("An unexpected error occurred");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    setIsLoading(true);
+    fetchUserData();
+  }, [user]);
 
   return { userData, isLoading, error };
 };
-
-export default useUserData;

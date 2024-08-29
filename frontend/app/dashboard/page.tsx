@@ -9,7 +9,13 @@ import { RiFileCheckLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa";
-import { ChangeEvent, SetStateAction, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import Button from "../components/common/Button";
@@ -20,6 +26,7 @@ import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { findUser } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { UserData } from "../payslip/page";
 
 interface Contract {
   id: number;
@@ -47,15 +54,39 @@ const mockContractData: Contract[] = [
 export default function Home() {
   const [accountType, setAccountType] = useState<string>("");
   const contractData = mockContractData; // Mock contract data
-  const { user } = useDynamicContext();
-
-  const userEmail = user!.email as string;
-  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
+
+  const { user } = useDynamicContext();
+  const [userData, setUserData] = useState<UserData>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user?.email) {
+        const result = await findUser(user.email);
+        setUserData(result);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
+  console.log({ userData });
+
+  if (!user) {
+    return <div>Please log in to view your profile.</div>;
+  }
+
+  if (userData?.error) {
+    return <div>Error: {userData.error}</div>;
+  }
+
+  if (!userData?.data) {
+    return <div>Loading...</div>;
+  }
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -68,8 +99,6 @@ export default function Home() {
     contractData?.filter(
       (contract) => activeFilter === "" || contract.status === activeFilter
     ) || null;
-
-  
 
   const activeContract = contractData.filter(
     (contract) => contract.status === "active"
@@ -87,22 +116,6 @@ export default function Home() {
   const handleViewClick = (id: number) => {
     console.log(`View contract with id: ${id}`);
   };
-
-  const fetchUserData = useCallback(async () => {
-    if (!userEmail) return; // Ensure we have a userEmail before attempting to fetch
-    try {
-      const userData = await findUser(userEmail);
-
-      const userType = userData?.data?.data?.userType;
-      setAccountType(userType);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }, [userEmail]);
-
-  useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
 
   if (!userData) {
     return (
