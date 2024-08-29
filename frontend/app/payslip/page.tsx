@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import PayslipDocument from "./PayslipDocument";
 import useContractData from "../hooks/useContractData";
@@ -20,22 +20,39 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { findUser } from "../api/helper-functions";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { useUserData } from "../hooks/useUserData";
+
+export type UserData = {
+  data: PostgrestSingleResponse<any> | null;
+  error: string | null;
+} | null;
 
 const Payslip: React.FC = () => {
-  const { contracts, isLoading, error } = useContractData();
+  const { contracts } = useContractData();
   const [payslip, setPayslip] = useState<Contract | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
-  const { user } = useDynamicContext();
-
-  const userEmail = user!.email as string;
-  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
 
   const router = useRouter();
+
+  const { userData, isLoading, error } = useUserData();
+
+  if (!userData) {
+    return <div>Please log in to view your profile.</div>;
+  }
+
+  if (error) {
+    return <div>Error: {userData.error}</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);

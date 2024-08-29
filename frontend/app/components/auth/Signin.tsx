@@ -66,7 +66,7 @@ const Signin: React.FC = () => {
               </Button> */}
             </div>
           </div>
-          <p className="self-center text-sm">
+          <p className="self-center text-sm text-center">
             Need to create an account?{" "}
             <span
               className="text-gradient font-medium cursor-pointer"

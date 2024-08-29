@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -10,36 +10,32 @@ import Button from "../components/common/Button";
 import Preloader from "../components/common/Preloader";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { findUser } from "../api/helper-functions";
+import { useUserData } from "../hooks/useUserData";
 
-// interface UserData {
-//   email: string;
-//   first_name: string;
-//   last_name: string;
-//   public_address: string;
-//   user_type: string;
-// }
-
-// const mockUserData: UserData = {
-//   email: "user@example.com",
-//   first_name: "John",
-//   last_name: "Doe",
-//   public_address: "0x1234567890abcdef",
-//   user_type: "business", // or "employee"
-// };
+interface UserData {
+  email: string;
+  first_name: string;
+  last_name: string;
+  public_address: string;
+  user_type: string;
+}
 
 const Profile = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const { user } = useDynamicContext();
+  const { userData, isLoading, error } = useUserData();
 
-  const userEmail = user!.email as string;
-  const userData: any = findUser(userEmail);
+  if (!userData) {
+    return <div>Please log in to view your profile.</div>;
+  }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {userData.error}</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   if (!userData) {
@@ -55,7 +51,8 @@ const Profile = () => {
 
   const handleUpdateProfile = () => {};
 
-  const { email, first_name, last_name, public_address, user_type } = userData;
+  const { email, first_name, last_name, public_address, user_type } =
+    userData.data as unknown as UserData;
 
   const isEmployer = user_type === "business";
   const isEmployee = user_type === "employee";

@@ -8,7 +8,7 @@ import { ContractContext } from "@/app/contexts/ContractContext";
 import Modal from "../common/Modal";
 import { useRouter } from "next/navigation";
 import { capitalizeFirstWord } from "@/plugins/utils";
-import useUserData from "@/app/hooks/useUserData";
+import { useUserData } from "@/app/hooks/useUserData";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
