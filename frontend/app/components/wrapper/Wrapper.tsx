@@ -10,6 +10,7 @@ import Image from "next/image";
 import { findUser } from "@/app/api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import Preloader from "../common/Preloader";
+import { useUserData } from "@/app/hooks/useUserData";
 
 interface WrapperProps {
   children: ReactNode;
@@ -19,10 +20,8 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [accountType, setAccountType] = useState(null);
-  const { user } = useDynamicContext();
-
-  const userEmail = user!.email as string;
-  const userData = findUser(userEmail);
+  const { userData, isLoading, error } = useUserData();
+  const userEmail = userData?.data?.data?.email;
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -60,9 +59,13 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
         <Sidebar title={getTitle()} user={accountType} />
       </div>
       <div className="contractBg w-full">
-        {user ? (
+        {userData ? (
           <main className="flex-1 p-4 bg-[inherit] border relative z-10 rounded-lg m-2 h-[98%]">
-            <Header title={getTitle()} toggleDrawer={toggleDrawer} user={accountType} />
+            <Header
+              title={getTitle()}
+              toggleDrawer={toggleDrawer}
+              user={accountType}
+            />
             <div className="overflow-forced">{children}</div>
             {pathname === "/dashboard" && (
               <Image
@@ -81,7 +84,11 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
         )}
       </div>
       {isDrawerOpen && (
-        <Drawer isOpen={isDrawerOpen} closeDrawer={toggleDrawer} user={accountType} />
+        <Drawer
+          isOpen={isDrawerOpen}
+          closeDrawer={toggleDrawer}
+          user={accountType}
+        />
       )}
     </div>
   );
