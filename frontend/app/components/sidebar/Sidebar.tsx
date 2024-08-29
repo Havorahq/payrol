@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Swal from "sweetalert2";
@@ -14,12 +14,16 @@ import { LiaSignOutAltSolid } from "react-icons/lia";
 import { CgFileRemove } from "react-icons/cg";
 import { BsGrid } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   title: string;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ title }) => {
+  const router = useRouter();
+  const { handleLogOut } = useDynamicContext();
 
   const handleSignout = () => {
     Swal.fire({
@@ -31,6 +35,8 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
+        handleLogOut()
+        router.push("/");
         console.log("Signed out");
       }
     });
