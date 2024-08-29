@@ -43,7 +43,13 @@ const Payslip: React.FC = () => {
   const { userData, isLoading, error } = useUserData();
 
   if (!userData) {
-    return <div>Please log in to view your profile.</div>;
+    return (
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center mt-4">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
+    );
   }
 
   if (error) {
@@ -321,36 +327,20 @@ const Payslip: React.FC = () => {
                         <p className="text-white text-xs">Approve Payment</p>
                       </div>
                     </td>
-                    {/* <td>
-                      <Image
-                        src="/icons/edit.png"
-                        alt="edit icon"
-                        height={30}
-                        width={30}
-                      />
-                    </td>
-                    <td>
-                      <Image
-                        src="/icons/delete.png"
-                        alt="delete icon"
-                        height={30}
-                        width={30}
-                        onClick={handleDelete}
-                      />
-                    </td>
-                    <td>
-                      <Image
-                        src="/icons/options.png"
-                        alt="options icon"
-                        height={3}
-                        width={4}
-                      />
-                    </td> */}
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          {contracts.length === 0 && (
+            <div className="min-h-6">
+              <div className="flex justify-center items-center my-2 p-4 h-full">
+                <p className="text-gray-400 text-lg mt-4 font-bold">
+                  No Result Found
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>

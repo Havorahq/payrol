@@ -38,21 +38,10 @@ interface Contract {
   contract_address: string;
 }
 
-const mockContractData: Contract[] = [
-  {
-    id: 1,
-    status: "active",
-    contract_type: "type1",
-    business_name: "Business 1",
-    employee_id: "Employee 1",
-    payment: "1000",
-    contract_address: "Address 1",
-  },
-  // Add more mock data here
-];
+const mockContractData: Contract[] = [];
 
 export default function Home() {
-  const [accountType, setAccountType] = useState<string>("");
+  // const [accountType, setAccountType] = useState<string>("");
   const contractData = mockContractData; // Mock contract data
 
   const [search, setSearch] = useState<string>("");
@@ -66,7 +55,7 @@ export default function Home() {
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.email) {
-        const result = await findUser(user.email);
+        const result = await findUser(user?.email);
         setUserData(result);
       }
     };
@@ -74,18 +63,24 @@ export default function Home() {
     fetchUserData();
   }, [user]);
 
-  console.log({ userData });
+  const accountType = userData?.data?.data?.userType;
 
-  if (!user) {
-    return <div>Please log in to view your profile.</div>;
+  // if (!user) {
+  //   return <div>Please log in to view your profile.</div>;
+  // }
+
+  if (!userData?.data) {
+    return (
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center mt-4">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
+    );
   }
 
   if (userData?.error) {
     return <div>Error: {userData.error}</div>;
-  }
-
-  if (!userData?.data) {
-    return <div>Loading...</div>;
   }
 
   const openModal = () => setIsOpen(true);
@@ -317,7 +312,7 @@ export default function Home() {
                   {filteredData?.length === 0 && (
                     <div className="min-h-6">
                       <div className="flex justify-center items-center my-2 p-4 h-full">
-                        <p className="text-gray-500 mt-2">No Result Found</p>
+                        <p className="text-gray-400 text-lg mt-4 font-bold">No Result Found</p>
                       </div>
                     </div>
                   )}

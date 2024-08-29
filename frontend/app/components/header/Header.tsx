@@ -11,9 +11,10 @@ import { usePathname } from "next/navigation";
 interface HeaderProps {
   toggleDrawer: () => void;
   title: string;
+  user: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
+const Header: React.FC<HeaderProps> = ({ title, toggleDrawer, user }) => {
   // Mimic user data for UI rendering
   const userData = {
     first_name: "John",
@@ -21,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
     user_type: "admin",
   };
 
-  const pathName = usePathname()
+  const pathName = usePathname();
 
   return (
     <div className="mb-8">
@@ -39,12 +40,16 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer }) => {
         />
       </div>
       <div className="flex items-center justify-between lg:px-12 px-4">
-        <p className="text-[#0A112F] text-3xl font-medium headerTitle">{title}</p>
-        {/* {<div className="flex items-center justify-end p-4 bg-white rounded-md gap-4 md:gap-8">
-           <div className="flex items-center justify-center rounded-full p-2 border">
-            <HiDotsHorizontal color="#0A112F" size={20} />
+        <p className="text-[#0A112F] text-3xl font-medium headerTitle">
+          {title}
+        </p>
+        {
+          <div className="flex items-center justify-end p-4 bg-white rounded-md gap-4 md:gap-8">
+            <div className="p-2 bg-black rounded-lg text-white text-sm font-semibold cursor-pointer font-bricolage">
+              {`${user?.firstName} ${user?.lastName}`}
+            </div>
           </div>
-        </div>} */}
+        }
       </div>
     </div>
   );

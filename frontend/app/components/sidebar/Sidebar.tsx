@@ -19,11 +19,16 @@ import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   title: string;
+  user: any;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ title }) => {
+
+const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
+
+
   const router = useRouter();
   const { handleLogOut } = useDynamicContext();
+
 
   const handleSignout = () => {
     Swal.fire({
@@ -42,8 +47,10 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
     });
   };
 
+  // console.log("Sidebar user check: ", user);
+
   return (
-    <div className="h-[98%] p-2 pb-8 bg-white flex flex-col items-center z-20 m-2 mb-4 border rounded-lg">
+    <div className="h-[98%] p-2 pb-8 bg-white flex flex-col items-center z-20 m-2 mb-2 border rounded-lg">
       <div className="mb-8">
         <Image
           src="/icons/brandLogo.png"
@@ -52,156 +59,163 @@ const Sidebar: React.FC<SidebarProps> = ({ title }) => {
           height={60}
         />
       </div>
-      <div className="mt-16 font-medium z-20">
-        <Link href="/dashboard">
+
+      {user && (
+        <div className="lg:pt-16 pt-8 font-medium z-10 overflow-forced">
+          <Link href="/dashboard">
+            <div
+              data-tooltip-id="tooltip-dashboard"
+              data-tooltip-content="Dashboard"
+              className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+                title === "Dashboard"
+                  ? "bg-primary text-white"
+                  : "bg-white text-gray-400 hover:border hover:border-gray-300"
+              }`}
+            >
+              {title === "Dashboard" ? (
+                <Image
+                  src="/icons/dashboard.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              ) : (
+                <Image
+                  src="/icons/dashboardInactive.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              )}
+            </div>
+          </Link>
+          {user?.userType !== "employee" && (
+            <Link href="/create-contract">
+              <div
+                data-tooltip-id="tooltip-contract"
+                data-tooltip-content="Contract"
+                className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+                  title === "Contract"
+                    ? "bg-primary text-white"
+                    : "bg-white text-gray-400 hover:border hover:border-gray-300"
+                }`}
+              >
+                {title === "Contract" ? (
+                  <Image
+                    src="/icons/contractIcon.svg"
+                    alt="dashboard icon"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/contractIconInactive.svg"
+                    alt="dashboard icon"
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </div>
+            </Link>
+          )}
+          {user?.userType !== "employee" && (
+            <Link href="/team">
+              <div
+                data-tooltip-id="tooltip-team"
+                data-tooltip-content="Team"
+                className={`flex items-center justify-center p-4 rounded-md my-3 ${
+                  title === "Team"
+                    ? "bg-primary text-white"
+                    : "bg-white text-gray-400 hover:border hover:border-gray-300"
+                }`}
+              >
+                {title === "Team" ? (
+                  <Image
+                    src="/icons/teamIcon.svg"
+                    alt="dashboard icon"
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <Image
+                    src="/icons/teamIconInactive.svg"
+                    alt="dashboard icon"
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </div>
+            </Link>
+          )}
+          <Link href="/payslip">
+            <div
+              data-tooltip-id="tooltip-payslip"
+              data-tooltip-content="Payslip"
+              className={`flex items-center justify-center p-4 rounded-md my-3 ${
+                title === "Payslip"
+                  ? "bg-primary text-white"
+                  : "bg-white text-gray-400 hover:border hover:border-gray-300"
+              }`}
+            >
+              {title === "Payslip" ? (
+                <Image
+                  src="/icons/payslipIcon.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              ) : (
+                <Image
+                  src="/icons/payslipIconInactive.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              )}
+            </div>
+          </Link>
+          <Link href="/profile">
+            <div
+              data-tooltip-id="tooltip-profile"
+              data-tooltip-content="Profile"
+              className={`lg:mt-72 mt-16 flex items-center justify-center p-3 rounded-lg my-3 ${
+                title === "Profile"
+                  ? "bg-primary text-white"
+                  : "bg-white text-gray-400 hover:border hover:border-gray-300"
+              }`}
+            >
+              {title === "Profile" ? (
+                <Image
+                  src="/icons/user.svg"
+                  alt="profile icon"
+                  width={24}
+                  height={24}
+                />
+              ) : (
+                <Image
+                  src="/icons/userInactive.svg"
+                  alt="profile icon"
+                  width={24}
+                  height={24}
+                />
+              )}
+            </div>
+          </Link>
           <div
-            data-tooltip-id="tooltip-dashboard"
-            data-tooltip-content="Dashboard"
-            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
-              title === "Dashboard"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
+            data-tooltip-id="tooltip-signout"
+            data-tooltip-content="Sign Out"
+            onClick={handleSignout}
+            className="flex items-center justify-center p-4 rounded-md cursor-pointer text-gray-400 hover:border hover:border-gray-300"
           >
-            {title === "Dashboard" ? (
-              <Image
-                src="/icons/dashboard.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                src="/icons/dashboardInactive.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            )}
+            <Image
+              src="/icons/logoutInactive.svg"
+              alt="logout icon"
+              width={24}
+              height={24}
+            />
           </div>
-        </Link>
-        <Link href="/create-contract">
-          <div
-            data-tooltip-id="tooltip-contract"
-            data-tooltip-content="Contract"
-            className={`flex items-center justify-center p-3 rounded-lg my-3 ${
-              title === "Contract"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            {title === "Contract" ? (
-              <Image
-                src="/icons/contractIcon.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                src="/icons/contractIconInactive.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            )}
-          </div>
-        </Link>
-        <Link href="/team">
-          <div
-            data-tooltip-id="tooltip-team"
-            data-tooltip-content="Team"
-            className={`flex items-center justify-center p-4 rounded-md my-3 ${
-              title === "Team"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            {title === "Team" ? (
-              <Image
-                src="/icons/teamIcon.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                src="/icons/teamIconInactive.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            )}
-          </div>
-        </Link>
-        <Link href="/payslip">
-          <div
-            data-tooltip-id="tooltip-payslip"
-            data-tooltip-content="Payslip"
-            className={`flex items-center justify-center p-4 rounded-md my-3 ${
-              title === "Payslip"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            {title === "Payslip" ? (
-              <Image
-                src="/icons/payslipIcon.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                src="/icons/payslipIconInactive.svg"
-                alt="dashboard icon"
-                width={24}
-                height={24}
-              />
-            )}
-          </div>
-        </Link>
-        <Link href="/profile">
-          <div
-            data-tooltip-id="tooltip-profile"
-            data-tooltip-content="Profile"
-            className={`mt-72 flex items-center justify-center p-3 rounded-lg my-3 ${
-              title === "Profile"
-                ? "bg-primary text-white"
-                : "bg-white text-gray-400 hover:border hover:border-gray-300"
-            }`}
-          >
-            {title === "Profile" ? (
-              <Image
-                src="/icons/user.svg"
-                alt="profile icon"
-                width={24}
-                height={24}
-              />
-            ) : (
-              <Image
-                src="/icons/userInactive.svg"
-                alt="profile icon"
-                width={24}
-                height={24}
-              />
-            )}
-          </div>
-        </Link>
-        <div
-          data-tooltip-id="tooltip-signout"
-          data-tooltip-content="Sign Out"
-          onClick={handleSignout}
-          className="flex items-center justify-center p-4 rounded-md cursor-pointer text-gray-400 hover:border hover:border-gray-300"
-        >
-          <Image
-            src="/icons/logoutInactive.svg"
-            alt="logout icon"
-            width={24}
-            height={24}
-          />
         </div>
-      </div>
+      )}
       <Tooltip id="tooltip-dashboard" place="right" />
       <Tooltip id="tooltip-profile" place="right" />
       <Tooltip id="tooltip-contract" place="right" />
