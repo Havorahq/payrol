@@ -55,7 +55,7 @@ export default function Home() {
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.email) {
-        const result = await findUser(user.email);
+        const result = await findUser(user?.email);
         setUserData(result);
       }
     };

@@ -28,7 +28,7 @@ const Profile = () => {
 
   const { userData, isLoading, error } = useUserData();
 
-  console.log("USERS: ", userData);
+  // console.log("USERS: ", userData);
 
   // if (!userData) {
   //   return (
@@ -64,7 +64,7 @@ const Profile = () => {
   const { email, firstName, lastName, address, userType } = userData?.data
     ?.data as unknown as UserData;
 
-  console.log("TT", email);
+  // console.log("TT", email);
 
   const isEmployer = userType === "business";
   const isEmployee = userType === "employee";
