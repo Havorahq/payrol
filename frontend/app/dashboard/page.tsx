@@ -9,7 +9,7 @@ import { RiFileCheckLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa";
-import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useCallback, useEffect, useState } from "react";
 import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import Button from "../components/common/Button";
@@ -69,15 +69,7 @@ export default function Home() {
       (contract) => activeFilter === "" || contract.status === activeFilter
     ) || null;
 
-  if (!userData) {
-    return (
-      <div className="w-full h-full">
-        <div className="flex justify-center items-center h-full">
-          <Preloader height={80} />
-        </div>
-      </div>
-    );
-  }
+  
 
   const activeContract = contractData.filter(
     (contract) => contract.status === "active"
@@ -96,26 +88,32 @@ export default function Home() {
     console.log(`View contract with id: ${id}`);
   };
 
-  async function fetchUserData() {
+  const fetchUserData = useCallback(async () => {
+    if (!userEmail) return; // Ensure we have a userEmail before attempting to fetch
     try {
       const userData = await findUser(userEmail);
-      console.log("User: ", userData);
 
       const userType = userData?.data?.data?.userType;
       setAccountType(userType);
-      console.log("User Type:", userType);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }
+  }, [userEmail]);
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
-  console.log("Userr: ", accountType);
+  if (!userData) {
+    return (
+      <div className="w-full h-full">
+        <div className="flex justify-center items-center h-full">
+          <Preloader height={80} />
+        </div>
+      </div>
+    );
+  }
 
-  // const { user_type } = userData;
   return (
     <>
       <Wrapper>
