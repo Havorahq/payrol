@@ -7,7 +7,6 @@ import ContractType from "../components/contract/ContractType";
 import Personal from "../components/contract/Personal";
 import RoleDetails from "../components/contract/RoleDetails";
 import Payments from "../components/contract/Payments";
-import Wallet from "../components/contract/Wallet";
 import ContractDetails from "../components/contract/ContractDetails";
 import { ContractContext, ContractProvider } from "../contexts/ContractContext";
 import Swal from "sweetalert2";
@@ -65,8 +64,6 @@ const Contract: React.FC = () => {
         return <RoleDetails />;
       case 3:
         return <Payments />;
-      // case 4: 
-      //   return <Wallet />
       case 4:
         return <ContractDetails />;
       default:

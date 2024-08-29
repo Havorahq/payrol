@@ -9,7 +9,13 @@ import { RiFileCheckLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { BiLeaf, BiDollarCircle } from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa";
-import { ChangeEvent, SetStateAction, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import Button from "../components/common/Button";
@@ -20,6 +26,7 @@ import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { findUser } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { UserData } from "../payslip/page";
 
 interface Contract {
   id: number;
@@ -31,31 +38,50 @@ interface Contract {
   contract_address: string;
 }
 
-const mockContractData: Contract[] = [
-  {
-    id: 1,
-    status: "active",
-    contract_type: "type1",
-    business_name: "Business 1",
-    employee_id: "Employee 1",
-    payment: "1000",
-    contract_address: "Address 1",
-  },
-  // Add more mock data here
-];
+const mockContractData: Contract[] = [];
 
 export default function Home() {
-  const [accountType, setAccountType] = useState<string>("");
+  // const [accountType, setAccountType] = useState<string>("");
   const contractData = mockContractData; // Mock contract data
-  const { user } = useDynamicContext();
-
-  const userEmail = user!.email as string;
-  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
+
+  const { user } = useDynamicContext();
+  const [userData, setUserData] = useState<UserData>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user?.email) {
+        const result = await findUser(user.email);
+        setUserData(result);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
+
+  const accountType = userData?.data?.data?.userType;
+
+  // if (!user) {
+  //   return <div>Please log in to view your profile.</div>;
+  // }
+
+  if (!userData?.data) {
+    return (
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center mt-4">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
+    );
+  }
+
+  if (userData?.error) {
+    return <div>Error: {userData.error}</div>;
+  }
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -68,8 +94,6 @@ export default function Home() {
     contractData?.filter(
       (contract) => activeFilter === "" || contract.status === activeFilter
     ) || null;
-
-  
 
   const activeContract = contractData.filter(
     (contract) => contract.status === "active"
@@ -87,22 +111,6 @@ export default function Home() {
   const handleViewClick = (id: number) => {
     console.log(`View contract with id: ${id}`);
   };
-
-  const fetchUserData = useCallback(async () => {
-    if (!userEmail) return;
-    try {
-      const userData = await findUser(userEmail);
-
-      const userType = userData?.data?.data?.userType;
-      setAccountType(userType);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }, [userEmail]);
-
-  useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
 
   if (!userData) {
     return (
@@ -304,7 +312,7 @@ export default function Home() {
                   {filteredData?.length === 0 && (
                     <div className="min-h-6">
                       <div className="flex justify-center items-center my-2 p-4 h-full">
-                        <p className="text-gray-500 mt-2">No Result Found</p>
+                        <p className="text-gray-400 text-lg mt-4 font-bold">No Result Found</p>
                       </div>
                     </div>
                   )}

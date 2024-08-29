@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { getContractById, getUserContract } from "../api/helper-functions";
 
 export interface OldContract {
-   business_name: string;
+  business_name: string;
   contract_address?: string;
   contract_type?: string;
   created_at?: string;
@@ -41,52 +41,7 @@ export interface Contract {
   token_address?: string;
 }
 
-const dummyContracts = [
-  {
-    id: "1",
-    status: "Pending",
-    name: "John Paul",
-    business_name: "Havora",
-    employee_id: "R1234",
-    created_at: "23-03-2024",
-    updated_at: "23-03-2024",
-    doc: "DOC.PDF",
-    contract_type: "Fixed Rate",
-  },
-  {
-    id: "1",
-    status: "Pending",
-    name: "John Paul",
-    business_name: "Havora",
-    employee_id: "R1234",
-    created_at: "23-03-2024",
-    updated_at: "23-03-2024",
-    doc: "DOC.PDF",
-    contract_type: "Fixed Rate",
-  },
-  {
-    id: "1",
-    status: "Pending",
-    name: "John Paul",
-    business_name: "Havora",
-    employee_id: "R1234",
-    created_at: "23-03-2024",
-    updated_at: "23-03-2024",
-    doc: "DOC.PDF",
-    contract_type: "Fixed Rate",
-  },
-  {
-    id: "1",
-    status: "Pending",
-    name: "John Paul",
-    business_name: "Havora",
-    employee_id: "R1234",
-    created_at: "23-03-2024",
-    updated_at: "23-03-2024",
-    doc: "DOC.PDF",
-    contract_type: "Fixed Rate",
-  },
-];
+const dummyContracts: any[] = [];
 
 const useContract = () => {
   // const account = useAccount();

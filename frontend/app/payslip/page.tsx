@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import PayslipDocument from "./PayslipDocument";
 import useContractData from "../hooks/useContractData";
@@ -20,22 +20,45 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { findUser } from "../api/helper-functions";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { useUserData } from "../hooks/useUserData";
+
+export type UserData = {
+  data: PostgrestSingleResponse<any> | null;
+  error: string | null;
+} | null;
 
 const Payslip: React.FC = () => {
-  const { contracts, isLoading, error } = useContractData();
+  const { contracts } = useContractData();
   const [payslip, setPayslip] = useState<Contract | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
-  const { user } = useDynamicContext();
-
-  const userEmail = user!.email as string;
-  const userData = findUser(userEmail);
 
   const [search, setSearch] = useState<string>("");
 
   const router = useRouter();
+
+  const { userData, isLoading, error } = useUserData();
+
+  if (!userData) {
+    return (
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center mt-4">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {userData.error}</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -304,36 +327,20 @@ const Payslip: React.FC = () => {
                         <p className="text-white text-xs">Approve Payment</p>
                       </div>
                     </td>
-                    {/* <td>
-                      <Image
-                        src="/icons/edit.png"
-                        alt="edit icon"
-                        height={30}
-                        width={30}
-                      />
-                    </td>
-                    <td>
-                      <Image
-                        src="/icons/delete.png"
-                        alt="delete icon"
-                        height={30}
-                        width={30}
-                        onClick={handleDelete}
-                      />
-                    </td>
-                    <td>
-                      <Image
-                        src="/icons/options.png"
-                        alt="options icon"
-                        height={3}
-                        width={4}
-                      />
-                    </td> */}
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          {contracts.length === 0 && (
+            <div className="min-h-6">
+              <div className="flex justify-center items-center my-2 p-4 h-full">
+                <p className="text-gray-400 text-lg mt-4 font-bold">
+                  No Result Found
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>

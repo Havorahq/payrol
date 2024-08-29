@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,45 +12,48 @@ import Preloader from "../components/common/Preloader";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { findUser } from "../api/helper-functions";
 import { capitalizeFirst } from "@/plugins/utils";
+import { useUserData } from "../hooks/useUserData";
 
-// interface UserData {
-//   email: string;
-//   first_name: string;
-//   last_name: string;
-//   public_address: string;
-//   user_type: string;
-// }
-
-// const mockUserData: UserData = {
-//   email: "user@example.com",
-//   first_name: "John",
-//   last_name: "Doe",
-//   public_address: "0x1234567890abcdef",
-//   user_type: "business", // or "employee"
-// };
+interface UserData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  userType: string;
+}
 
 const Profile = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [accountType, setAccountType] = useState<any>({});
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const { user } = useDynamicContext();
+  const { userData, isLoading, error } = useUserData();
 
-  const userEmail = user!.email as string;
-  const userData: any = findUser(userEmail);
+  console.log("USERS: ", userData);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (!userData) {
+  //   return (
+  //     <div className="flex h-full w-full justify-center items-center font-bricolage font-bold text-2xl">
+  //       Please log in to view your profile.
+  //     </div>
+  //   );
+  // }
 
   if (!userData) {
     return (
-      <div className="w-full h-full">
-        <Preloader height={80} />
-      </div>
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
     );
+  }
+
+  if (error) {
+    return <div>Error: {userData.error}</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   const openModal = () => setIsOpen(true);
@@ -57,26 +61,29 @@ const Profile = () => {
 
   const handleUpdateProfile = () => {};
 
-  const { email, first_name, last_name, public_address, user_type } = userData;
+  const { email, firstName, lastName, address, userType } = userData?.data
+    ?.data as unknown as UserData;
 
-  const isEmployer = user_type === "business";
-  const isEmployee = user_type === "employee";
+  console.log("TT", email);
 
-  const fetchUserData = useCallback(async () => {
-    if (!userEmail) return;
-    try {
-      const userData = await findUser(userEmail);
+  const isEmployer = userType === "business";
+  const isEmployee = userType === "employee";
 
-      const userType = userData?.data?.data;
-      setAccountType(userType);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }, [userEmail]);
+  // const fetchUserData = useCallback(async () => {
+  //   if (!userEmail) return;
+  //   try {
+  //     const userData = await findUser(userEmail);
 
-  useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
+  //     const userType = userData?.data?.data;
+  //     setAccountType(userType);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // }, [userEmail]);
+
+  // useEffect(() => {
+  //   fetchUserData();
+  // }, [fetchUserData]);
 
   return (
     <>
@@ -92,7 +99,7 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                placeholder={first_name}
+                placeholder={firstName}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               />
             </div>
@@ -102,7 +109,7 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                placeholder={last_name}
+                placeholder={lastName}
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               />
             </div>
@@ -142,16 +149,16 @@ const Profile = () => {
               primary
             />
           </div>
-          {accountType !== null ? (
+          {userData?.data?.data ? (
             <div className="lg:p-16 p-8 bg-white rounded-md shadow border text-gray-700">
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Name</p>
                 <p className="text-xl font-semibold">
-                  {accountType?.firstName} {accountType?.lastName}
+                  {firstName} {lastName}
                 </p>
               </div>
 
-              {isEmployer && (
+              {/* {isEmployer && (
                 <div className="mb-8">
                   <p className="text-sm font-semibold text-brandgray">
                     First Name
@@ -160,7 +167,7 @@ const Profile = () => {
                     {first_name} {last_name}
                   </p>
                 </div>
-              )}
+              )} */}
               {isEmployer && (
                 <div className="mb-8">
                   <p className="text-sm font-semibold text-brandgray">
@@ -172,7 +179,7 @@ const Profile = () => {
 
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Email</p>
-                <p className="text-xl font-semibold">{accountType?.email}</p>
+                <p className="text-xl font-semibold">{email}</p>
               </div>
 
               <div className="mb-8">
@@ -180,14 +187,12 @@ const Profile = () => {
                   Account Type
                 </p>
                 <p className="text-xl font-semibold">
-                  {capitalizeFirst(accountType?.userType)}
+                  {capitalizeFirst(userType)}
                 </p>
               </div>
               <div className="mb-8">
-                <p className="text-sm font-semibold text-brandgray">
-                  Public Address
-                </p>
-                <p className="text-xl font-semibold">{accountType?.address}</p>
+                <p className="text-sm font-semibold text-brandgray">Address</p>
+                <p className="text-xl font-semibold">{address}</p>
               </div>
             </div>
           ) : (

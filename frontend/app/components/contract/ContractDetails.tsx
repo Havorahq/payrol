@@ -8,7 +8,7 @@ import { ContractContext } from "@/app/contexts/ContractContext";
 import Modal from "../common/Modal";
 import { useRouter } from "next/navigation";
 import { capitalizeFirstWord } from "@/plugins/utils";
-import useUserData from "@/app/hooks/useUserData";
+import { useUserData } from "@/app/hooks/useUserData";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
@@ -222,10 +222,6 @@ const ContractDetails: React.FC = () => {
             <p className="text-sm text-grey">
               {capitalizeFirstWord(state?.contractType?.toUpperCase())}
             </p>
-          </div>
-          <div className="py-1 my-1 border-b">
-            <p className="text-md text-grey-500 font-medium">Employee Name</p>
-            <p className="text-sm text-grey">{state?.employeeName}</p>
           </div>
           <div className="py-1 my-1 border-b">
             <p className="text-md text-grey-500 font-medium">Employee Email</p>

@@ -37,80 +37,78 @@ export const ContractContext = createContext<ContractContextProps | undefined>(
 );
 
 export const ContractProvider = ({ children }: { children: ReactNode }) => {
-    const [state, setState] = useState<ContractState>({
-      step: 0,
-      contractType: "",
-      employeeName: "",
-      employeeEmail: "",
-      jobTitle: "",
-      jobDescription: "",
-      startDate: null,
-      endDate: null,
-      monthlyRate: "",
-      milestoneTitle: "",
-      milestoneTitles: [],
-      milestoneRates: [],
-      walletAddress: "",
-      isPasswordShown: false,
+  const [state, setState] = useState<ContractState>({
+    step: 0,
+    contractType: "",
+    employeeName: "",
+    employeeEmail: "",
+    jobTitle: "",
+    jobDescription: "",
+    startDate: null,
+    endDate: null,
+    monthlyRate: "",
+    milestoneTitle: "",
+    milestoneTitles: [],
+    milestoneRates: [],
+    walletAddress: "",
+    isPasswordShown: false,
+  });
+
+  const handleNext = () => {
+    if (state.step < 5) {
+      setState((prevState) => ({
+        ...prevState,
+        step: prevState.step + 1,
+      }));
+    }
+  };
+
+  const handlePrev = () => {
+    setState((prevState) => ({
+      ...prevState,
+      step: prevState.step - 1,
+    }));
+  };
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onFromDateChange = (date: Date | null) => {
+    setState((prevState) => ({ ...prevState, startDate: date }));
+  };
+
+  const onToDateChange = (date: Date | null) => {
+    setState((prevState) => ({ ...prevState, endDate: date }));
+  };
+
+  const comingSoon = () => {
+    Swal.fire({
+      title: "Coming soon",
+      text: "This feature will be available soon",
+      icon: "info",
     });
+  };
 
-    // console.log("State: ", state);
-
-    const handleNext = () => {
-      if (state.step < 5) {
-        setState((prevState) => ({
-          ...prevState,
-          step: prevState.step + 1,
-        }));
-      }
-    };
-
-    const handlePrev = () => {
-      setState((prevState) => ({
-        ...prevState,
-        step: prevState.step - 1,
-      }));
-    };
-
-    const onChange = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-      setState((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }));
-    };
-
-    const onFromDateChange = (date: Date | null) => {
-      setState((prevState) => ({ ...prevState, startDate: date }));
-    };
-
-    const onToDateChange = (date: Date | null) => {
-      setState((prevState) => ({ ...prevState, endDate: date }));
-    };
-
-    const comingSoon = () => {
-      Swal.fire({
-        title: "Coming soon",
-        text: "This feature will be available soon",
-        icon: "info",
-      });
-    };
-
-    return (
-      <ContractContext.Provider
-        value={{
-          handleNext,
-          handlePrev,
-          onChange,
-          onFromDateChange,
-          onToDateChange,
-          comingSoon,
-          setState,
-          state,
-        }}
-      >
-        {children}
-      </ContractContext.Provider>
-    );
+  return (
+    <ContractContext.Provider
+      value={{
+        handleNext,
+        handlePrev,
+        onChange,
+        onFromDateChange,
+        onToDateChange,
+        comingSoon,
+        setState,
+        state,
+      }}
+    >
+      {children}
+    </ContractContext.Provider>
+  );
 };

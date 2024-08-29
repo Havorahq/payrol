@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
     });
   };
 
-  console.log("Sidebar user check: ", user);
+  // console.log("Sidebar user check: ", user);
 
   return (
     <div className="h-[98%] p-2 pb-8 bg-white flex flex-col items-center z-20 m-2 mb-2 border rounded-lg">
