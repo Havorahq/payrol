@@ -47,7 +47,8 @@ const ContractDetails: React.FC = () => {
     abi: factoryAbi,
     eventName: "FixedRateAgreementDeployed",
     onLogs(logs) {
-      const createdContractAddress = logs[0]?.args?.contractAddress
+      const newLogs = logs as unknown as any[]
+      const createdContractAddress = newLogs[0]?.args?.contractAddress
       const {
         contractType,
         employeeEmail,
@@ -89,7 +90,8 @@ const ContractDetails: React.FC = () => {
     eventName: "PayAsYoGoAgreementDeployed",
     onLogs(logs) {
       console.log('New logs2!', logs)
-      const createdContractAddress = logs[0]?.args?.contractAddress
+      const newLogs = logs as unknown as any[]
+      const createdContractAddress = newLogs[0]?.args?.contractAddress
       const {
         contractType,
         employeeEmail,
