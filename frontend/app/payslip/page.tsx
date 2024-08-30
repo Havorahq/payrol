@@ -23,6 +23,12 @@ import { findUser } from "../api/helper-functions";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { useUserData } from "../hooks/useUserData";
 
+import { TOKEN_CONTRACT_ADDRESS } from "../../lib/contract/constants";
+import TOKEN_ABI from "../../lib/contract/tokenabi.json";
+import Agreement_ABI from "../../lib/contract/AgreementAbi.json";
+import { useReadContract, useWriteContract } from "wagmi";
+import { BigNumber } from "bignumber.js";
+
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
   error: string | null;
@@ -35,12 +41,35 @@ const Payslip: React.FC = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
+  const { primaryWallet } = useDynamicContext();
 
   const [search, setSearch] = useState<string>("");
 
   const router = useRouter();
 
   const { userData, isLoading, error } = useUserData();
+
+  const { data: allowanceData }: { data: any } = useReadContract({
+    address: TOKEN_CONTRACT_ADDRESS,
+    abi: TOKEN_ABI,
+    functionName: "allowance",
+    args: [primaryWallet?.address, Agreement_ABI],
+  });
+
+  const approval = async () => {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: "TOKEN_CONTRACT_ADDRESS",
+      abi: TOKEN_ABI,
+      functionName: "allowance",
+      args: [
+        primaryWallet?.address,
+        new BigNumber(100).integerValue().toString(),
+      ],
+    });
+    return hash;
+  };
 
   if (!userData) {
     return (
