@@ -56,9 +56,9 @@ const Payslip: React.FC = () => {
     return <div>Error: {userData.error}</div>;
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -66,14 +66,18 @@ const Payslip: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full h-full">
+      <div className="w-full h-full flex items-center justify-center mt-4">
         <Preloader height={80} />
       </div>
     );
   }
 
   if (error) {
-    return <div>Error: {"An error Occured"}</div>;
+    return (
+      <div className="flex h-full w-full justify-center items-center font-bricolage font-bold text-2xl">
+        Error: {"An error Occured"}
+      </div>
+    );
   }
 
   const openModal = () => setIsOpen(true);

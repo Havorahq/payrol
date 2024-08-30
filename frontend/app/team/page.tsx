@@ -33,7 +33,7 @@ const Team: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full h-full">
+      <div className="w-full h-full flex items-center justify-center">
         <Preloader height={80} />
       </div>
     );

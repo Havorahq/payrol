@@ -49,7 +49,13 @@ const Profile = () => {
   }
 
   if (error) {
-    return <div>Error: {userData.error}</div>;
+    return (
+      <Wrapper>
+        <div className="flex h-full w-full justify-center items-center font-bricolage font-bold text-2xl">
+          Error: {userData.error}
+        </div>
+      </Wrapper>
+    );
   }
 
   if (isLoading) {
@@ -192,11 +198,11 @@ const Profile = () => {
               </div>
               <div className="mb-8">
                 <p className="text-sm font-semibold text-brandgray">Address</p>
-                <p className="text-xl font-semibold">{address}</p>
+                <p className="lg:text-xl text-xs font-semibold">{address}</p>
               </div>
             </div>
           ) : (
-            <div className="block">
+            <div className="block w-full h-full flex items-center justify-center">
               <Preloader />
             </div>
           )}
