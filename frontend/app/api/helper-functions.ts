@@ -184,12 +184,12 @@ export const getCompanyById = async (companyId: string) => {
   }
 };
 
-export const getEmployerById = async (employerId: string) => {
+export const getUserByEmail = async (email: string) => {
   try {
     const { data, error } = await supabase
-      .from("employers")
+      .from("users")
       .select("*")
-      .eq("id", employerId)
+      .eq("email", email)
       .single();
 
     if (error) {
@@ -238,12 +238,12 @@ export const getContractById = async (contractId: string) => {
   }
 };
 
-export const getUserContract = async (contractId: string) => {
+export const getEmployerContract = async (employerId: string) => {
   try {
     const { data, error } = await supabase
       .from("contracts")
       .select("*")
-      .eq("id", contractId);
+      .eq("employer_id", employerId);
 
     if (error) {
       throw new Error(error.message);
@@ -253,6 +253,33 @@ export const getUserContract = async (contractId: string) => {
   } catch (error) {
     return { data: null, error: "An error occurred" };
   }
+};
+
+export const getEmployeeContract = async (employeeId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("contracts")
+      .select("*")
+      .eq("employee_id", employeeId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: "An error occurred" };
+  }
+};
+
+export const getContracts = async (userType: string, userId: string) => {
+  let contracts;
+  if (userType === "business") {
+    contracts = await getEmployerContract(userId);
+  } else if (userType === "employee") {
+    contracts = await getEmployeeContract(userId);
+  }
+  return { contracts };
 };
 
 export const getPaymentById = async (paymentId: string) => {

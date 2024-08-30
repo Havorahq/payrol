@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-// import { useAccount } from "wagmi";
-import { getContractById, getUserContract } from "../api/helper-functions";
+import { useUserData } from "./useUserData";
+import { getUserByEmail, getContracts } from "../api/helper-functions";
 
 export interface OldContract {
   business_name: string;
@@ -34,54 +34,65 @@ export interface Contract {
   id: string;
   job_description?: string;
   job_title?: string;
-  payment?: string;
+  amount?: string;
   payment_address?: string;
   payment_status?: string;
   status: string;
   token_address?: string;
+  start_date: any;
+  milestoneRates: string;
+  milestoneTitle: string;
+  end_date: any;
 }
 
-const dummyContracts: any[] = [];
-
-const useContract = () => {
-  // const account = useAccount();
-  // const { address } = account;
-  const [contracts, setContracts] = useState<Contract[]>(dummyContracts || []);
+const useContractData = () => {
+  const { userData } = useUserData();
+  const [contracts, setContracts] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchContracts = async () => {
-  //     setIsLoading(true);
-  //     setError(null);
+  useEffect(() => {
+    const fetchContracts = async () => {
+      setIsLoading(true);
+      setError(null);
 
-  //     try {
-  //       if (address) {
-  //         const contractData: any = await getUserContract(address); // Fetch employee contracts
+      try {
+        if (userData) {
+          const userType = userData?.data?.data?.userType;
+          const userEmail = userData.data?.data?.email;
 
-  //         if (contractData) {
-  //           console.log("Contracts:", contractData);
-  //           setContracts(contractData);
-  //         } else {
-  //           console.log("No contracts found");
-  //           setContracts([]);
-  //         }
-  //       } else {
-  //         router.push("/");
-  //       }
-  //     } catch (error: any) {
-  //       console.error("Error fetching contracts:", error);
-  //       setError(error.message || "An error occurred while fetching contracts");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+          const contractData: any = await getContracts(userType, userEmail);
 
-  //   fetchContracts();
-  // }, [address, router]);
+          const updatedContractData = await Promise.all(
+            contractData.contracts.data.map(async (contract: any) => {
+              const employerData = await getUserByEmail(contract.employer_id);
+              const employeeData = await getUserByEmail(contract.employee_id);
+
+              return {
+                ...contract,
+                employerData: employerData.data,
+                employeeData: employeeData.data,
+              };
+            })
+          );
+
+          setContracts(updatedContractData);
+        } else {
+          console.log("No contracts found");
+          setContracts([]);
+        }
+      } catch (error: any) {
+        console.error("Error fetching contracts:", error);
+        setError(error.message || "An error occurred while fetching contracts");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchContracts();
+  }, [userData]);
 
   return { contracts, isLoading, error };
 };
 
-export default useContract;
+export default useContractData;
