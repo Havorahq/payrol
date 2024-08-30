@@ -3,11 +3,13 @@
 import React, { ChangeEvent, useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import useContractData from "../hooks/useContractData";
+import { useUserData } from "../hooks/useUserData";
 import Wrapper from "../components/wrapper/Wrapper";
 import { FaSearch } from "react-icons/fa";
 import { Contract } from "../hooks/useContractData";
 import Button from "../components/common/Button";
 import Modal from "../components/common/Modal";
+import { getUserByEmail } from "../api/helper-functions";
 import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
@@ -19,6 +21,7 @@ import Swal from "sweetalert2";
 
 const Team: React.FC = () => {
   const { contracts, isLoading, error } = useContractData();
+
   const [payslip, setPayslip] = useState<Contract | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
@@ -31,6 +34,7 @@ const Team: React.FC = () => {
     setSearch(e.target.value);
   };
 
+  console.log({ contracts }, "with users");
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -50,7 +54,9 @@ const Team: React.FC = () => {
 
   const handleGenerateSlip = (id: string) => {
     openModal();
-    const contractSlip = contracts.find((contract) => id === contract.id);
+    const contractSlip = contracts.data.find(
+      (contract: any) => id === contract.id
+    );
     if (contractSlip) {
       setPayslip(contractSlip);
     }
@@ -184,25 +190,39 @@ const Team: React.FC = () => {
               <tr className="text-[#878790] mb-20 pb-16 text-xs">
                 <th className="pr-3 py-1">S/N</th>
                 <th className="pr-3 py-1">Name</th>
-                <th className="pr-3 py-1">Start Date</th>
-                <th className="pr-3 py-1">End Date</th>
+                <th className="pr-3 py-1">Job title</th>
+                <th className="pr-3 py-1">Amount</th>
                 <th className="pr-3 py-1">Type</th>
                 <th className="pr-3 py-1">Status</th>
               </tr>
             </thead>
             <tbody>
-              {contracts.map((item, index) => {
+              {contracts?.map((item: any, index: number) => {
                 const {
                   id,
                   contract_type,
                   name,
+
+                  employerData,
+                  employeeData,
+
                   employee_id,
-                  payment,
+                  employer_id,
+                  amount,
+                  job_description,
+                  job_title,
                   created_at,
                   updated_at,
                   status,
                   doc,
+                  payment_status,
+                  start_date,
+                  milestoneRates,
+                  milestoneTitle,
+                  end_date,
                 } = item;
+
+                const employeeName = employeeData?.firstname || employee_id;
 
                 return (
                   <tr
@@ -220,9 +240,9 @@ const Team: React.FC = () => {
                     // style={{ marginBlock: "2em", paddingInline: "1em" }}
                   >
                     <td className="pr-1 py-3">{index + 1}</td>
-                    <td className="pr-1 py-3">{name}</td>
-                    <td className="pr-1 py-3">{created_at}</td>
-                    <td className="pr-1 py-3">{updated_at}</td>
+                    <td className="pr-1 py-3">{employeeName}</td>
+                    <td className="pr-1 py-3">{job_title}</td>
+                    <td className="pr-1 py-3">{amount}</td>
                     <td className="pr-1 py-3">{contract_type}</td>
                     <td className="pr-1 py-3 capitalize">
                       <span className={`${statusClass(status)}`}>

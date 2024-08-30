@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../common/Button";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import moment from "moment";
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { capitalizeFirstWord } from "@/plugins/utils";
 import { useUserData } from "@/app/hooks/useUserData";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useWriteContract } from "wagmi";
+import { useWatchContractEvent, useWriteContract} from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
 import { bscTestnet } from "viem/chains";
 import { createContract } from "@/app/api/helper-functions";
@@ -40,7 +40,92 @@ const ContractDetails: React.FC = () => {
   //     args: [],
   //   });
   //   return result;
-  // };
+  // };\
+
+  useWatchContractEvent({
+    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    abi: factoryAbi,
+    eventName: "FixedRateAgreementDeployed",
+    onLogs(logs) {
+      const newLogs = logs as unknown as any[]
+      const createdContractAddress = newLogs[0]?.args?.contractAddress
+      const {
+        contractType,
+        employeeEmail,
+        endDate,
+        jobDescription,
+        jobTitle,
+        milestoneRates,
+        milestoneTitle,
+        monthlyRate,
+        startDate,
+      } = state;
+      const employerEmail = userData?.data?.data?.email;
+      const status: string = "Pending";
+      const payment_status: string = "Pending";
+
+      createContract(
+        contractType,
+        employerEmail,
+        employeeEmail,
+        jobTitle,
+        jobDescription,
+        monthlyRate,
+        status,
+        payment_status,
+        milestoneTitle,
+        milestoneRates,
+        startDate,
+        endDate,
+        createdContractAddress
+      ).then(()=>{
+        openModal()
+      });
+    }
+  });
+
+  useWatchContractEvent({
+    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    abi: factoryAbi,
+    eventName: "PayAsYoGoAgreementDeployed",
+    onLogs(logs) {
+      console.log('New logs2!', logs)
+      const newLogs = logs as unknown as any[]
+      const createdContractAddress = newLogs[0]?.args?.contractAddress
+      const {
+        contractType,
+        employeeEmail,
+        endDate,
+        jobDescription,
+        jobTitle,
+        milestoneRates,
+        milestoneTitle,
+        monthlyRate,
+        startDate,
+      } = state;
+      const employerEmail = userData?.data?.data?.email;
+      const status: string = "Pending";
+      const payment_status: string = "Pending";
+
+      createContract(
+        contractType,
+        employerEmail,
+        employeeEmail,
+        jobTitle,
+        jobDescription,
+        monthlyRate,
+        status,
+        payment_status,
+        milestoneTitle,
+        milestoneRates,
+        startDate,
+        endDate,
+        createdContractAddress
+      ).then(()=>{
+        openModal()
+      });
+    }
+  });
 
   const wormhole_ags = [
     "0x80aC94316391752A193C1c47E27D382b507c93F3",
@@ -90,85 +175,6 @@ const ContractDetails: React.FC = () => {
     return hash;
   };
 
-  // useContractEvent({
-  //   address: contractAddress,
-  //   abi: factoryAbi,
-  //   eventName: "FixedRateAgreementDeployed",
-  //   listener: async (eventNumber: any[]) => {
-  //     const eventNum = eventNumber[0];
-  //     state.contractAddress = eventNum.args.contractAddress;
-  //     const { data: reqData, error: reqError } = await createContract(state);
-  //     if (reqError) {
-  //       return console.error(reqError, "contract creation error");
-  //     }
-  //     openModal();
-  //   },
-  // });
-
-  // writeContract({
-  //   abi: factoryAbi,
-  //   address: "0x6b175474e89094c44da98b954eedeac495271d0f",
-  //   functionName: "transferFrom",
-  //   args: [
-  //     "0xd2135CfB216b74109775236E36d4b433F1DF507B",
-  //     "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-  //   ],
-  // });
-
-  // writeContract({
-  //   abi: factoryAbi,
-  //   address: contractAddress,
-  //   eventName: "PayAsYoGoAgreementDeployed",
-  //   listener: async (eventNumber: any[]) => {
-  //     const eventNum = eventNumber[0];
-  //     state.contractAddress = eventNum.args.contractAddress;
-  //     const { data: reqData, error: reqError } = await createContract(state);
-  //     if (reqError) {
-  //       return console.error(reqError, "contract creation error");
-  //     }
-  //     openModal();
-  //   },
-  // });
-
-  // writeContract({
-  //   address: contractAddress,
-  //   abi: factoryAbi,
-  //   functionName: "createNewFixedRateAgreement",
-  // });
-
-  // writeContract({
-  //   address: contractAddress,
-  //   abi: factoryAbi,
-  //   functionName: "createNewPayAsYouGoAgreement",
-  // });
-
-  // useEffect(() => {
-  //   if (userData) {
-  //     setUser(userData);
-  //   }
-  //   if (fixedContractSuccess) {
-  //     console.log("fixed rate contract deployed", fixedContractSuccess);
-  //   }
-
-  //   if (paygContractSuccess) {
-  //     console.log("PAYG contract deployed");
-  //   }
-
-  //   if (fixedContractError) {
-  //     console.log(fixedContractError, "error deploying fixed contract");
-  //   }
-
-  //   if (paygContractError) {
-  //     console.log(paygContractError, "error deploying payg contract");
-  //   }
-  // }, [
-  //   fixedContractSuccess,
-  //   paygContractSuccess,
-  //   fixedContractError,
-  //   paygContractError,
-  //   userData,
-  // ]);
-
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
@@ -193,29 +199,11 @@ const ContractDetails: React.FC = () => {
     const payment_status: string = "Pending";
 
     try {
-      let hash;
       if (state.contractType === "fixed") {
-        hash = await deployFixedAgreement();
+        await deployFixedAgreement();
       } else if (contractType.toLowerCase() === "pay as you go") {
-        hash = await deployPAYGAgreement();
+        await deployPAYGAgreement();
       }
-      const contract = await createContract(
-        contractType,
-        employerEmail,
-        employeeEmail,
-        jobTitle,
-        jobDescription,
-        monthlyRate,
-        status,
-        payment_status,
-        milestoneTitle,
-        milestoneRates,
-        startDate,
-        endDate,
-        hash
-      );
-
-      return { contract, hash };
     } catch {
       console.error("error creating contract");
     }

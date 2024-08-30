@@ -23,6 +23,12 @@ import { findUser } from "../api/helper-functions";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { useUserData } from "../hooks/useUserData";
 
+import { TOKEN_CONTRACT_ADDRESS } from "../../lib/contract/constants";
+import TOKEN_ABI from "../../lib/contract/tokenabi.json";
+import Agreement_ABI from "../../lib/contract/AgreementAbi.json";
+import { useReadContract, useWriteContract } from "wagmi";
+import { BigNumber } from "bignumber.js";
+
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
   error: string | null;
@@ -35,12 +41,35 @@ const Payslip: React.FC = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
+  const { primaryWallet } = useDynamicContext();
 
   const [search, setSearch] = useState<string>("");
 
   const router = useRouter();
 
   const { userData, isLoading, error } = useUserData();
+
+  const { data: allowanceData }: { data: any } = useReadContract({
+    address: TOKEN_CONTRACT_ADDRESS,
+    abi: TOKEN_ABI,
+    functionName: "allowance",
+    args: [primaryWallet?.address, Agreement_ABI],
+  });
+
+  const approval = async () => {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: "TOKEN_CONTRACT_ADDRESS",
+      abi: TOKEN_ABI,
+      functionName: "allowance",
+      args: [
+        primaryWallet?.address,
+        new BigNumber(100).integerValue().toString(),
+      ],
+    });
+    return hash;
+  };
 
   if (!userData) {
     return (
@@ -87,7 +116,9 @@ const Payslip: React.FC = () => {
 
   const handleGenerateSlip = (id: string) => {
     openModal();
-    const contractSlip = contracts.find((contract) => id === contract.id);
+    const contractSlip = contracts.find(
+      (contract: { id: string }) => id === contract.id
+    );
     if (contractSlip) {
       setPayslip(contractSlip);
     }
@@ -277,63 +308,78 @@ const Payslip: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {contracts.map((item, index) => {
-                const {
-                  id,
-                  contract_type,
-                  name,
-                  employee_id,
-                  payment,
-                  created_at,
-                  updated_at,
-                  status,
-                  doc,
-                } = item;
+              {contracts.map(
+                (
+                  item: {
+                    id: any;
+                    contract_type?: any;
+                    name?: any;
+                    employee_id?: any;
+                    payment?: any;
+                    created_at?: any;
+                    updated_at?: any;
+                    status?: any;
+                    doc?: any;
+                  },
+                  index: number
+                ) => {
+                  const {
+                    id,
+                    contract_type,
+                    name,
+                    employee_id,
+                    payment,
+                    created_at,
+                    updated_at,
+                    status,
+                    doc,
+                  } = item;
 
-                return (
-                  <tr
-                    key={id}
-                    // onClick={() => {
-                    //   localStorage.setItem(
-                    //     "currentContract",
-                    //     JSON.stringify({
-                    //       contract_type,
-                    //       contract_address: item.contract_address,
-                    //     })
-                    //   );
-                    // }}
-                    className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 border-gray-100 p-3 px-2 my-4 rounded-lg"
-                    style={{ marginBlock: "2em", paddingInline: "1em" }}
-                  >
-                    <td className="pr-1 py-3">{index + 1}</td>
-                    <td className="pr-1 py-3 capitalize">
-                      <span className={`${statusClass(status)}`}>
-                        {capitalizeFirst(status)}
-                      </span>
-                    </td>
-                    <td className="pr-1 py-3">{name}</td>
-                    <td className="pr-1 py-3">{created_at}</td>
-                    <td className="pr-1 py-3">{updated_at}</td>
-                    {/* <td className="pr-1 py-3">{doc}</td> */}
-                    <td className="pr-1 py-3">{contract_type}</td>
-                    <td className="pr-1 py-3">
-                      <span onClick={() => handleGenerateSlip(item.id)}>
-                        <p className="text-[#5EAA22] font-medium">
-                          View Payslip
-                        </p>
-                      </span>
-                    </td>
-                    <td>
-                      <div
-                        className="bg-black w-fit p-2 px-3 rounded-md"
-                        onClick={() => handlePayment(item.id)}
-                      >
-                        <p className="text-white text-xs">Approve Payment</p>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                  return (
+                    <tr
+                      key={id}
+                      // onClick={() => {
+                      //   localStorage.setItem(
+                      //     "currentContract",
+                      //     JSON.stringify({
+                      //       contract_type,
+                      //       contract_address: item.contract_address,
+                      //     })
+                      //   );
+                      // }}
+                      className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 border-gray-100 p-3 px-2 my-4 rounded-lg"
+                      style={{ marginBlock: "2em", paddingInline: "1em" }}
+                    >
+                      <td className="pr-1 py-3">{index + 1}</td>
+                      <td className="pr-1 py-3 capitalize">
+                        <span className={`${statusClass(status)}`}>
+                          {capitalizeFirst(status)}
+                        </span>
+                      </td>
+                      <td className="pr-1 py-3">{name}</td>
+                      <td className="pr-1 py-3">{created_at}</td>
+                      <td className="pr-1 py-3">{updated_at}</td>
+                      {/* <td className="pr-1 py-3">{doc}</td> */}
+                      <td className="pr-1 py-3">{contract_type}</td>
+                      <td className="pr-1 py-3">
+                        <span onClick={() => handleGenerateSlip(item.id)}>
+                          <p className="text-[#5EAA22] font-medium">
+                            View Payslip
+                          </p>
+                        </span>
+                      </td>
+                      <td>
+                        <div
+                          className="bg-black w-fit p-2 px-3 rounded-md"
+                          onClick={() => handlePayment(item.id)}
+                        >
+                          <p className="text-white text-xs">Approve Payment</p>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
             </tbody>
           </table>
           {contracts.length === 0 && (
