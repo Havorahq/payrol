@@ -29,6 +29,7 @@ import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
 import { chains } from "@/lib/network";
+import { useBalance } from "wagmi";
 
 interface Contract {
   id: number;
@@ -50,7 +51,9 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
-
+  const balance = useBalance({
+    address: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  });
   const { user } = useDynamicContext();
   const [userData, setUserData] = useState<UserData>(null);
 
@@ -217,7 +220,9 @@ export default function Home() {
                       <BiDollarCircle />
                     </div>
                   </div>
-                  <div className="text-2xl mt-2 font-semibold">0</div>
+                  <div className="text-2xl mt-2 font-semibold">
+                    <h1>{balance.data?.decimals}</h1>
+                  </div>
                 </div>
               </div>
               <div className="mt-8 p-8 pb-32 bg-white rounded-lg border h-full shadow">
