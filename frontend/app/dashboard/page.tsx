@@ -28,6 +28,7 @@ import { findUser } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
+import { chains } from "@/lib/network";
 
 interface Contract {
   id: number;
@@ -98,17 +99,18 @@ export default function Home() {
     ) || null;
 
   const activeContract = contractData.filter(
-    (contract: { status: string }) => contract.status === "active"
+    (contract: { status: string }) => contract.status === "Active"
   ).length;
 
   const pendingContract = contractData.filter(
-    (contract: { status: string }) => contract.status === "pending"
+    (contract: { status: string }) => contract.status === "Pending"
   ).length;
 
   const upcomingPayment = contractData.reduce(
-    (sum: number, ad: { payment: string }) => sum + parseInt(ad.payment),
+    (sum: number, ad: { amount: string }) => sum + parseInt(ad.amount),
     0
   );
+  console.log({ contractData });
 
   const handleViewClick = (id: number) => {
     console.log(`View contract with id: ${id}`);
@@ -133,18 +135,27 @@ export default function Home() {
               Withdrawal Funds
             </p>
             <div className="mt-8">
-              <label htmlFor="token" className="mb-4">
+              <label htmlFor="chain" className="mb-4">
                 Select Chain
               </label>
               <select
-                name="token"
-                id="token"
+                name="chain"
+                id="chain"
                 className="w-full border border-gray-300 p-4 rounded-md mb-6"
               >
-                <option value=""></option>
+                <option value="">Select a chain</option>
+                {chains.map((chain) => (
+                  <option
+                    key={chain.chainId}
+                    value={chain.chainId}
+                    data-image={chain.picture}
+                  >
+                    {chain.name}
+                  </option>
+                ))}
               </select>
               <div className="w-1/2">
-                <Button primary>Confirm Withdrwal</Button>
+                <Button primary>Confirm Withdrawal</Button>
               </div>
             </div>
           </div>
@@ -191,13 +202,22 @@ export default function Home() {
                 <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <p>Payment</p>
+                      <p>Pending Payment</p>
                       <BiDollarCircle />
                     </div>
                   </div>
                   <div className="text-2xl mt-2 font-semibold">
                     {upcomingPayment}
                   </div>
+                </div>
+                <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <p>Current Balance</p>
+                      <BiDollarCircle />
+                    </div>
+                  </div>
+                  <div className="text-2xl mt-2 font-semibold">0</div>
                 </div>
               </div>
               <div className="mt-8 p-8 pb-32 bg-white rounded-lg border h-full shadow">
@@ -258,8 +278,7 @@ export default function Home() {
                   <table className="min-w-full bg-white">
                     <thead>
                       <tr className="text-[#878790] mb-20 text-sm">
-                        <th className="py-2">S/N</th>
-                        <th className="py-2">Name</th>
+                        <th className="py-2">Employer</th>
                         <th className="py-2">Job Title</th>
                         <th className="py-2">Amount</th>
                         <th className="py-2">Type</th>
@@ -294,21 +313,16 @@ export default function Home() {
                             amount,
                             employee_id,
                           } = item;
-                          const employeeName =
-                            employeeData?.firstname || employee_id;
+
                           const employerName =
-                            employerData?.firstname || employer_id;
+                            `${employerData?.firstName} ${employerData?.lastName}` ||
+                            employer_id;
                           return (
                             <tr
                               key={id}
                               className=" hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-base border border-1 p-3 px-2 my-4 rounded-lg"
                             >
-                              <td className="py-2">{index + 1}</td>
-                              <td className="py-2">
-                                {accountType === "business"
-                                  ? employeeName
-                                  : employerName}
-                              </td>
+                              <td className="py-2">{employerName}</td>
                               <td className="py-2">{job_title}</td>
                               <td className="py-2">{amount}</td>
                               <td className="py-2">{contract_type}</td>
