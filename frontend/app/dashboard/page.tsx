@@ -27,6 +27,7 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { findUser } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
+import useContractData from "../hooks/useContractData";
 
 interface Contract {
   id: number;
@@ -42,7 +43,7 @@ const mockContractData: Contract[] = [];
 
 export default function Home() {
   // const [accountType, setAccountType] = useState<string>("");
-  const contractData = mockContractData; // Mock contract data
+  const { contracts: contractData, isLoading, error } = useContractData();
 
   const [search, setSearch] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<string>("");
@@ -92,19 +93,20 @@ export default function Home() {
 
   const filteredData =
     contractData?.filter(
-      (contract) => activeFilter === "" || contract.status === activeFilter
+      (contract: { status: string }) =>
+        activeFilter === "" || contract.status === activeFilter
     ) || null;
 
   const activeContract = contractData.filter(
-    (contract) => contract.status === "active"
+    (contract: { status: string }) => contract.status === "active"
   ).length;
 
   const pendingContract = contractData.filter(
-    (contract) => contract.status === "pending"
+    (contract: { status: string }) => contract.status === "pending"
   ).length;
 
   const upcomingPayment = contractData.reduce(
-    (sum, ad) => sum + parseInt(ad.payment),
+    (sum: number, ad: { payment: string }) => sum + parseInt(ad.payment),
     0
   );
 
@@ -258,7 +260,7 @@ export default function Home() {
                       <tr className="text-[#878790] mb-20 text-sm">
                         <th className="py-2">S/N</th>
                         <th className="py-2">Name</th>
-                        <th className="py-2">Email</th>
+                        <th className="py-2">Job Title</th>
                         <th className="py-2">Amount</th>
                         <th className="py-2">Type</th>
                         <th className="py-2">Status</th>
@@ -266,53 +268,80 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredData?.map((item, index) => {
-                        const {
-                          id,
-                          status,
-                          contract_type,
-                          business_name,
-                          employee_id,
-                          payment,
-                        } = item;
-
-                        return (
-                          <tr
-                            key={id}
-                            className=" hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-base border border-1 p-3 px-2 my-4 rounded-lg"
-                          >
-                            <td className="py-2">{index + 1}</td>
-                            <td className="py-2">{business_name}</td>
-                            <td className="py-2">{employee_id}</td>
-                            <td className="py-2">{payment}</td>
-                            <td className="py-2">{contract_type}</td>
-                            <td className="py-2">
-                              <span
-                                className={`status-badge ${statusClass(
-                                  status
-                                )}`}
-                              >
-                                {capitalizeFirst(status)}
-                              </span>
-                            </td>
-                            <td className="py-2">
-                              <div
-                                className="flex items-center gap-1 cursor-pointer text-sm"
-                                onClick={() => handleViewClick(id)}
-                              >
-                                <FaRegEye />
-                                <span>View</span>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                      {filteredData?.map(
+                        (
+                          item: {
+                            id: any;
+                            status: any;
+                            contract_type: any;
+                            employeeData: any;
+                            employerData: any;
+                            employee_id: any;
+                            employer_id: any;
+                            amount: any;
+                            job_title: any;
+                          },
+                          index: number
+                        ) => {
+                          const {
+                            id,
+                            status,
+                            employeeData,
+                            employerData,
+                            job_title,
+                            employer_id,
+                            contract_type,
+                            amount,
+                            employee_id,
+                          } = item;
+                          const employeeName =
+                            employeeData?.firstname || employee_id;
+                          const employerName =
+                            employerData?.firstname || employer_id;
+                          return (
+                            <tr
+                              key={id}
+                              className=" hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-base border border-1 p-3 px-2 my-4 rounded-lg"
+                            >
+                              <td className="py-2">{index + 1}</td>
+                              <td className="py-2">
+                                {accountType === "business"
+                                  ? employeeName
+                                  : employerName}
+                              </td>
+                              <td className="py-2">{job_title}</td>
+                              <td className="py-2">{amount}</td>
+                              <td className="py-2">{contract_type}</td>
+                              <td className="py-2">
+                                <span
+                                  className={`status-badge ${statusClass(
+                                    status
+                                  )}`}
+                                >
+                                  {capitalizeFirst(status)}
+                                </span>
+                              </td>
+                              <td className="py-2">
+                                <div
+                                  className="flex items-center gap-1 cursor-pointer text-sm"
+                                  onClick={() => handleViewClick(id)}
+                                >
+                                  <FaRegEye />
+                                  <span>View</span>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        }
+                      )}
                     </tbody>
                   </table>
                   {filteredData?.length === 0 && (
                     <div className="min-h-6">
                       <div className="flex justify-center items-center my-2 p-4 h-full">
-                        <p className="text-gray-400 text-lg mt-4 font-bold">No Result Found</p>
+                        <p className="text-gray-400 text-lg mt-4 font-bold">
+                          No Result Found
+                        </p>
                       </div>
                     </div>
                   )}

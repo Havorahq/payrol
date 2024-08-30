@@ -41,7 +41,9 @@ const ContractDetail = () => {
 
   useEffect(() => {
     if (id && contracts) {
-      const foundContract = contracts.find((contract) => contract.id === id);
+      const foundContract = contracts.find(
+        (contract: any) => contract.id === id
+      );
       setContract(foundContract);
     }
   }, [id, contracts]);
