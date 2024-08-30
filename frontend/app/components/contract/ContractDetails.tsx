@@ -60,7 +60,7 @@ const ContractDetails: React.FC = () => {
         monthlyRate,
         startDate,
       } = state;
-      const employerEmail = userData?.data.data.email;
+      const employerEmail = userData?.data?.data?.email;
       const status: string = "Pending";
       const payment_status: string = "Pending";
 
@@ -103,7 +103,7 @@ const ContractDetails: React.FC = () => {
         monthlyRate,
         startDate,
       } = state;
-      const employerEmail = userData?.data.data.email;
+      const employerEmail = userData?.data?.data?.email;
       const status: string = "Pending";
       const payment_status: string = "Pending";
 
