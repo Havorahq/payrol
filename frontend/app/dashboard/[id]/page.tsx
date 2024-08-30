@@ -10,6 +10,7 @@ import useContractData from "../../hooks/useContractData";
 import { useUserData } from "../../hooks/useUserData";
 import { bscTestnet } from "viem/chains";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { acceptContract, getContractById } from "@/app/api/helper-functions";
 
 const agreementAbi = require("@/lib/contract/AgreementAbi.json");
 
@@ -19,7 +20,6 @@ const ContractDetail = () => {
   const pathname = usePathname();
   const id = pathname.split("/").pop();
   const [contract, setContract] = useState<any>(null);
-  const [isEmployer, setIsEmployer] = useState(true);
   const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
   const { contracts, isLoading, error } = useContractData();
@@ -27,10 +27,11 @@ const ContractDetail = () => {
 
   const enterContract = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+    
 
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      address: contract.hash,
       abi: agreementAbi,
       functionName: "employeeEnterContract",
       chain: bscTestnet || walletClient.chain,
@@ -39,14 +40,17 @@ const ContractDetail = () => {
     return hash;
   };
 
+  const loadContract =async(id: string)=>{
+    console.log(id, 'the id')
+    if (!id) return
+    const gottenContract = await getContractById(id)
+    console.log(gottenContract, 'the gotten contract')
+    setContract(gottenContract.data)
+  }
+
   useEffect(() => {
-    if (id && contracts) {
-      const foundContract = contracts.find(
-        (contract: any) => contract.id === id
-      );
-      setContract(foundContract);
-    }
-  }, [id, contracts]);
+    loadContract(id as string)
+  }, [id]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -58,10 +62,15 @@ const ContractDetail = () => {
     }
   };
 
-  const handleEnterAgreement = () => {
-    console.log("Agreement entered");
-    enterContract();
-    openModal();
+  const handleEnterAgreement = async () => {
+    try{
+      console.log("Agreement entered");
+      enterContract();
+      await acceptContract(id as string)
+      openModal();
+    } catch(e){
+      console.log(e)
+    }
   };
 
   return (
@@ -124,50 +133,15 @@ const ContractDetail = () => {
               {contract ? capitalizeFirst(contract.status) : ""}
             </p>
           </div>
-          {isEmployer &&
-            contract &&
-            contract.status === "active" &&
-            contract.payment_status !== "pending" &&
-            contract.payment_status !== "active" && (
-              <div className="my-2">
-                <p className="font-medium">Payment Hash</p>
-                <input
-                  type="text"
-                  placeholder="Submit Blockchain payment Hash"
-                  className="w-full border rounded p-2"
-                />
-                <Button
-                  label="Submit Payment Hash"
-                  onClick={() => handleSendPayment("send")}
-                  style="mt-2"
-                />
-              </div>
-            )}
-          {!isEmployer && (
-            <div>
-              {acceptingPaymentClicked ? (
-                <p>Processing acceptance...</p>
-              ) : (
-                <div>
-                  {contract && contract.status === "pending" && (
-                    <Button
-                      label="Accept Contract"
-                      onClick={handleEnterAgreement}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-          {!isEmployer &&
-            contract &&
-            contract.status === "active" &&
-            contract.payment_status === "pending" && (
-              <Button
-                label="Confirm Payment"
-                onClick={() => handleSendPayment("confirm")}
-              />
-            )}
+          { 
+            contract.status !== "Active" &&
+            (<div>
+                  <Button
+                    label="Accept Contract"
+                    onClick={handleEnterAgreement}
+                  />
+            </div>)
+          }
         </div>
       </div>
     </Wrapper>

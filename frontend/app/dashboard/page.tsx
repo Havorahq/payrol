@@ -341,13 +341,14 @@ export default function Home() {
                                 </span>
                               </td>
                               <td className="py-2">
-                                <div
+                                <Link
                                   className="flex items-center gap-1 cursor-pointer text-sm"
-                                  onClick={() => handleViewClick(id)}
+                                  // onClick={() => handleViewClick(id)}
+                                  href={`/dashboard/${id}`}
                                 >
                                   <FaRegEye />
                                   <span>View</span>
-                                </div>
+                                </Link>
                               </td>
                             </tr>
                           );
