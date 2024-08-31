@@ -35,8 +35,8 @@ export const getInitials = (name: string) => {
 
 export const tokenOptions = [
   { value: "USDT", label: "USDT" },
-  { value: "BTC", label: "BTC" },
-  { value: "ETH", label: "ETH" },
+  { value: "USDC", label: "USDC" },
+  { value: "DAI", label: "DAI" },
 ];
 
 export const statusClass = (status: string) => {
