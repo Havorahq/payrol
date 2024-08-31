@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Button from "../../components/common/Button";
 import Wrapper from "../../components/wrapper/Wrapper";
 import Modal from "../../components/common/Modal";
-import { capitalizeFirst } from "../../../plugins/utils";
+import { capitalizeFirst, statusClass } from "../../../plugins/utils";
 import useContractData from "../../hooks/useContractData";
 import { useUserData } from "../../hooks/useUserData";
 import { bscTestnet } from "viem/chains";
@@ -119,31 +119,36 @@ const ContractDetail = () => {
             </div>
             <div className="border-b py-4">
               <p className="font-medium">Rate ($)</p>
-              <p className="text-gray-600">{contract ? contract.payment : ""}</p>
+              <p className="text-gray-600">{contract ? contract.amount : ""}</p>
             </div>
-            <div className="border-b py-4">
+            {/* <div className="border-b py-4">
               <p className="font-medium">Employee Wallet Address</p>
               <p className="text-gray-600">
                 {contract ? contract.payment_address : ""}
               </p>
-            </div>
+            </div> */}
             <div className="border-b py-4">
               <p className="font-medium">Contract Status</p>
               <p className="text-gray-600">
-                {contract ? capitalizeFirst(contract.status) : ""}
+                {contract ? (
+                  <span className={`${statusClass(contract?.status)}`}>
+                    {capitalizeFirst(contract.status)}
+                  </span>
+                ) : (
+                  ""
+                )}
               </p>
             </div>
-            { 
-              contract?.status !== "Active" &&
-              (<div className="mt-8">
-                    <Button
-                      primary
-                      label="Accept Contract"
-                      style="w-fit"
-                      onClick={handleEnterAgreement}
-                    />
-              </div>)
-            }
+            {contract?.status !== "Active" && (
+              <div className="mt-8">
+                <Button
+                  primary
+                  label="Accept Contract"
+                  style="w-fit"
+                  onClick={handleEnterAgreement}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
