@@ -360,7 +360,7 @@ export default function Home() {
                                   href={`/dashboard/${id}`}
                                 >
                                   <FaRegEye />
-                                  <span className="no-underline">View</span>
+                                  <span className="no-underline hover:no-underline">View</span>
                                 </Link>
                               </td>
                             </tr>
