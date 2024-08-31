@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
         />
       </div>
 
-      {user && (
+      {(
         <div className="lg:pt-16 pt-8 font-medium z-10 overflow-forced">
           <Link href="/dashboard">
             <div
@@ -178,7 +178,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
             <div
               data-tooltip-id="tooltip-profile"
               data-tooltip-content="Profile"
-              className={`lg:mt-72 mt-16 flex items-center justify-center p-3 rounded-lg my-3 ${
+              className={`flex items-center justify-center p-3 rounded-lg my-3 ${
                 title === "Profile"
                   ? "bg-primary text-white"
                   : "bg-white text-gray-400 hover:border hover:border-gray-300"
