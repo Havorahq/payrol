@@ -11,8 +11,7 @@ import { useUserData } from "../../hooks/useUserData";
 import { bscTestnet } from "viem/chains";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { acceptContract, getContractById } from "@/app/api/helper-functions";
-
-const agreementAbi = require("@/lib/contract/AgreementAbi.json");
+import agreementAbi from "@/lib/contract/AgreementAbi.json";
 
 const ContractDetail = () => {
   const router = useRouter();

@@ -28,6 +28,10 @@ import TOKEN_ABI from "../../lib/contract/tokenabi.json";
 import Agreement_ABI from "../../lib/contract/AgreementAbi.json";
 import { useReadContract, useWriteContract } from "wagmi";
 import { BigNumber } from "bignumber.js";
+import { bscTestnet } from "viem/chains";
+import agreementAbi from "@/lib/contract/AgreementAbi.json";
+import { parseUnits } from 'viem'
+import { readContract } from 'viem/actions';
 
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
@@ -49,27 +53,68 @@ const Payslip: React.FC = () => {
 
   const { userData, isLoading, error } = useUserData();
 
-  const { data: allowanceData }: { data: any } = useReadContract({
-    address: TOKEN_CONTRACT_ADDRESS,
-    abi: TOKEN_ABI,
-    functionName: "allowance",
-    args: [primaryWallet?.address, Agreement_ABI],
-  });
+   const [allowance, setAllowance] = useState<any | null>(null);
 
-  const approval = async () => {
+ const getAllowance = async () => {
+  try {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-
-    const { hash, loading, error } = await walletClient.writeContract({
-      address: "TOKEN_CONTRACT_ADDRESS",
+    // Use the readContract function from viem
+    const result = await readContract(walletClient, {
+      address: TOKEN_CONTRACT_ADDRESS,
       abi: TOKEN_ABI,
       functionName: "allowance",
-      args: [
-        primaryWallet?.address,
-        new BigNumber(100).integerValue().toString(),
-      ],
+      args: [primaryWallet?.address, '0x36a8733dfc2862821F8dF5B79C389D477Ed89e24'],
     });
+
+    setAllowance(Number(result).toString());
+    return result;
+  } catch (error) {
+    console.error("Error getting allowance:", error);
+    return null;
+  }
+};
+
+const grantApproval = async (spenderAddress: string, amount: string) => {
+  try {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+    const result = await walletClient.writeContract({
+      address: TOKEN_CONTRACT_ADDRESS,
+      abi: TOKEN_ABI,
+      functionName: "approve",
+      args: [spenderAddress, amount],
+            chain: bscTestnet || walletClient.chain,
+    });
+
+    console.log("Approval granted:", result);
+    return result;
+  } catch (error) {
+    console.error("Error granting approval:", error);
+    throw error;
+  }
+};
+
+  const collectTokens = async (receipientAddress: string, amount: number) => {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+      const amountInWei = parseUnits(amount.toString(), 18)
+    // Use the walletClient to write data to the smart contract
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: TOKEN_CONTRACT_ADDRESS,
+      abi: agreementAbi,
+      functionName: "collectTokens",
+      args: [receipientAddress, amountInWei],
+      chain: bscTestnet || walletClient.chain,
+    });
+
     return hash;
   };
+
+   useEffect(() => {
+     getAllowance();
+   }, [primaryWallet, contracts]);
+
+   const needAllowance = allowance > 2
+
+ 
 
   if (!userData) {
     return (
@@ -137,6 +182,16 @@ const Payslip: React.FC = () => {
         console.log("Contract deleted");
       }
     });
+  };
+
+  const handleApprovePayment = async () => {
+    grantApproval('0x36a8733dfc2862821F8dF5B79C389D477Ed89e24', "10");
+    console.log("Approve Payment");
+  };
+
+  const handleMakePayment = async () => {
+    collectTokens('0x36a8733dfc2862821F8dF5B79C389D477Ed89e24', 2);
+    console.log("Make Payment");
   };
 
   return (
@@ -230,8 +285,10 @@ const Payslip: React.FC = () => {
                     payment ? "bg-[#4A851C]" : "bg-black"
                   } w-fit p-2 px-3 rounded-lg cursor-pointer`}
                   onClick={() => {
-                    setPayment(!payment);
-                    payment && setComplete(true);
+                    // needAllowance ? handleApprovePayment() : handleMakePayment()
+                   handleMakePayment()
+                    // setPayment(!payment);
+                    // payment && setComplete(true);
                   }}
                 >
                   <p className="text-white text-sm">
