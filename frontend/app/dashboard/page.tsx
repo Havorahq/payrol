@@ -30,6 +30,9 @@ import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
 import { chains } from "@/lib/network";
 import { useBalance } from "wagmi";
+const fixedAbi = require("@/lib/contract/fixedabi.json");
+const paygAbi = require("@/lib/contract/paygabi.json");
+import { bscTestnet } from "viem/chains";
 
 interface Contract {
   id: number;
@@ -56,6 +59,13 @@ export default function Home() {
   });
   const { user } = useDynamicContext();
   const [userData, setUserData] = useState<UserData>(null);
+
+  // for withdrawal
+  const [withdrawalChainId, setWithdrawalChainId] = useState('56')
+  const [withdrawalContract, setWithdrawalContract] = useState<any>(null)
+  const [recipientAddress, setRecipientAddress] = useState('')
+
+  const { primaryWallet } = useDynamicContext();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -129,6 +139,51 @@ export default function Home() {
     );
   }
 
+  const collectIntraChainPayment =async (contractType: any)=>{
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: withdrawalContract.hash,
+      abi: contractType === 'fixed'? fixedAbi : paygAbi,
+      functionName: "sendPayment",
+      chain: bscTestnet || walletClient.chain,
+    });
+    if (error) alert("Withdrawal failed")
+    return {hash, loading, error}
+  }
+
+  const requestCrossChainPayment = async (contractType: any)=>{
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+    const { hash, loading, error } = await walletClient.writeContract({
+      address: withdrawalContract.hash,
+      abi: contractType === 'fixed'? fixedAbi : paygAbi,
+      functionName: "sendCrossChainPayment",
+      args: [
+        3,
+        recipientAddress,
+        recipientAddress
+      ],
+      chain: bscTestnet || walletClient.chain,
+    });
+    if (error) alert("Withdrawal failed")
+    return {hash, loading, error}
+  }
+
+  const handleWithdrawal =async ()=>{
+    console.log(
+      'handling withdrawal',
+      withdrawalContract,
+      withdrawalChainId, 
+      recipientAddress
+    )
+    if (withdrawalChainId === '56'){
+      await collectIntraChainPayment(withdrawalContract.contract_type)
+    } else{
+      await requestCrossChainPayment(withdrawalContract.contract_type)
+    }
+  }
+
   return (
     <>
       <Wrapper>
@@ -145,6 +200,10 @@ export default function Home() {
                 name="chain"
                 id="chain"
                 className="w-full border border-gray-300 p-4 rounded-md mb-6"
+                onChange={(e)=>{
+                  console.log(e.target.value, 'the chain event')
+                  setWithdrawalChainId(e.target.value)
+                }}
               >
                 <option value="">Select a chain</option>
                 {chains.map((chain) => (
@@ -157,7 +216,44 @@ export default function Home() {
                   </option>
                 ))}
               </select>
-              <div className="w-1/2">
+
+              <label htmlFor="chain" className="mb-4">
+                Select Employer to withdraw from
+              </label>
+              <select
+                name="chain"
+                id="chain"
+                className="w-full border border-gray-300 p-4 rounded-md mb-6"
+                onChange={(e)=>{
+                  console.log(e.target.value, 'the contract event')
+                 setWithdrawalContract(e.target.value)
+                }}
+              >
+                <option value="">Select an employer</option>
+                {contractData.map((contract: any) => (
+                  <option
+                    key={contract?.hash}
+                    value={contract}
+                  >
+                    {`${contract?.employerData?.firstName} ${contract?.employerData?.lastName} (${contract.id}) - $${contract.amount}`}
+                  </option>
+                ))}
+              </select>
+              {
+                withdrawalChainId !== '56' &&
+                (
+                  <div className="my-4">
+                    <label htmlFor="businessEmail">wallet address</label>
+                    <input
+                      placeholder="Enter wallet address"
+                      onChange={(e)=>{setRecipientAddress(e.target.value)}}
+                      className="input"
+                      required
+                    />
+                  </div>
+                )
+              }
+              <div className="w-1/2" onClick={handleWithdrawal}>
                 <Button primary>Confirm Withdrawal</Button>
               </div>
             </div>
