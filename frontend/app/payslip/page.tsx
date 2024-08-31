@@ -93,15 +93,15 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
   }
 };
 
-  const collectTokens = async (receipientAddress: string, amount: number) => {
+  const collectTokens = async (amount: number) => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
       const amountInWei = parseUnits(amount.toString(), 18)
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: TOKEN_CONTRACT_ADDRESS,
+      address: contracts?.hash,
       abi: agreementAbi,
       functionName: "collectTokens",
-      args: [receipientAddress, amountInWei],
+      args: [TOKEN_CONTRACT_ADDRESS, amountInWei],
       chain: bscTestnet || walletClient.chain,
     });
 
@@ -190,7 +190,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
   };
 
   const handleMakePayment = async () => {
-    collectTokens('0x36a8733dfc2862821F8dF5B79C389D477Ed89e24', 2);
+    collectTokens(2000);
     console.log("Make Payment");
   };
 
