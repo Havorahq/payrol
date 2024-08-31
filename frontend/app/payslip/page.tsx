@@ -10,7 +10,7 @@ import { Contract } from "../hooks/useContractData";
 import Button from "../components/common/Button";
 import Modal from "../components/common/Modal";
 import Preloader from "../components/common/Preloader";
-import { capitalizeFirst, statusClass } from "@/plugins/utils";
+import { capitalizeFirst, capitalizeFirstWord, formatDate, getInitials, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { SelectPicker } from "rsuite";
@@ -45,6 +45,7 @@ const Payslip: React.FC = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
+  const [contract, setContract] = useState<any>(null);
   const { primaryWallet } = useDynamicContext();
 
   const [search, setSearch] = useState<string>("");
@@ -198,6 +199,8 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
     console.log("Make Payment");
   };
 
+  console.log("Contracts: ", contracts, contract);
+
   return (
     <Wrapper>
       <Modal isOpen={isOpen} onClose={closeModal}>
@@ -255,16 +258,23 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                   />
                   <p className="text-brandgray font-bricolage">Invoice</p>
                 </div>
-                <p className="text-base text-[#3981F7]">July 1, 2024</p>
+                <p className="text-base text-[#3981F7]">
+                  {formatDate(contract?.created_at, "date")}
+                </p>
               </div>
               <div className="flex items-center justify-between my-2">
                 <div className="flex items-center gap-1">
                   <p className="text-[#0A112F] text-2xl font-medium font-bricolage">
-                    $2,670<span className="text-[#9096A2] text-base">.50</span>
+                    ${contract?.amount}
+                    {/* <span className="text-[#9096A2] text-base">.50</span> */}
                   </p>
                 </div>
-                <span className="p-2 px-4 bg-[#FEEDDA] rounded-xl">
-                  <p className="text-sm text-[#FAA745]">PENDING</p>
+                <span
+                  className={`${statusClass(
+                    contract?.status
+                  )} p-2 px-4 bg-[#FEEDDA] rounded-xl`}
+                >
+                  <p className="text-sm">{capitalizeFirst(contract?.status)}</p>
                 </span>
               </div>
             </div>
@@ -274,15 +284,27 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                 <p className="text-brandgray font-bricolage">Preview Invoice</p>
               </div>
               <div className="w-full flex items-center justify-evenly">
-                <Image
+                {/* <Image
                   src="/icons/Avatar.png"
                   alt="Avatar"
                   height={48}
                   width={48}
-                />
+                /> */}
+                <div
+                  className="bg-primary rounded-full p-2"
+                  // style={{ borderRadius: "50%"}}
+                >
+                  <p className="text-white font-extrabold text-2xl font-bricolage">
+                    {getInitials(
+                      `${contract?.employeeData?.firstName} ${contract?.employeeData?.lastName}`
+                    )}
+                  </p>
+                </div>
                 <div>
-                  <p className="text-base text-[#0A112F] ">Angela Nagelsman</p>
-                  <p className="text-sm text-brandgray">Product Designer</p>
+                  <p className="text-base text-[#0A112F] ">{`${capitalizeFirst(
+                    contract?.employeeData?.firstName
+                  )} ${capitalizeFirst(contract?.employeeData?.lastName)}`}</p>
+                  <p className="text-sm text-brandgray">{`${contract?.job_title}`}</p>
                 </div>
                 <div
                   className={`${
@@ -290,7 +312,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                   } w-fit p-2 px-3 rounded-lg cursor-pointer`}
                   onClick={() => {
                     // needAllowance ? handleApprovePayment() : handleMakePayment()
-                   handleMakePayment()
+                    handleMakePayment();
                     // setPayment(!payment);
                     // payment && setComplete(true);
                   }}
@@ -305,7 +327,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
         ) : (
           <div className="p-8">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
-              All done!🎉
+              Congratulations!🎉
             </p>
             <p className="text-sm text-[#8F9299] font-dm-sans">
               You’ve successfully approved payment
@@ -357,6 +379,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                 <th className="pr-3 py-1">S/N</th>
                 <th className="pr-3 py-1">Status</th>
                 <th className="pr-3 py-1">Name</th>
+                <th className="pr-3 py-1">Job Title</th>
                 <th className="pr-3 py-1">Start Date</th>
                 <th className="pr-3 py-1">End Date</th>
                 <th className="pr-3 py-1">Type</th>
@@ -368,13 +391,15 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
               {contracts.map(
                 (
                   item: {
+                    employeeData: any;
                     id: any;
                     contract_type?: any;
                     name?: any;
                     employee_id?: any;
+                    job_title?: any;
                     payment?: any;
                     created_at?: any;
-                    updated_at?: any;
+                    end_date?: any;
                     status?: any;
                     doc?: any;
                   },
@@ -383,11 +408,11 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                   const {
                     id,
                     contract_type,
-                    name,
+                    job_title,
                     employee_id,
                     payment,
                     created_at,
-                    updated_at,
+                    end_date,
                     status,
                     doc,
                   } = item;
@@ -413,11 +438,16 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                           {capitalizeFirst(status)}
                         </span>
                       </td>
-                      <td className="pr-1 py-3">{name}</td>
-                      <td className="pr-1 py-3">{created_at}</td>
-                      <td className="pr-1 py-3">{updated_at}</td>
+                      <td className="pr-1 py-3">{`${item?.employeeData?.firstName} ${item?.employeeData?.lastName}`}</td>
+                      <td className="pr-1 py-3">
+                        {capitalizeFirstWord(job_title)}
+                      </td>
+                      <td className="pr-1 py-3">{formatDate(created_at)}</td>
+                      <td className="pr-1 py-3">{formatDate(end_date)}</td>
                       {/* <td className="pr-1 py-3">{doc}</td> */}
-                      <td className="pr-1 py-3">{contract_type}</td>
+                      <td className="pr-1 py-3">
+                        {capitalizeFirst(contract_type)}
+                      </td>
                       <td className="pr-1 py-3">
                         <span onClick={() => handleGenerateSlip(item.id)}>
                           <p className="text-[#5EAA22] font-medium">
@@ -428,7 +458,10 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                       <td>
                         <div
                           className="bg-black w-fit p-2 px-3 rounded-md"
-                          onClick={() => handlePayment(item.id)}
+                          onClick={() => {
+                            handlePayment(item.id);
+                            setContract(item);
+                          }}
                         >
                           <p className="text-white text-xs">Approve Payment</p>
                         </div>
