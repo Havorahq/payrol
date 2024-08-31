@@ -94,6 +94,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
 };
 
   const collectTokens = async (amount: number) => {
+    console.log(contracts?.hash)
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
       const amountInWei = parseUnits(amount.toString(), 18)
     // Use the walletClient to write data to the smart contract

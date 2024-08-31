@@ -137,17 +137,29 @@ const ContractDetails: React.FC = () => {
   const deployFixedAgreement = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
+    const {
+      contractType,
+      employeeEmail,
+      endDate,
+      jobDescription,
+      jobTitle,
+      milestoneRates,
+      milestoneTitle,
+      monthlyRate,
+      startDate,
+    } = state;
+
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
       address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
-        "johnson", // employer id
-        "jj", // employee id
+        'employerId', // employer id
+        employeeEmail, // employee id
         "0x8810df59BE2F2e585F8085586eB70340f3E7E103", // employer address,
-        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda", // usdt address
-        1000,
+        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda", // usdc address
+        monthlyRate,
         ...wormhole_ags,
       ],
       chain: bscTestnet || walletClient.chain,
@@ -161,6 +173,19 @@ const ContractDetails: React.FC = () => {
   const deployPAYGAgreement = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
+    const {
+      contractType,
+      employeeEmail,
+      endDate,
+      jobDescription,
+      jobTitle,
+      milestoneRates,
+      milestoneTitle,
+      monthlyRate,
+      startDate,
+    } = state;
+
+
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
       address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
@@ -171,7 +196,8 @@ const ContractDetails: React.FC = () => {
         "employee@employee.com",
         "0xE08686958FF334A5422df17FaF05dd989e779FfA",
         "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda",
-        "state.monthlyRate",
+        monthlyRate,
+        ...wormhole_ags,
       ],
     });
 
