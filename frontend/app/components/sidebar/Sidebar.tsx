@@ -145,35 +145,35 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
                   </div>
                 </Link>
               )}
-              <Link href="/payslip">
-                <div
-                  data-tooltip-id="tooltip-payslip"
-                  data-tooltip-content="Payslip"
-                  className={`flex items-center justify-center p-4 rounded-md my-3 ${
-                    title === "Payslip"
-                      ? "bg-primary text-white"
-                      : "bg-white text-gray-400 hover:border hover:border-gray-300"
-                  }`}
-                >
-                  {title === "Payslip" ? (
-                    <Image
-                      src="/icons/payslipIcon.svg"
-                      alt="dashboard icon"
-                      width={24}
-                      height={24}
-                    />
-                  ) : (
-                    <Image
-                      src="/icons/payslipIconInactive.svg"
-                      alt="dashboard icon"
-                      width={24}
-                      height={24}
-                    />
-                  )}
-                </div>
-              </Link>
             </div>
           )}
+          <Link href="/payslip">
+            <div
+              data-tooltip-id="tooltip-payslip"
+              data-tooltip-content="Payslip"
+              className={`flex items-center justify-center p-4 rounded-md my-3 ${
+                title === "Payslip"
+                  ? "bg-primary text-white"
+                  : "bg-white text-gray-400 hover:border hover:border-gray-300"
+              }`}
+            >
+              {title === "Payslip" ? (
+                <Image
+                  src="/icons/payslipIcon.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              ) : (
+                <Image
+                  src="/icons/payslipIconInactive.svg"
+                  alt="dashboard icon"
+                  width={24}
+                  height={24}
+                />
+              )}
+            </div>
+          </Link>
           <Link href="/profile">
             <div
               data-tooltip-id="tooltip-profile"

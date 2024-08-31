@@ -18,22 +18,6 @@ export const evmNetworks = [
     rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
     vanityName: "BSC Testnet",
   },
-  {
-    blockExplorerUrls: ["https://etherscan.io/"],
-    chainId: 1,
-    chainName: "Ethereum Mainnet",
-    iconUrls: ["https://app.dynamic.xyz/assets/networks/eth.svg"],
-    name: "Ethereum",
-    nativeCurrency: {
-      decimals: 18,
-      name: "Ether",
-      symbol: "ETH",
-    },
-    networkId: 1,
-
-    rpcUrls: ["https://mainnet.infura.io/v3/"],
-    vanityName: "ETH Mainnet",
-  },
 ];
 
 export const config = createConfig({

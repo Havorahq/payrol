@@ -87,7 +87,7 @@ const ContractDetail = () => {
         </div>
       </Modal>
       <div className="flex w-full h-full justify-center items-center">
-        <div className="w-1/2 border shadow-lg bg-white rounded-xl p-8">
+        <div className="lg:w-1/2 w-full border shadow-lg bg-white rounded-xl p-8">
           <div className="p-10 text-[#131414] mt-3">
             <h1 className="text-2xl font-bold text-left mb-4">
               Contract Details 📄
