@@ -64,7 +64,7 @@ const Payslip: React.FC = () => {
       address: TOKEN_CONTRACT_ADDRESS,
       abi: TOKEN_ABI,
       functionName: "allowance",
-      args: [primaryWallet?.address, '0x36a8733dfc2862821F8dF5B79C389D477Ed89e24'],
+      args: [primaryWallet?.address, '0xb1C68a7C1eE2c7D64aE9eA0edc775AdA61DBa9Ee'],
     });
 
     setAllowance(Number(result).toString());
@@ -74,6 +74,8 @@ const Payslip: React.FC = () => {
     return null;
   }
 };
+
+console.log(allowance, 'the allowance')
 
 const grantApproval = async (spenderAddress: string, amount: string) => {
   try {
@@ -94,16 +96,16 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
   }
 };
 
-  const collectTokens = async (amount: number) => {
+  const collectTokens = async (amount: string) => {
     console.log(contracts?.hash)
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
       const amountInWei = parseUnits(amount.toString(), 18)
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: contracts?.hash,
+      address: '0xc96288280764Ac7385797a5149901572Ae98a0A3',
       abi: agreementAbi,
       functionName: "collectTokens",
-      args: [TOKEN_CONTRACT_ADDRESS, amountInWei],
+      args: [TOKEN_CONTRACT_ADDRESS, amount],
       chain: bscTestnet || walletClient.chain,
     });
 
@@ -191,12 +193,12 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
   };
 
   const handleApprovePayment = async () => {
-    grantApproval('0x36a8733dfc2862821F8dF5B79C389D477Ed89e24', "10");
+    grantApproval('0xc96288280764Ac7385797a5149901572Ae98a0A3', "100000000000000000000");
     console.log("Approve Payment");
   };
 
   const handleMakePayment = async () => {
-    collectTokens(2000);
+    collectTokens("10000000000000000");
     console.log("Make Payment");
   };
 
@@ -314,6 +316,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                   onClick={() => {
                     // needAllowance ? handleApprovePayment() : handleMakePayment()
                     handleMakePayment();
+                    // handleApprovePayment()
                     // setPayment(!payment);
                     // payment && setComplete(true);
                   }}

@@ -44,7 +44,7 @@ const ContractDetails: React.FC = () => {
   // };\
 
   useWatchContractEvent({
-    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
     abi: factoryAbi,
     eventName: "FixedRateAgreementDeployed",
     onLogs(logs) {
@@ -86,7 +86,7 @@ const ContractDetails: React.FC = () => {
   });
 
   useWatchContractEvent({
-    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
     abi: factoryAbi,
     eventName: "PayAsYoGoAgreementDeployed",
     onLogs(logs) {
@@ -152,7 +152,7 @@ const ContractDetails: React.FC = () => {
 
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
@@ -189,7 +189,7 @@ const ContractDetails: React.FC = () => {
 
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
@@ -222,8 +222,8 @@ const ContractDetails: React.FC = () => {
       } else if (contractType.toLowerCase() === "pay as you go") {
         await deployPAYGAgreement();
       }
-    } catch {
-      console.error("error creating contract");
+    } catch(e) {
+      console.error("error creating contract", e);
       alert("error creating contract");
     }
   };
