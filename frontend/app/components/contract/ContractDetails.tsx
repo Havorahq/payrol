@@ -123,6 +123,7 @@ const ContractDetails: React.FC = () => {
         endDate,
         createdContractAddress
       ).then(() => {
+        setIsLoading(false)
         openModal();
       });
     },
@@ -153,7 +154,7 @@ const ContractDetails: React.FC = () => {
       chain: bscTestnet || walletClient.chain,
     });
 
-    setIsLoading(loading);
+    setIsLoading(true);
 
     return hash;
   };
@@ -174,9 +175,7 @@ const ContractDetails: React.FC = () => {
         "state.monthlyRate",
       ],
     });
-
-    setIsLoading(loading);
-
+    setIsLoading(true);
     return hash;
   };
 
@@ -189,33 +188,17 @@ const ContractDetails: React.FC = () => {
     }
     setIsLoading(true)
 
-    const {
-      contractType,
-      employeeEmail,
-      endDate,
-      jobDescription,
-      jobTitle,
-      milestoneRates,
-      milestoneTitle,
-      monthlyRate,
-      startDate,
-    } = state;
-    const employerEmail = userData?.data.data.email;
-    const status: string = "Pending";
-    const payment_status: string = "Pending";
+    const {contractType} = state;
 
     try {
       if (state.contractType === "fixed") {
         await deployFixedAgreement();
-        setIsLoading(false)
-        openModal();
       } else if (contractType.toLowerCase() === "pay as you go") {
         await deployPAYGAgreement();
-        setIsLoading(false);
-        openModal();
       }
     } catch {
       console.error("error creating contract");
+      alert("error creating contract");
     }
   };
 
