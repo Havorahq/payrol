@@ -134,7 +134,7 @@ const ContractDetail = () => {
             </p>
           </div>
           { 
-            contract.status !== "Active" &&
+            contract?.status !== "Active" &&
             (<div>
                   <Button
                     label="Accept Contract"
