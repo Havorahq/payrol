@@ -10,7 +10,13 @@ import { Contract } from "../hooks/useContractData";
 import Button from "../components/common/Button";
 import Modal from "../components/common/Modal";
 import Preloader from "../components/common/Preloader";
-import { capitalizeFirst, capitalizeFirstWord, formatDate, getInitials, statusClass } from "@/plugins/utils";
+import {
+  capitalizeFirst,
+  capitalizeFirstWord,
+  formatDate,
+  getInitials,
+  statusClass,
+} from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { SelectPicker } from "rsuite";
@@ -30,8 +36,8 @@ import { useReadContract, useWriteContract } from "wagmi";
 import { BigNumber } from "bignumber.js";
 import { bscTestnet } from "viem/chains";
 import agreementAbi from "@/lib/contract/AgreementAbi.json";
-import { parseUnits } from 'viem'
-import { readContract } from 'viem/actions';
+import { parseUnits } from "viem";
+import { readContract } from "viem/actions";
 
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
@@ -54,18 +60,22 @@ const Payslip: React.FC = () => {
 
   const { userData, isLoading, error } = useUserData();
 
-   const [allowance, setAllowance] = useState<any | null>(null);
+  const [allowance, setAllowance] = useState<any | null>(null);
 
- const getAllowance = async () => {
-  try {
-    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-    // Use the readContract function from viem
-    const result = await readContract(walletClient, {
-      address: TOKEN_CONTRACT_ADDRESS,
-      abi: TOKEN_ABI,
-      functionName: "allowance",
-      args: [primaryWallet?.address, '0xb1C68a7C1eE2c7D64aE9eA0edc775AdA61DBa9Ee'],
-    });
+  const getAllowance = async () => {
+    try {
+      const walletClient: any =
+        await primaryWallet?.connector?.getWalletClient();
+      // Use the readContract function from viem
+      const result = await readContract(walletClient, {
+        address: TOKEN_CONTRACT_ADDRESS,
+        abi: TOKEN_ABI,
+        functionName: "allowance",
+        args: [
+          primaryWallet?.address,
+          "0x36a8733dfc2862821F8dF5B79C389D477Ed89e24",
+        ],
+      });
 
     setAllowance(Number(result).toString());
     return result;
@@ -77,29 +87,30 @@ const Payslip: React.FC = () => {
 
 console.log(allowance, 'the allowance')
 
-const grantApproval = async (spenderAddress: string, amount: string) => {
-  try {
-    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-    const result = await walletClient.writeContract({
-      address: TOKEN_CONTRACT_ADDRESS,
-      abi: TOKEN_ABI,
-      functionName: "approve",
-      args: [spenderAddress, amount],
-            chain: bscTestnet || walletClient.chain,
-    });
+  const grantApproval = async (spenderAddress: string, amount: string) => {
+    try {
+      const walletClient: any =
+        await primaryWallet?.connector?.getWalletClient();
+      const result = await walletClient.writeContract({
+        address: TOKEN_CONTRACT_ADDRESS,
+        abi: TOKEN_ABI,
+        functionName: "approve",
+        args: [spenderAddress, amount],
+        chain: bscTestnet || walletClient.chain,
+      });
 
-    console.log("Approval granted:", result);
-    return result;
-  } catch (error) {
-    console.error("Error granting approval:", error);
-    throw error;
-  }
-};
+      console.log("Approval granted:", result);
+      return result;
+    } catch (error) {
+      console.error("Error granting approval:", error);
+      throw error;
+    }
+  };
 
   const collectTokens = async (amount: string) => {
     console.log(contracts?.hash)
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-      const amountInWei = parseUnits(amount.toString(), 18)
+    const amountInWei = parseUnits(amount.toString(), 18);
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
       address: '0xc96288280764Ac7385797a5149901572Ae98a0A3',
@@ -112,13 +123,11 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
     return hash;
   };
 
-   useEffect(() => {
-     getAllowance();
-   }, [primaryWallet, contracts]);
+  useEffect(() => {
+    getAllowance();
+  }, [primaryWallet, contracts]);
 
-   const needAllowance = allowance > 2
-
- 
+  const needAllowance = allowance > 2;
 
   if (!userData) {
     return (
@@ -129,6 +138,10 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
       </Wrapper>
     );
   }
+
+  // const userType = userData?.data?.data?.userType
+
+  console.log("TT: ", userData);
 
   if (error) {
     return <div>Error: {userData.error}</div>;
@@ -294,7 +307,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                   width={48}
                 /> */}
                 <div
-                  className="bg-primary rounded-full p-2"
+                  className="bg-primary rounded-full p-3"
                   // style={{ borderRadius: "50%"}}
                 >
                   <p className="text-white font-extrabold text-2xl font-bricolage">
@@ -374,6 +387,7 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
             placeholder="Search"
             value={search}
             onChange={onChange}
+            height="36px"
           />
         </div>
         <div className="overflow-x-auto mt-3">
@@ -460,15 +474,19 @@ const grantApproval = async (spenderAddress: string, amount: string) => {
                         </span>
                       </td>
                       <td>
-                        <div
-                          className="bg-black w-fit p-2 px-3 rounded-md"
-                          onClick={() => {
-                            handlePayment(item.id);
-                            setContract(item);
-                          }}
-                        >
-                          <p className="text-white text-xs">Approve Payment</p>
-                        </div>
+                        {userData?.data?.data?.userType !== "employee" && (
+                          <div
+                            className="bg-black w-fit p-2 px-3 rounded-md"
+                            onClick={() => {
+                              handlePayment(item.id);
+                              setContract(item);
+                            }}
+                          >
+                            <p className="text-white text-xs">
+                              Approve Payment
+                            </p>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   );

@@ -388,6 +388,7 @@ export default function Home() {
                   <table className="min-w-full bg-white">
                     <thead>
                       <tr className="text-[#878790] mb-20 text-sm">
+                        <th className="py-2">S/N</th>
                         <th className="py-2">Employer</th>
                         <th className="py-2">Job Title</th>
                         <th className="py-2">Amount</th>
@@ -432,10 +433,13 @@ export default function Home() {
                               key={id}
                               className=" hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-base border border-1 p-3 px-2 my-4 rounded-lg"
                             >
+                              <td className="py-2">{index + 1}</td>
                               <td className="py-2">{employerName}</td>
                               <td className="py-2">{job_title}</td>
                               <td className="py-2">{amount}</td>
-                              <td className="py-2">{contract_type}</td>
+                              <td className="py-2">
+                                {capitalizeFirst(contract_type)}
+                              </td>
                               <td className="py-2">
                                 <span
                                   className={`status-badge ${statusClass(
@@ -452,7 +456,7 @@ export default function Home() {
                                   href={`/dashboard/${id}`}
                                 >
                                   <FaRegEye />
-                                  <span>View</span>
+                                  <span className="no-underline hover:no-underline">View</span>
                                 </Link>
                               </td>
                             </tr>

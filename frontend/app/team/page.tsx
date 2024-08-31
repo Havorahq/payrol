@@ -19,14 +19,13 @@ import DatePicker from "react-datepicker";
 import { bscTestnet } from "viem/chains";
 import Swal from "sweetalert2";
 
-
 import { TOKEN_CONTRACT_ADDRESS } from "../../lib/contract/constants";
 import TOKEN_ABI from "../../lib/contract/tokenabi.json";
 import Agreement_ABI from "../../lib/contract/AgreementAbi.json";
 import { useReadContract, useWriteContract } from "wagmi";
 import { BigNumber } from "bignumber.js";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { readContract } from 'viem/actions';
+import { readContract } from "viem/actions";
 
 const Team: React.FC = (): React.ReactElement => {
   const { contracts, isLoading, error } = useContractData();
@@ -39,7 +38,6 @@ const Team: React.FC = (): React.ReactElement => {
   const { primaryWallet } = useDynamicContext();
   const [search, setSearch] = useState<string>("");
 
-
   //  const { data: allowanceData }: { data: any } = useReadContract({
   //   address: TOKEN_CONTRACT_ADDRESS,
   //   abi: TOKEN_ABI,
@@ -48,38 +46,46 @@ const Team: React.FC = (): React.ReactElement => {
   // });
 
   // console.log(allowanceData, "allowanceData");
-   const [allowance, setAllowance] = useState<string | null>(null);
+  const [allowance, setAllowance] = useState<string | null>(null);
 
-  console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts)
+  console.log(TOKEN_CONTRACT_ADDRESS, primaryWallet?.address, contracts);
 
- const getAllowance = async () => {
-  try {
-    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-    console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts?.hash)
-    // Use the readContract function from viem
-    const result = await readContract(walletClient, {
-      address: TOKEN_CONTRACT_ADDRESS,
-      abi: TOKEN_ABI,
-      functionName: "allowance",
-      args: [primaryWallet?.address, contracts?.hash],
-    });
+  const getAllowance = async () => {
+    try {
+      const walletClient: any =
+        await primaryWallet?.connector?.getWalletClient();
+      console.log(
+        TOKEN_CONTRACT_ADDRESS,
+        primaryWallet?.address,
+        contracts?.hash
+      );
+      // Use the readContract function from viem
+      const result = await readContract(walletClient, {
+        address: TOKEN_CONTRACT_ADDRESS,
+        abi: TOKEN_ABI,
+        functionName: "allowance",
+        args: [primaryWallet?.address, contracts?.hash],
+      });
 
-    console.log(result, "allowance");
-  setAllowance((result as bigint).toString());
-    return result;
-  } catch (error) {
-        console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts?.hash)
-    console.error("Error getting allowance:", error);
-    return null;
-  }
-};
+      console.log(result, "allowance");
+      setAllowance((result as bigint).toString());
+      return result;
+    } catch (error) {
+      console.log(
+        TOKEN_CONTRACT_ADDRESS,
+        primaryWallet?.address,
+        contracts?.hash
+      );
+      console.error("Error getting allowance:", error);
+      return null;
+    }
+  };
 
-   useEffect(() => {
-     getAllowance();
-   }, [primaryWallet, contracts]);
+  useEffect(() => {
+    getAllowance();
+  }, [primaryWallet, contracts]);
 
   // const approve = allowanceData < contracts?.amount;)
-
 
   // const approve = allowanceData < contracts?.amount;
 
@@ -90,19 +96,17 @@ const Team: React.FC = (): React.ReactElement => {
   console.log({ contracts }, "with users");
   if (isLoading) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <Preloader height={80} />
-      </div>
+      <Wrapper>
+        <div className="w-full h-full flex items-center justify-center">
+          <Preloader height={80} />
+        </div>
+      </Wrapper>
     );
   }
 
   if (error) {
     return <div>Error: {"An error Occured"}</div>;
   }
-
-  
-
-
 
   // const approval = async () => {
   //   const walletClient: any = await primaryWallet?.connector?.getWalletClient();
@@ -137,10 +141,9 @@ const Team: React.FC = (): React.ReactElement => {
   const handlePayment = (id: string) => {
     openPaymentModal();
   };
-   const handleApprove = (id: string) => {
+  const handleApprove = (id: string) => {
     openPaymentModal();
   };
-
 
   const handleDelete = () => {
     Swal.fire({
@@ -267,6 +270,7 @@ const Team: React.FC = (): React.ReactElement => {
               <tr className="text-[#878790] mb-20 pb-16 text-xs">
                 <th className="pr-3 py-1">S/N</th>
                 <th className="pr-3 py-1">Name</th>
+                <th className="pr-3 py-1">Email</th>
                 <th className="pr-3 py-1">Job title</th>
                 <th className="pr-3 py-1">Amount</th>
                 <th className="pr-3 py-1">Type</th>
@@ -299,7 +303,7 @@ const Team: React.FC = (): React.ReactElement => {
                   end_date,
                 } = item;
 
-                const employeeName = employeeData?.firstname || employee_id;
+                // const employeeName = employeeData?.firstname || employee_id;
 
                 return (
                   <tr
@@ -314,13 +318,17 @@ const Team: React.FC = (): React.ReactElement => {
                     //   );
                     // }}
                     className="hover:bg-gray-50 cursor-pointer text-[#3A3A49] font-medium text-sm border border-1 border-gray-100 p-3 px-2 my-4 rounded-lg"
-                    // style={{ marginBlock: "2em", paddingInline: "1em" }}
                   >
                     <td className="pr-1 py-3">{index + 1}</td>
-                    <td className="pr-1 py-3">{employeeName}</td>
+                    <td className="pr-1 py-3">{`${capitalizeFirst(
+                      item?.employeeData?.firstName
+                    )} ${capitalizeFirst(item?.employeeData?.lastName)}`}</td>
+                    <td className="pr-1 py-3">{item?.employeeData?.email}</td>
                     <td className="pr-1 py-3">{job_title}</td>
                     <td className="pr-1 py-3">{amount}</td>
-                    <td className="pr-1 py-3">{contract_type}</td>
+                    <td className="pr-1 py-3">
+                      {capitalizeFirst(contract_type)}
+                    </td>
                     <td className="pr-1 py-3 capitalize">
                       <span className={`${statusClass(status)}`}>
                         {capitalizeFirst(status)}
