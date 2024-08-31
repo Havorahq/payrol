@@ -146,14 +146,13 @@ export const createPayment = async (
   }
 };
 
-export const updateContractStatus = async (
+export const acceptContract = async (
   contractId: string,
-  status: string
 ) => {
   try {
     const { data, error } = await supabase
       .from("contracts")
-      .update({ status })
+      .update({ status: "Active", payment_status: "Pending"})
       .eq("id", contractId);
 
     if (error) {
@@ -221,6 +220,7 @@ export const getEmployeeById = async (employeeId: string) => {
 };
 
 export const getContractById = async (contractId: string) => {
+  console.log(contractId, 'the c id')
   try {
     const { data, error } = await supabase
       .from("contracts")

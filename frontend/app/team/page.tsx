@@ -1,25 +1,25 @@
 "use client";
 
 import React, { ChangeEvent, useState } from "react";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+
 import useContractData from "../hooks/useContractData";
-import { useUserData } from "../hooks/useUserData";
+
 import Wrapper from "../components/wrapper/Wrapper";
-import { FaSearch } from "react-icons/fa";
+
 import { Contract } from "../hooks/useContractData";
-import Button from "../components/common/Button";
+
 import Modal from "../components/common/Modal";
-import { getUserByEmail } from "../api/helper-functions";
+
 import Preloader from "../components/common/Preloader";
 import { capitalizeFirst, statusClass } from "@/plugins/utils";
 import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { SelectPicker } from "rsuite";
 import DatePicker from "react-datepicker";
-import CustomDatePicker from "../components/common/Datepicker";
+
 import Swal from "sweetalert2";
 
-const Team: React.FC = () => {
+const Team: React.FC = (): React.ReactElement => {
   const { contracts, isLoading, error } = useContractData();
 
   const [payslip, setPayslip] = useState<Contract | null>(null);
