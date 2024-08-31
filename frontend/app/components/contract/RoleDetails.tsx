@@ -72,6 +72,7 @@ const RoleDetails: React.FC = () => {
         <div className="max-w-full">
           <CustomDatePicker
             label="End Date"
+            minDate={state.startDate}
             value={state?.endDate || null}
             onChange={onToDateChange}
             placeholder="Select End Date"

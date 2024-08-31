@@ -11,8 +11,7 @@ import { useUserData } from "../../hooks/useUserData";
 import { bscTestnet } from "viem/chains";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { acceptContract, getContractById } from "@/app/api/helper-functions";
-
-const agreementAbi = require("@/lib/contract/AgreementAbi.json");
+import agreementAbi from "@/lib/contract/AgreementAbi.json";
 
 const ContractDetail = () => {
   const router = useRouter();
@@ -87,61 +86,65 @@ const ContractDetail = () => {
           />
         </div>
       </Modal>
-      <div className="">
-        <div className="p-10 text-[#131414] mt-3">
-          <h1 className="text-2xl font-bold text-left mb-4">
-            Contract Details 📄
-          </h1>
-          <p className="text-gray-600 mt-2">Details of your contract below</p>
-          <div className="border-b py-4">
-            <p className="font-medium">Contract Type</p>
-            <p className="text-gray-600">
-              {capitalizeFirst(contract ? contract.contract_type : "")}
-            </p>
+      <div className="flex w-full h-full justify-center items-center">
+        <div className="w-1/2 border shadow-lg bg-white rounded-xl p-8">
+          <div className="p-10 text-[#131414] mt-3">
+            <h1 className="text-2xl font-bold text-left mb-4">
+              Contract Details 📄
+            </h1>
+            <p className="text-gray-600 mt-2">Details of your contract below</p>
+            <div className="border-b py-4">
+              <p className="font-medium">Contract Type</p>
+              <p className="text-gray-600">
+                {capitalizeFirst(contract ? contract.contract_type : "")}
+              </p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Employee Email</p>
+              <p className="text-gray-600">
+                {contract ? contract.employee_id : ""}
+              </p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Job Title</p>
+              <p className="text-gray-600">
+                {contract ? contract.job_title : ""}
+              </p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Job Description</p>
+              <p className="text-gray-600">
+                {contract ? contract.job_description : ""}
+              </p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Rate ($)</p>
+              <p className="text-gray-600">{contract ? contract.payment : ""}</p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Employee Wallet Address</p>
+              <p className="text-gray-600">
+                {contract ? contract.payment_address : ""}
+              </p>
+            </div>
+            <div className="border-b py-4">
+              <p className="font-medium">Contract Status</p>
+              <p className="text-gray-600">
+                {contract ? capitalizeFirst(contract.status) : ""}
+              </p>
+            </div>
+            { 
+              contract?.status !== "Active" &&
+              (<div className="mt-8">
+                    <Button
+                      primary
+                      label="Accept Contract"
+                      style="w-fit"
+                      onClick={handleEnterAgreement}
+                    />
+              </div>)
+            }
           </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Employee Email</p>
-            <p className="text-gray-600">
-              {contract ? contract.employee_id : ""}
-            </p>
-          </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Job Title</p>
-            <p className="text-gray-600">
-              {contract ? contract.job_title : ""}
-            </p>
-          </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Job Description</p>
-            <p className="text-gray-600">
-              {contract ? contract.job_description : ""}
-            </p>
-          </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Rate ($)</p>
-            <p className="text-gray-600">{contract ? contract.payment : ""}</p>
-          </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Employee Wallet Address</p>
-            <p className="text-gray-600">
-              {contract ? contract.payment_address : ""}
-            </p>
-          </div>
-          <div className="border-b py-4">
-            <p className="font-medium">Contract Status</p>
-            <p className="text-gray-600">
-              {contract ? capitalizeFirst(contract.status) : ""}
-            </p>
-          </div>
-          { 
-            contract?.status !== "Active" &&
-            (<div>
-                  <Button
-                    label="Accept Contract"
-                    onClick={handleEnterAgreement}
-                  />
-            </div>)
-          }
         </div>
       </div>
     </Wrapper>

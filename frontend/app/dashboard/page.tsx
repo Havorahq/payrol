@@ -30,6 +30,7 @@ import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
 import { chains } from "@/lib/network";
 import { useBalance } from "wagmi";
+import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
@@ -137,6 +138,14 @@ export default function Home() {
         </div>
       </div>
     );
+  }
+
+  const comingSoon = () => {
+    return Swal.fire({
+      icon: "info",
+      title: "Coming soon!",
+      text: `This feature is currently not available.`,
+    });
   }
 
   const collectIntraChainPayment =async (contractType: any)=>{
@@ -317,7 +326,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="text-2xl mt-2 font-semibold">
-                    <h1>{balance.data?.decimals}</h1>
+                    {balance.data?.decimals || 0}
                   </div>
                 </div>
               </div>
@@ -483,13 +492,13 @@ export default function Home() {
                         Create and manage contracts <br />
                         contacts effortlessly.
                       </p>
-                      <div
-                        className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+                      <button
+                        className="flex items-center gap-1 cursor-pointer rounded btn-secondary text-white font-bold w-fit"
                         onClick={() => router.push("/create-contract")}
                       >
                         <p>Create Contract</p>
                         <TiArrowRight />
-                      </div>
+                      </button>
                     </div>
                     <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow w-[300px]">
                       <Image
@@ -504,10 +513,13 @@ export default function Home() {
                         Manage Time effectively and <br />
                         track work done.
                       </p>
-                      <div className="flex items-center gap-1">
+                      <button
+                        className="flex items-center gap-1 cursor-pointer rounded btn-secondary text-white font-bold w-fit"
+                        onClick={comingSoon}
+                      >
                         <p>Track Time</p>
                         <TiArrowRight />
-                      </div>
+                      </button>
                     </div>
                     <div className="border p-10 rounded-lg bg-white flex flex-col items-start justify-start gap-6 text-sm font-normal shadow w-[300px]">
                       <Image
@@ -522,23 +534,26 @@ export default function Home() {
                         Settle employee and Contractors <br />
                         globally with crypto.
                       </p>
-                      <div
-                        className="flex items-center gap-1 cursor-pointer hover:bg-slate-50"
+                      <button
+                        className="flex items-center gap-1 cursor-pointer rounded btn-secondary text-white font-bold w-fit"
                         onClick={() => router.push("/payslip")}
                       >
                         <p>Make Payment</p>
                         <TiArrowRight />
-                      </div>
+                      </button>
                     </div>
                   </div>
 
                   <div className="bg-white border p-10 rounded-xl flex flex-col items-start justify-start gap-6 text-sm font-normal shadow mt-10 lg:w-fit w-[300px]">
                     <p className="font-medium text-2xl">Xalari Support</p>
                     <p>Enjoy our 24/7 support by our dedicated team.</p>
-                    <div className="flex items-center gap-1">
+                    <button
+                      className="flex items-center gap-1 cursor-pointer rounded btn-secondary text-white font-bold w-fit"
+                      onClick={comingSoon}
+                    >
                       <p>Contact Us</p>
                       <TiArrowRight />
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>

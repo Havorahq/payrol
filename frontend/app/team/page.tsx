@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import useContractData from "../hooks/useContractData";
 
@@ -16,8 +16,17 @@ import InputFilter from "../components/common/InputFilter";
 import Image from "next/image";
 import { SelectPicker } from "rsuite";
 import DatePicker from "react-datepicker";
-
+import { bscTestnet } from "viem/chains";
 import Swal from "sweetalert2";
+
+
+import { TOKEN_CONTRACT_ADDRESS } from "../../lib/contract/constants";
+import TOKEN_ABI from "../../lib/contract/tokenabi.json";
+import Agreement_ABI from "../../lib/contract/AgreementAbi.json";
+import { useReadContract, useWriteContract } from "wagmi";
+import { BigNumber } from "bignumber.js";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { readContract } from 'viem/actions';
 
 const Team: React.FC = (): React.ReactElement => {
   const { contracts, isLoading, error } = useContractData();
@@ -27,8 +36,52 @@ const Team: React.FC = (): React.ReactElement => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
   const [payment, setPayment] = useState<boolean>(false);
   const [QR, setQR] = useState<boolean>(false);
-
+  const { primaryWallet } = useDynamicContext();
   const [search, setSearch] = useState<string>("");
+
+
+  //  const { data: allowanceData }: { data: any } = useReadContract({
+  //   address: TOKEN_CONTRACT_ADDRESS,
+  //   abi: TOKEN_ABI,
+  //   functionName: "allowance",
+  //   args: [primaryWallet?.address, contracts?.hash],
+  // });
+
+  // console.log(allowanceData, "allowanceData");
+   const [allowance, setAllowance] = useState<string | null>(null);
+
+  console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts)
+
+ const getAllowance = async () => {
+  try {
+    const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+    console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts?.hash)
+    // Use the readContract function from viem
+    const result = await readContract(walletClient, {
+      address: TOKEN_CONTRACT_ADDRESS,
+      abi: TOKEN_ABI,
+      functionName: "allowance",
+      args: [primaryWallet?.address, contracts?.hash],
+    });
+
+    console.log(result, "allowance");
+  setAllowance((result as bigint).toString());
+    return result;
+  } catch (error) {
+        console.log(TOKEN_CONTRACT_ADDRESS,primaryWallet?.address, contracts?.hash)
+    console.error("Error getting allowance:", error);
+    return null;
+  }
+};
+
+   useEffect(() => {
+     getAllowance();
+   }, [primaryWallet, contracts]);
+
+  // const approve = allowanceData < contracts?.amount;)
+
+
+  // const approve = allowanceData < contracts?.amount;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -37,7 +90,7 @@ const Team: React.FC = (): React.ReactElement => {
   console.log({ contracts }, "with users");
   if (isLoading) {
     return (
-      <div className="w-full h-full">
+      <div className="w-full h-full flex items-center justify-center">
         <Preloader height={80} />
       </div>
     );
@@ -46,6 +99,25 @@ const Team: React.FC = (): React.ReactElement => {
   if (error) {
     return <div>Error: {"An error Occured"}</div>;
   }
+
+  
+
+
+
+  // const approval = async () => {
+  //   const walletClient: any = await primaryWallet?.connector?.getWalletClient();
+
+  //   const { hash, loading, error } = await walletClient.writeContract({
+  //     address: "TOKEN_CONTRACT_ADDRESS",
+  //     abi: TOKEN_ABI,
+  //     functionName: "allowance",
+  //     args: [
+  //       contracts?.hash,
+  //       new BigNumber(100).integerValue().toString(),
+  //     ],
+  //   });
+  //   return hash;
+  // };
 
   const openModal = () => setIsOpen(true);
   const openPaymentModal = () => setIsPaymentModalOpen(true);
@@ -65,6 +137,10 @@ const Team: React.FC = (): React.ReactElement => {
   const handlePayment = (id: string) => {
     openPaymentModal();
   };
+   const handleApprove = (id: string) => {
+    openPaymentModal();
+  };
+
 
   const handleDelete = () => {
     Swal.fire({
@@ -125,19 +201,20 @@ const Team: React.FC = (): React.ReactElement => {
                 <p className="text-base text-[#0A112F] ">Angela Nagelsman</p>
                 <p className="text-sm text-brandgray">Product Designer</p>
               </div>
-              <div
+              {/* <div
                 className={`${
-                  payment ? "bg-[#4A851C]" : "bg-black"
+                  approve ? "bg-[#4A851C]" : "bg-black"
                 } w-fit p-2 px-3 rounded-lg cursor-pointer`}
                 onClick={() => {
-                  setPayment(!payment);
-                  payment && setQR(true);
+                  // setPayment(!payment);
+                  // payment && setQR(true);
+                    {approve ? handlePayment : handleApprove}
                 }}
               >
                 <p className="text-white text-sm">
-                  {payment ? "Make Payment" : "Approve Payment"}
+                  {approve ? "Make Payment" : "Approve Payment"}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (
@@ -254,6 +331,15 @@ const Team: React.FC = (): React.ReactElement => {
               })}
             </tbody>
           </table>
+          {contracts.length === 0 && (
+            <div className="min-h-6">
+              <div className="flex justify-center items-center my-2 p-4 h-full">
+                <p className="text-gray-400 text-lg mt-4 font-bold">
+                  No Result Found
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>

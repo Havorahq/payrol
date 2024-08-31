@@ -22,13 +22,9 @@ interface SidebarProps {
   user: any;
 }
 
-
 const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
-
-
   const router = useRouter();
   const { handleLogOut } = useDynamicContext();
-
 
   const handleSignout = () => {
     Swal.fire({
@@ -40,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleLogOut()
+        handleLogOut();
         router.push("/");
         console.log("Signed out");
       }
@@ -60,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
         />
       </div>
 
-      {user && (
+      {
         <div className="lg:pt-16 pt-8 font-medium z-10 overflow-forced">
           <Link href="/dashboard">
             <div
@@ -89,96 +85,100 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
               )}
             </div>
           </Link>
-          {user?.userType !== "employee" && (
-            <Link href="/create-contract">
-              <div
-                data-tooltip-id="tooltip-contract"
-                data-tooltip-content="Contract"
-                className={`flex items-center justify-center p-3 rounded-lg my-3 ${
-                  title === "Contract"
-                    ? "bg-primary text-white"
-                    : "bg-white text-gray-400 hover:border hover:border-gray-300"
-                }`}
-              >
-                {title === "Contract" ? (
-                  <Image
-                    src="/icons/contractIcon.svg"
-                    alt="dashboard icon"
-                    width={24}
-                    height={24}
-                  />
-                ) : (
-                  <Image
-                    src="/icons/contractIconInactive.svg"
-                    alt="dashboard icon"
-                    width={24}
-                    height={24}
-                  />
-                )}
-              </div>
-            </Link>
-          )}
-          {user?.userType !== "employee" && (
-            <Link href="/team">
-              <div
-                data-tooltip-id="tooltip-team"
-                data-tooltip-content="Team"
-                className={`flex items-center justify-center p-4 rounded-md my-3 ${
-                  title === "Team"
-                    ? "bg-primary text-white"
-                    : "bg-white text-gray-400 hover:border hover:border-gray-300"
-                }`}
-              >
-                {title === "Team" ? (
-                  <Image
-                    src="/icons/teamIcon.svg"
-                    alt="dashboard icon"
-                    width={24}
-                    height={24}
-                  />
-                ) : (
-                  <Image
-                    src="/icons/teamIconInactive.svg"
-                    alt="dashboard icon"
-                    width={24}
-                    height={24}
-                  />
-                )}
-              </div>
-            </Link>
-          )}
-          <Link href="/payslip">
-            <div
-              data-tooltip-id="tooltip-payslip"
-              data-tooltip-content="Payslip"
-              className={`flex items-center justify-center p-4 rounded-md my-3 ${
-                title === "Payslip"
-                  ? "bg-primary text-white"
-                  : "bg-white text-gray-400 hover:border hover:border-gray-300"
-              }`}
-            >
-              {title === "Payslip" ? (
-                <Image
-                  src="/icons/payslipIcon.svg"
-                  alt="dashboard icon"
-                  width={24}
-                  height={24}
-                />
-              ) : (
-                <Image
-                  src="/icons/payslipIconInactive.svg"
-                  alt="dashboard icon"
-                  width={24}
-                  height={24}
-                />
+          {user && (
+            <div>
+              {user?.userType !== "employee" && (
+                <Link href="/create-contract">
+                  <div
+                    data-tooltip-id="tooltip-contract"
+                    data-tooltip-content="Contract"
+                    className={`flex items-center justify-center p-3 rounded-lg my-3 ${
+                      title === "Contract"
+                        ? "bg-primary text-white"
+                        : "bg-white text-gray-400 hover:border hover:border-gray-300"
+                    }`}
+                  >
+                    {title === "Contract" ? (
+                      <Image
+                        src="/icons/contractIcon.svg"
+                        alt="dashboard icon"
+                        width={24}
+                        height={24}
+                      />
+                    ) : (
+                      <Image
+                        src="/icons/contractIconInactive.svg"
+                        alt="dashboard icon"
+                        width={24}
+                        height={24}
+                      />
+                    )}
+                  </div>
+                </Link>
               )}
+              {user?.userType !== "employee" && (
+                <Link href="/team">
+                  <div
+                    data-tooltip-id="tooltip-team"
+                    data-tooltip-content="Team"
+                    className={`flex items-center justify-center p-4 rounded-md my-3 ${
+                      title === "Team"
+                        ? "bg-primary text-white"
+                        : "bg-white text-gray-400 hover:border hover:border-gray-300"
+                    }`}
+                  >
+                    {title === "Team" ? (
+                      <Image
+                        src="/icons/teamIcon.svg"
+                        alt="dashboard icon"
+                        width={24}
+                        height={24}
+                      />
+                    ) : (
+                      <Image
+                        src="/icons/teamIconInactive.svg"
+                        alt="dashboard icon"
+                        width={24}
+                        height={24}
+                      />
+                    )}
+                  </div>
+                </Link>
+              )}
+              <Link href="/payslip">
+                <div
+                  data-tooltip-id="tooltip-payslip"
+                  data-tooltip-content="Payslip"
+                  className={`flex items-center justify-center p-4 rounded-md my-3 ${
+                    title === "Payslip"
+                      ? "bg-primary text-white"
+                      : "bg-white text-gray-400 hover:border hover:border-gray-300"
+                  }`}
+                >
+                  {title === "Payslip" ? (
+                    <Image
+                      src="/icons/payslipIcon.svg"
+                      alt="dashboard icon"
+                      width={24}
+                      height={24}
+                    />
+                  ) : (
+                    <Image
+                      src="/icons/payslipIconInactive.svg"
+                      alt="dashboard icon"
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                </div>
+              </Link>
             </div>
-          </Link>
+          )}
           <Link href="/profile">
             <div
               data-tooltip-id="tooltip-profile"
               data-tooltip-content="Profile"
-              className={`lg:mt-72 mt-16 flex items-center justify-center p-3 rounded-lg my-3 ${
+              className={`flex items-center justify-center p-3 rounded-lg my-3 ${
                 title === "Profile"
                   ? "bg-primary text-white"
                   : "bg-white text-gray-400 hover:border hover:border-gray-300"
@@ -215,7 +215,7 @@ const Sidebar: React.FC<SidebarProps> = ({ title, user }) => {
             />
           </div>
         </div>
-      )}
+      }
       <Tooltip id="tooltip-dashboard" place="right" />
       <Tooltip id="tooltip-profile" place="right" />
       <Tooltip id="tooltip-contract" place="right" />

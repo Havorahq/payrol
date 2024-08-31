@@ -9,6 +9,7 @@ interface CustomDatePickerProps {
   value?: Date | null;
   onChange: (value: Date | null) => void;
   placeholder?: string;
+  minDate?: Date;
   // style?: React.CSSProperties;
 }
 
@@ -17,6 +18,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   value,
   onChange,
   placeholder,
+  minDate,
   // style
 }) => {
   return (
@@ -27,6 +29,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       <DatePicker
         selected={value}
         onChange={(date) => onChange(date ? new Date(date) : null)}
+        minDate={minDate}
         placeholderText={placeholder}
         className="w-full border border-gray-300 rounded p-2"
         // style={style}

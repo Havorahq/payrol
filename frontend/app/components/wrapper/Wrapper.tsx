@@ -78,8 +78,8 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
             )}
           </main>
         ) : (
-          <div>
-            <Preloader />
+          <div className="w-full h-full flex items-center justify-center">
+            <Preloader height={150} />
           </div>
         )}
       </div>

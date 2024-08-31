@@ -7,6 +7,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import Image from "next/image";
 import Button from "../common/Button";
 import { usePathname } from "next/navigation";
+import Preloader from "../common/Preloader";
 
 interface HeaderProps {
   toggleDrawer: () => void;
@@ -46,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ title, toggleDrawer, user }) => {
         {
           <div className="flex items-center justify-end p-4 bg-white rounded-md gap-4 md:gap-8">
             <div className="p-2 bg-black rounded-lg text-white text-sm font-semibold cursor-pointer font-bricolage">
-              {`${user?.firstName} ${user?.lastName}`}
+              {user ? `${user?.firstName} ${user?.lastName}`: <Preloader height={20} color="#fff" />}
             </div>
           </div>
         }
