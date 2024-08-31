@@ -67,6 +67,8 @@ const Profile = () => {
 
   const handleUpdateProfile = () => {};
 
+  console.log("User :", userData?.data);
+
   const { email, firstName, lastName, address, userType } = userData?.data
     ?.data as unknown as UserData;
 
@@ -202,7 +204,7 @@ const Profile = () => {
               </div>
             </div>
           ) : (
-            <div className="block w-full h-full flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center">
               <Preloader />
             </div>
           )}

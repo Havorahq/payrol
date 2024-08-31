@@ -1,8 +1,10 @@
 import React from "react";
+import Preloader from "./Preloader";
 
 interface ButtonProps {
   children?: React.ReactNode;
   disabled?: boolean;
+  isLoading?: boolean;
   style?: string;
   onClick?: () => void;
   primary?: boolean;
@@ -17,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   primary,
   secondary,
   disabled,
+  isLoading,
   label,
 }) => {
   return (
@@ -27,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {label || children}
+      {isLoading ? <Preloader height={30} color="#fff" /> : label || children}
     </button>
   );
 };

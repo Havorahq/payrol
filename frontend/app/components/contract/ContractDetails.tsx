@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { capitalizeFirstWord } from "@/plugins/utils";
 import { useUserData } from "@/app/hooks/useUserData";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useWatchContractEvent, useWriteContract} from "wagmi";
+import { useWatchContractEvent, useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
 import { bscTestnet } from "viem/chains";
 import { createContract } from "@/app/api/helper-functions";
@@ -27,8 +27,9 @@ const ContractDetails: React.FC = () => {
   const { writeContract } = useWriteContract();
 
   const [isOpen, setIsOpen] = useState(false);
-  const { userData, isLoading, error } = useUserData();
+  const { userData, isLoading: userLoading, error } = useUserData();
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Use the publicClient to read data from the smart contract
   // const readFunction = async () => {
@@ -47,8 +48,8 @@ const ContractDetails: React.FC = () => {
     abi: factoryAbi,
     eventName: "FixedRateAgreementDeployed",
     onLogs(logs) {
-      const newLogs = logs as unknown as any[]
-      const createdContractAddress = newLogs[0]?.args?.contractAddress
+      const newLogs = logs as unknown as any[];
+      const createdContractAddress = newLogs[0]?.args?.contractAddress;
       const {
         contractType,
         employeeEmail,
@@ -78,10 +79,10 @@ const ContractDetails: React.FC = () => {
         startDate,
         endDate,
         createdContractAddress
-      ).then(()=>{
-        openModal()
+      ).then(() => {
+        openModal();
       });
-    }
+    },
   });
 
   useWatchContractEvent({
@@ -89,9 +90,9 @@ const ContractDetails: React.FC = () => {
     abi: factoryAbi,
     eventName: "PayAsYoGoAgreementDeployed",
     onLogs(logs) {
-      console.log('New logs2!', logs)
-      const newLogs = logs as unknown as any[]
-      const createdContractAddress = newLogs[0]?.args?.contractAddress
+      console.log("New logs2!", logs);
+      const newLogs = logs as unknown as any[];
+      const createdContractAddress = newLogs[0]?.args?.contractAddress;
       const {
         contractType,
         employeeEmail,
@@ -121,10 +122,10 @@ const ContractDetails: React.FC = () => {
         startDate,
         endDate,
         createdContractAddress
-      ).then(()=>{
-        openModal()
+      ).then(() => {
+        openModal();
       });
-    }
+    },
   });
 
   const wormhole_ags = [
@@ -152,6 +153,8 @@ const ContractDetails: React.FC = () => {
       chain: bscTestnet || walletClient.chain,
     });
 
+    setIsLoading(loading);
+
     return hash;
   };
 
@@ -172,6 +175,8 @@ const ContractDetails: React.FC = () => {
       ],
     });
 
+    setIsLoading(loading);
+
     return hash;
   };
 
@@ -182,6 +187,7 @@ const ContractDetails: React.FC = () => {
     if (!primaryWallet || !userData?.data) {
       return console.error("user not loaded yet");
     }
+    setIsLoading(true)
 
     const {
       contractType,
@@ -201,8 +207,12 @@ const ContractDetails: React.FC = () => {
     try {
       if (state.contractType === "fixed") {
         await deployFixedAgreement();
+        setIsLoading(false)
+        openModal();
       } else if (contractType.toLowerCase() === "pay as you go") {
         await deployPAYGAgreement();
+        setIsLoading(false);
+        openModal();
       }
     } catch {
       console.error("error creating contract");
@@ -211,20 +221,22 @@ const ContractDetails: React.FC = () => {
 
   return (
     <>
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <div className="mt-8">
-          <p className="text-4xl font-bold">All Done! 🎉</p>
-          <p className="text-xs font-light text-grey mb-14">
-            You’ve successfully created a contract!
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="p-8">
+          <p className="text-3xl text-black font-semibold font-sharp-grotesk">
+            Congratulations!🎉
+          </p>
+          <p className="text-sm text-[#8F9299] font-dm-sans mb-4">
+            You’ve successfully created a contract
           </p>
           <Button onClick={() => router.push("/dashboard")} primary>
-            Back to Home
+            Go to Dashboard
           </Button>
         </div>
       </Modal>
       <div className="flex flex-col m-8 lg:p-8 p-0 h-full justify-center gap-2">
         <span
-          className="flex items-center gap-2 text-primary cursor-pointer"
+          className="flex items-center gap-2 text-primary cursor-pointer mb-2"
           onClick={handlePrev}
         >
           <FaChevronLeft />
@@ -289,7 +301,7 @@ const ContractDetails: React.FC = () => {
           className="p-2 border border-gray-300 rounded"
         /> */}
         </div>
-        <div className="flex justify-between mt-4">
+        <div className="flex justify-between mt-8">
           {/* 
           TODO: 
           call createNewPayAsYouGoAgreement for pay as you go contract
@@ -299,6 +311,7 @@ const ContractDetails: React.FC = () => {
 
           <Button
             onClick={() => handleSubmit()}
+            isLoading={isLoading}
             // disabled={!state.startDate || !state.endDate}
             primary
           >

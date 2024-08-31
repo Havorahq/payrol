@@ -41,6 +41,7 @@ body {
   height: 100vh !important;
   width: 100vw !important;
   color: #131414;
+  font-size: 14px !important;
   /* overflow-y: scroll; */
 }
 
@@ -102,6 +103,12 @@ button:disabled {
   font-weight: 400;
 }
 
+.btn-primary-hover {
+  background: linear-gradient(338.14deg, #3b37ff -3.56%, #ff7a21 119.15%);
+  background: linear-gradient(90.55deg, #ff7418 -76.45%, #232199 107.58%);
+  opacity: 0.8 !important;
+}
+
 .btn-secondary {
   padding: var(--space-xs) var(--space-md);
   font-size: var(--font-size-xs);
@@ -113,6 +120,10 @@ button:disabled {
   cursor: pointer;
   color: #1d1d1f;
   border: 1px solid #dbe1eb !important;
+}
+
+.btn-secondary:hover {
+  border: 1.1px solid #23219994 !important;
 }
 
 .filter-active {

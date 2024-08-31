@@ -254,6 +254,15 @@ const Team: React.FC = (): React.ReactElement => {
               })}
             </tbody>
           </table>
+          {contracts.length === 0 && (
+            <div className="min-h-6">
+              <div className="flex justify-center items-center my-2 p-4 h-full">
+                <p className="text-gray-400 text-lg mt-4 font-bold">
+                  No Result Found
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>
