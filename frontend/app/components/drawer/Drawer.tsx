@@ -11,7 +11,7 @@ interface DrawerProps {
 const Drawer: React.FC<DrawerProps> = ({ isOpen, closeDrawer, user }) => {
   return (
     <div
-      className={`fixed top-0 right-0 w-40 h-full transition-transform transform ${
+      className={`fixed top-0 right-0 w-48 h-full transition-transform transform ${
         isOpen ? "translate-x-0" : "translate-x-full"
       } bg-white z-20`}
     >
