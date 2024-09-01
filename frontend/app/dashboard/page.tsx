@@ -254,7 +254,7 @@ export default function Home() {
                 withdrawalChainId !== '56' &&
                 (
                   <div className="my-4">
-                    <label htmlFor="businessEmail">wallet address</label>
+                    <label htmlFor="businessEmail">Wallet Address</label>
                     <input
                       placeholder="Enter wallet address"
                       onChange={(e)=>{setRecipientAddress(e.target.value)}}
