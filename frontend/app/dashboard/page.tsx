@@ -34,7 +34,9 @@ import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
-// import WormholeConnect from '@wormhole-foundation/wormhole-connect';
+import dynamic from "next/dynamic";
+
+
 
 interface Contract {
   id: number;
@@ -51,6 +53,14 @@ const mockContractData: Contract[] = [];
 export default function Home() {
   // const [accountType, setAccountType] = useState<string>("");
   const { contracts: contractData, isLoading, error } = useContractData();
+const WormholeConnect = dynamic(
+  () => import('@wormhole-foundation/wormhole-connect'),
+  { ssr: false }
+);
+
+const DynamicModal = dynamic(() => import('../components/common/Modal'), {
+  ssr: false,
+});
 
   const [search, setSearch] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<string>("");
@@ -197,9 +207,9 @@ export default function Home() {
   return (
     <>
       <Wrapper>
-      {/* <Modal isOpen={wModalOpen} onClose={()=>setWModalOpen(false)}>
-        <WormholeConnect />
-      </Modal> */}
+        <DynamicModal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
+          <WormholeConnect/>
+        </DynamicModal>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
