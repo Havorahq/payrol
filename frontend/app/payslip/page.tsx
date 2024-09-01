@@ -38,7 +38,7 @@ import { bscTestnet } from "viem/chains";
 import agreementAbi from "@/lib/contract/AgreementAbi.json";
 import { parseUnits } from "viem";
 import { readContract } from "viem/actions";
-
+import { updateContract,createPayment } from "../api/helper-functions";
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
   error: string | null;
@@ -198,10 +198,14 @@ const Payslip: React.FC = () => {
 
   const handleApprovePayment = async () => {
     grantApproval();
+    await updateContract(contract?.id, 'Approved')
   };
 
   const handleMakePayment = async () => {
     collectTokens();
+    await updateContract(contract?.id, 'Funded')
+    const paymentDate = new Date().toISOString();
+    await createPayment(contract?.id, paymentDate)
   };
 
 
