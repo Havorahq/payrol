@@ -113,7 +113,7 @@ console.log(allowance, 'the allowance')
     const amountInWei = parseUnits(amount.toString(), 18);
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: '0xc96288280764Ac7385797a5149901572Ae98a0A3',
+      address: '0x2712a73508fa1803021e86c0bffB341cc2E1495b',
       abi: agreementAbi,
       functionName: "collectTokens",
       args: [TOKEN_CONTRACT_ADDRESS, amount],
@@ -206,12 +206,12 @@ console.log(allowance, 'the allowance')
   };
 
   const handleApprovePayment = async () => {
-    grantApproval('0xc96288280764Ac7385797a5149901572Ae98a0A3', "100000000000000000000");
+    grantApproval('0x2712a73508fa1803021e86c0bffB341cc2E1495b', "100000000000000000000");
     console.log("Approve Payment");
   };
 
   const handleMakePayment = async () => {
-    collectTokens("10000000000000000");
+    collectTokens("1000000000000000000");
     console.log("Make Payment");
   };
 

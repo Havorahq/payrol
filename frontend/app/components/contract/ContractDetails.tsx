@@ -14,6 +14,7 @@ import { useWatchContractEvent, useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
 import { bscTestnet } from "viem/chains";
 import { createContract } from "@/app/api/helper-functions";
+import { TOKEN_CONTRACT_ADDRESS } from "@/lib/contract/constants";
 
 const ContractDetails: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -159,7 +160,7 @@ const ContractDetails: React.FC = () => {
         'employerId', // employer id
         employeeEmail, // employee id
         "0x8810df59BE2F2e585F8085586eB70340f3E7E103", // employer address,
-        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda", // usdc address
+        TOKEN_CONTRACT_ADDRESS, // usdc address
         monthlyRate,
         ...wormhole_ags,
       ],
@@ -196,7 +197,7 @@ const ContractDetails: React.FC = () => {
         "employer@employer.com",
         "employee@employee.com",
         "0xE08686958FF334A5422df17FaF05dd989e779FfA",
-        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda",
+        TOKEN_CONTRACT_ADDRESS,
         monthlyRate,
         ...wormhole_ags,
       ],

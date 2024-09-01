@@ -56,7 +56,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
   const balance = useBalance({
-    address: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    address: "0x67B9793cf2eE7456e4BEb74c8406395eB37548fd",
   });
   const { user } = useDynamicContext();
   const [userData, setUserData] = useState<UserData>(null);
@@ -151,9 +151,11 @@ export default function Home() {
   const collectIntraChainPayment =async (contractType: any)=>{
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
+    console.log(withdrawalContract.hash, 'the .hash')
+
     const { hash, loading, error } = await walletClient.writeContract({
-      address: withdrawalContract.hash,
-      abi: contractType === 'fixed'? fixedAbi : paygAbi,
+      address: '0x2712a73508fa1803021e86c0bffB341cc2E1495b',
+      abi: fixedAbi,
       functionName: "sendPayment",
       chain: bscTestnet || walletClient.chain,
     });
@@ -165,8 +167,8 @@ export default function Home() {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address: withdrawalContract.hash,
-      abi: contractType === 'fixed'? fixedAbi : paygAbi,
+      address:'0x2712a73508fa1803021e86c0bffB341cc2E1495b',
+      abi: fixedAbi,
       functionName: "sendCrossChainPayment",
       args: [
         3,
