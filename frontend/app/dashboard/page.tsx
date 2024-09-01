@@ -46,6 +46,8 @@ interface Contract {
   employee_id: string;
   payment: string;
   contract_address: string;
+  // payment_status?: string;
+  // amount?: string;
 }
 
 const mockContractData: Contract[] = [];
@@ -136,7 +138,14 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
     (sum: number, ad: { amount: string }) => sum + parseInt(ad.amount),
     0
   );
-  console.log({ contractData });
+
+  const currentAmount = contractData?.reduce((sum: number, contract: any) => {
+    if(contract?.payment_status === "Funded" || "Approved") {
+      return sum + parseInt(contract?.amount);
+    }
+    return sum
+  }, 0)
+  console.log(contractData, currentAmount);
 
   const handleViewClick = (id: number) => {
     console.log(`View contract with id: ${id}`);
@@ -208,7 +217,11 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
     <>
       <Wrapper>
         <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
-          <iframe src='https://wormhole.xalari.com/' height={'600px'} width={'100%'}/>
+          <iframe
+            src="https://wormhole.xalari.com/"
+            height={"600px"}
+            width={"100%"}
+          />
         </Modal>
         {/* <Widget/> */}
         <Modal isOpen={isOpen} onClose={closeModal}>
@@ -217,25 +230,20 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
               Withdrawal Funds
             </p>
             <div className="mt-8">
-              
-
               <label htmlFor="chain" className="mb-4">
                 Select Employer to withdraw from
               </label>
               <select
                 className="w-full border border-gray-300 p-4 rounded-md mb-6"
                 // onSelect={(e)=>console.log(e, 'the select ob')}
-                onChange={(e)=>{
-                  console.log(e.target.value, 'the contract event')
-                  setWithdrawalContract(e.target.value)
+                onChange={(e) => {
+                  console.log(e.target.value, "the contract event");
+                  setWithdrawalContract(e.target.value);
                 }}
               >
                 <option value="">Select an employer</option>
                 {contractData.map((contract: any) => (
-                  <option
-                    key={contract?.hash}
-                    value={contract?.hash}
-                  >
+                  <option key={contract?.hash} value={contract?.hash}>
                     {`${contract?.employerData?.firstName} ${contract?.employerData?.lastName} (${contract.id}) - $${contract.amount}`}
                   </option>
                 ))}
@@ -327,7 +335,8 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
                   </div>
                   <div className="text-2xl mt-2 font-semibold flex items-center">
                     <p className="text-xl text-gray-400">$</p>
-                    <p className="m-0">{balance.data?.decimals || 0}</p>
+                    {/* <p className="m-0">{balance.data?.decimals || 0}</p> */}
+                    <p className="m-0">{currentAmount || 0}</p>
                   </div>
                 </div>
               </div>

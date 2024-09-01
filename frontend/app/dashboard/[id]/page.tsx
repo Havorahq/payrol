@@ -16,12 +16,13 @@ import agreementAbi from "@/lib/contract/AgreementAbi.json";
 const ContractDetail = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
   const id = pathname.split("/").pop();
   const [contract, setContract] = useState<any>(null);
   const [acceptingPaymentClicked, setAcceptingPaymentClicked] = useState(false);
   const { userData, isLoading: userLoading, error: userErroer } = useUserData();
-  const { contracts, isLoading, error } = useContractData();
+  const { contracts, isLoading: loading, error } = useContractData();
   const { primaryWallet } = useDynamicContext();
 
   const enterContract = async () => {
@@ -62,13 +63,16 @@ const ContractDetail = () => {
   };
 
   const handleEnterAgreement = async () => {
+    setIsLoading(true)
     try{
       console.log("Agreement entered");
       enterContract();
       await acceptContract(id as string)
       openModal();
+      setIsLoading(false);
     } catch(e){
       console.log(e)
+      setIsLoading(false);
     }
   };
 
@@ -76,13 +80,13 @@ const ContractDetail = () => {
     <Wrapper>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="p-6">
-          <h2 className="text-xl font-bold">All done! 🎉</h2>
+          <h2 className="text-xl font-bold">Congratulations! 🎉</h2>
           <p className="text-sm text-gray-500 my-2 mb-4">
-            You have Confirmed your payment!
+            You have accepted your contract
           </p>
           <Button
             primary
-            label="Back to Home"
+            label="Back to dashboard"
             onClick={() => router.push("/dashboard")}
           />
         </div>
@@ -143,6 +147,7 @@ const ContractDetail = () => {
             {contract?.status !== "Active" && (
               <div className="mt-8">
                 <Button
+                  isLoading={isLoading}
                   primary
                   label="Accept Contract"
                   style="w-fit"

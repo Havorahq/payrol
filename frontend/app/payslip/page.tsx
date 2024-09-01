@@ -350,14 +350,14 @@ const Payslip: React.FC = () => {
           <SelectPicker
             data={[]}
             placeholder="Status"
-            style={{ width: 117, zIndex: 0 }}
+            style={{ width: 117, zIndex: 0, cursor: "not-allowed"}}
           />
           <div className="flex items-center mb-0 pb-0 gap-2">
             <DatePicker
               // value={state?.startDate || null}
               // onChange={onFromDateChange}
               placeholderText="Start Date"
-              className="w-full border border-gray-300 rounded h-9"
+              className="w-full border border-gray-300 rounded h-9 cursor-not-allowed"
             />
             <Image
               src="/icons/arrowRight.png"
@@ -369,7 +369,7 @@ const Payslip: React.FC = () => {
               // value={state?.startDate || null}
               // onChange={onFromDateChange}
               placeholderText="End Date"
-              className="w-full border border-gray-300 rounded h-9"
+              className="w-full border border-gray-300 rounded h-9 cursor-not-allowed"
             />
           </div>
           <InputFilter
