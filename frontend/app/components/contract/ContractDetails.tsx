@@ -198,7 +198,7 @@ const ContractDetails: React.FC = () => {
         "employee@employee.com",
         "0xE08686958FF334A5422df17FaF05dd989e779FfA",
         TOKEN_CONTRACT_ADDRESS,
-        monthlyRate,
+        parseFloat(monthlyRate) * 1000000000000000,
         ...wormhole_ags,
       ],
     });

@@ -34,6 +34,7 @@ import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
+import WormholeConnect from '@wormhole-foundation/wormhole-connect';
 
 interface Contract {
   id: number;
@@ -65,6 +66,7 @@ export default function Home() {
   const [withdrawalChainId, setWithdrawalChainId] = useState('56')
   const [withdrawalContract, setWithdrawalContract] = useState<any>(null)
   const [recipientAddress, setRecipientAddress] = useState('')
+  const [wModalOpen, setWModalOpen] = useState(false)
 
   const { primaryWallet } = useDynamicContext();
 
@@ -198,13 +200,16 @@ export default function Home() {
   return (
     <>
       <Wrapper>
+      <Modal isOpen={wModalOpen} onClose={()=>setWModalOpen(false)}>
+        <WormholeConnect />
+      </Modal>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
               Withdrawal Funds
             </p>
             <div className="mt-8">
-              <label htmlFor="chain" className="mb-4">
+              {/* <label htmlFor="chain" className="mb-4">
                 Select Chain
               </label>
               <select
@@ -226,7 +231,7 @@ export default function Home() {
                     {chain.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
 
               <label htmlFor="chain" className="mb-4">
                 Select Employer to withdraw from
@@ -280,7 +285,13 @@ export default function Home() {
                 <div>
                   <Button onClick={() => openModal()} primary>
                     <BiMoneyWithdraw />
-                    Withdraw Balance
+                    Accept payment
+                  </Button>
+                </div>
+                <div>
+                  <Button onClick={() => setWModalOpen(true)} primary>
+                    <BiMoneyWithdraw />
+                    Cross-chain swap
                   </Button>
                 </div>
               </div>
