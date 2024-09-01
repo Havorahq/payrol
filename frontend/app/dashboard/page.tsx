@@ -207,9 +207,10 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
   return (
     <>
       <Wrapper>
-        <DynamicModal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
-          <WormholeConnect/>
-        </DynamicModal>
+        <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
+          <iframe src='https://wormhole.xalari.com/' height={'600px'} width={'100%'}/>
+        </Modal>
+        {/* <Widget/> */}
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
