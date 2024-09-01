@@ -24,7 +24,7 @@ import { TiArrowRight } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { findUser } from "../api/helper-functions";
+import { findUser, updatePayment } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
@@ -63,10 +63,10 @@ export default function Home() {
   const [userData, setUserData] = useState<UserData>(null);
 
   // for withdrawal
-  const [withdrawalChainId, setWithdrawalChainId] = useState('56')
-  const [withdrawalContract, setWithdrawalContract] = useState<any>(null)
-  const [recipientAddress, setRecipientAddress] = useState('')
-  const [wModalOpen, setWModalOpen] = useState(false)
+  const [withdrawalChainId, setWithdrawalChainId] = useState("56");
+  const [withdrawalContract, setWithdrawalContract] = useState<any>(null);
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [wModalOpen, setWModalOpen] = useState(false);
 
   const { primaryWallet } = useDynamicContext();
 
@@ -161,9 +161,9 @@ export default function Home() {
       functionName: "sendPayment",
       chain: bscTestnet || walletClient.chain,
     });
-    if (error) alert("Withdrawal failed")
-    return {hash, loading, error}
-  }
+    if (error) alert("Withdrawal failed");
+    return { hash, loading, error };
+  };
 
   const requestCrossChainPayment = async ()=>{
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
@@ -172,22 +172,18 @@ export default function Home() {
       address:withdrawalContract,
       abi: fixedAbi,
       functionName: "sendCrossChainPayment",
-      args: [
-        3,
-        recipientAddress,
-        recipientAddress
-      ],
+      args: [3, recipientAddress, recipientAddress],
       chain: bscTestnet || walletClient.chain,
     });
-    if (error) alert("Withdrawal failed")
-    return {hash, loading, error}
-  }
+    if (error) alert("Withdrawal failed");
+    return { hash, loading, error };
+  };
 
-  const handleWithdrawal =async ()=>{
+  const handleWithdrawal = async () => {
     console.log(
-      'handling withdrawal',
+      "handling withdrawal",
       withdrawalContract,
-      withdrawalChainId, 
+      withdrawalChainId,
       recipientAddress
     )
     if (withdrawalChainId === '56'){
@@ -195,6 +191,7 @@ export default function Home() {
     } else{
       await requestCrossChainPayment()
     }
+    await updatePayment(withdrawalContract.id, 'completed')
   }
 
   return (
@@ -254,20 +251,19 @@ export default function Home() {
                   </option>
                 ))}
               </select>
-              {
-                withdrawalChainId !== '56' &&
-                (
-                  <div className="my-4">
-                    <label htmlFor="businessEmail">Wallet Address</label>
-                    <input
-                      placeholder="Enter wallet address"
-                      onChange={(e)=>{setRecipientAddress(e.target.value)}}
-                      className="input"
-                      required
-                    />
-                  </div>
-                )
-              }
+              {withdrawalChainId !== "56" && (
+                <div className="my-4">
+                  <label htmlFor="businessEmail">Wallet Address</label>
+                  <input
+                    placeholder="Enter wallet address"
+                    onChange={(e) => {
+                      setRecipientAddress(e.target.value);
+                    }}
+                    className="input"
+                    required
+                  />
+                </div>
+              )}
               <div className="w-fit" onClick={handleWithdrawal}>
                 <Button primary>Confirm Withdrawal</Button>
               </div>
@@ -276,25 +272,27 @@ export default function Home() {
         </Modal>
         <div>
           {accountType === "employee" ? (
-            <div className="px-14">
-              <div className="flex items-center justify-between p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
+            <div className="lg:px-14 px-2">
+              <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between gap-2 p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
                 <p className="text-xl font-bold">
                   Total Contract: {contractData?.length}
                 </p>
-                <div>
-                  <Button onClick={() => openModal()} primary>
-                    <BiMoneyWithdraw />
-                    Accept payment
-                  </Button>
-                </div>
-                <div>
-                  <Button onClick={() => setWModalOpen(true)} primary>
-                    <BiMoneyWithdraw />
-                    Cross-chain swap
-                  </Button>
+                <div className="flex items-center gap-2">
+                  <div>
+                    <Button onClick={() => openModal()} primary style="w-fit">
+                      <BiMoneyWithdraw />
+                      Accept payment
+                    </Button>
+                  </div>
+                  <div>
+                    <Button onClick={() => setWModalOpen(true)} style="w-fit">
+                      <BiMoneyWithdraw />
+                      Cross-chain swap
+                    </Button>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-8">
+              <div className="flex lg:flex-row flex-col items-center lg:gap-8 gap-2">
                 <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
@@ -345,7 +343,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8 p-8 pb-32 bg-white rounded-lg border h-full shadow">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex lg:flex-row flex-wrap items-center justify-between mb-4">
                   <p className="text-xl font-medium text-[#131414]">
                     All Contracts
                   </p>
@@ -460,11 +458,7 @@ export default function Home() {
                                     status
                                   )}`}
                                 >
-                                  {capitalizeFirst(
-                                    status?.toLowerCase() === "active"
-                                      ? "Completed"
-                                      : status
-                                  )}
+                                  {capitalizeFirst(status)}
                                 </span>
                               </td>
                               <td className="py-2">

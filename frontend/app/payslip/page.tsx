@@ -38,7 +38,7 @@ import { bscTestnet } from "viem/chains";
 import agreementAbi from "@/lib/contract/AgreementAbi.json";
 import { parseUnits } from "viem";
 import { readContract } from "viem/actions";
-
+import { updateContract,createPayment } from "../api/helper-functions";
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
   error: string | null;
@@ -198,10 +198,14 @@ const Payslip: React.FC = () => {
 
   const handleApprovePayment = async () => {
     grantApproval();
+    await updateContract(contract?.id, 'Approved')
   };
 
   const handleMakePayment = async () => {
     collectTokens();
+    await updateContract(contract?.id, 'Funded')
+    const paymentDate = new Date().toISOString();
+    await createPayment(contract?.id, paymentDate)
   };
 
 
@@ -218,13 +222,13 @@ const Payslip: React.FC = () => {
           </p>
           {payslip && (
             <PDFViewer width="100%" height="400">
-              {/* <PayslipDocument contracts={payslip} /> */}
+              <PayslipDocument contractData={payslip} />
             </PDFViewer>
           )}
           <div className="flex gap-2 mt-4">
             <PDFDownloadLink
               document={<PayslipDocument contractData={payslip as Contract} />}
-              fileName={`${payslip?.name}-payslip.pdf`}
+              fileName={`${payslip?.employeeData?.firstName}'s-payslip.pdf`}
             >
               {({ loading }) =>
                 loading ? (
@@ -376,6 +380,7 @@ const Payslip: React.FC = () => {
             height="36px"
           />
         </div>
+        
         <div className="overflow-x-auto mt-3">
           <table className="min-w-full bg-white rounded-md">
             <thead className="mb-20 py-8">

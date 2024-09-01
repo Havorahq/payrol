@@ -43,6 +43,7 @@ export interface Contract {
   milestoneRates: string;
   milestoneTitle: string;
   end_date: any;
+  employeeData: any;
 }
 
 const useContractData = () => {
