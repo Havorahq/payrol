@@ -139,12 +139,19 @@ const DynamicModal = dynamic(() => import('../components/common/Modal'), {
     0
   );
 
-  const currentAmount = contractData?.reduce((sum: number, contract: any) => {
-    if(contract?.payment_status === "Funded" || "Approved") {
-      return sum + parseInt(contract?.amount);
-    }
-    return sum
-  }, 0)
+  // const currentAmount = contractData?.reduce((sum: number, contract: any) => {
+  //   if(contract?.payment_status === "Funded" || "Approved") {
+  //     return sum + parseInt(contract?.amount);
+  //   }
+  //   return sum
+  // }, 0)
+
+  const statusesToInclude = ["Funded", "Approved"];
+
+  const currentAmount = contractData
+    .filter((contract:any) => statusesToInclude.includes(contract.payment_status))
+    .reduce((sum:number, contract:any) => sum + parseInt(contract.amount, 10), 0);
+    
   console.log(contractData, currentAmount);
 
   const handleViewClick = (id: number) => {
