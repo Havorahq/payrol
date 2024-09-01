@@ -17,8 +17,17 @@ export const capitalizeFirstWord = (words: string) => {
   }
 };
 
-export const formatDate = (date: MomentInput, type?: string) => {
-  const dateObject = moment(date, "DD-MM-YYYY HH:mm:ss");
+// export const formatDate = (date: MomentInput, type?: string) => {
+//   const dateObject = moment(date, "DD-MM-YYYY HH:mm:ss");
+//   const formattedDate =
+//     type === "date"
+//       ? dateObject.format("MMMM D, YYYY")
+//       : dateObject.format("MMMM D, YYYY h:mm A");
+//   return formattedDate;
+// };
+
+export const formatDate = (date: string, type?: string) => {
+  const dateObject = moment(date);
   const formattedDate =
     type === "date"
       ? dateObject.format("MMMM D, YYYY")

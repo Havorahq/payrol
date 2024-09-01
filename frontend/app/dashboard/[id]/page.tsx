@@ -77,10 +77,11 @@ const ContractDetail = () => {
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="p-6">
           <h2 className="text-xl font-bold">All done! 🎉</h2>
-          <p className="text-sm text-gray-500 my-2">
+          <p className="text-sm text-gray-500 my-2 mb-4">
             You have Confirmed your payment!
           </p>
           <Button
+            primary
             label="Back to Home"
             onClick={() => router.push("/dashboard")}
           />

@@ -88,7 +88,7 @@ const RoleDetails: React.FC = () => {
         /> */}
         <Button
           onClick={handleNext}
-          disabled={!state.jobTitle || !state.jobDescription}
+          disabled={!state.jobTitle || !state.jobDescription || !state?.startDate || !state?.endDate}
           primary
         >
           Continue

@@ -136,7 +136,7 @@ export default function Home() {
       title: "Coming soon!",
       text: `This feature is currently not available.`,
     });
-  }
+  };
 
   return (
     <>
@@ -166,7 +166,7 @@ export default function Home() {
                   </option>
                 ))}
               </select>
-              <div className="w-1/2">
+              <div className="w-fit">
                 <Button primary>Confirm Withdrawal</Button>
               </div>
             </div>
@@ -218,8 +218,9 @@ export default function Home() {
                       <BiDollarCircle />
                     </div>
                   </div>
-                  <div className="text-2xl mt-2 font-semibold">
-                    {upcomingPayment}
+                  <div className="text-2xl mt-2 font-semibold flex items-center">
+                    <p className="text-xl text-gray-400">$</p>
+                    <p className="m-0">{upcomingPayment}</p>
                   </div>
                 </div>
                 <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
@@ -229,8 +230,9 @@ export default function Home() {
                       <BiDollarCircle />
                     </div>
                   </div>
-                  <div className="text-2xl mt-2 font-semibold">
-                    {balance.data?.decimals || 0}
+                  <div className="text-2xl mt-2 font-semibold flex items-center">
+                    <p className="text-xl text-gray-400">$</p>
+                    <p className="m-0">{balance.data?.decimals || 0}</p>
                   </div>
                 </div>
               </div>
@@ -340,7 +342,7 @@ export default function Home() {
                               <td className="py-2">{index + 1}</td>
                               <td className="py-2">{employerName}</td>
                               <td className="py-2">{job_title}</td>
-                              <td className="py-2">{amount}</td>
+                              <td className="py-2">${amount}</td>
                               <td className="py-2">
                                 {capitalizeFirst(contract_type)}
                               </td>
@@ -350,7 +352,11 @@ export default function Home() {
                                     status
                                   )}`}
                                 >
-                                  {capitalizeFirst(status)}
+                                  {capitalizeFirst(
+                                    status?.toLowerCase() === "active"
+                                      ? "Completed"
+                                      : status
+                                  )}
                                 </span>
                               </td>
                               <td className="py-2">
@@ -360,7 +366,9 @@ export default function Home() {
                                   href={`/dashboard/${id}`}
                                 >
                                   <FaRegEye />
-                                  <span className="no-underline hover:no-underline">View</span>
+                                  <span className="no-underline hover:no-underline">
+                                    View
+                                  </span>
                                 </Link>
                               </td>
                             </tr>
