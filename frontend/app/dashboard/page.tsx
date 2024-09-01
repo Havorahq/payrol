@@ -24,7 +24,7 @@ import { TiArrowRight } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { findUser, updatePayment } from "../api/helper-functions";
+import { findUser } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
@@ -191,44 +191,22 @@ export default function Home() {
     } else{
       await requestCrossChainPayment()
     }
-    await updatePayment(withdrawalContract.id, 'completed')
+    // await updatePayment(withdrawalContract.id, 'completed')
   }
 
   return (
     <>
       <Wrapper>
-        <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
+        {/* <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
           <WormholeConnect />
-        </Modal>
-        <Modal isOpen={isOpen} onClose={closeModal}>
+        </Modal> */}
+        {/* <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
               Withdrawal Funds
             </p>
             <div className="mt-8">
-              {/* <label htmlFor="chain" className="mb-4">
-                Select Chain
-              </label>
-              <select
-                name="chain"
-                id="chain"
-                className="w-full border border-gray-300 p-4 rounded-md mb-6"
-                onChange={(e)=>{
-                  console.log(e.target.value, 'the chain event')
-                  setWithdrawalChainId(e.target.value)
-                }}
-              >
-                <option value="">Select a chain</option>
-                {chains.map((chain) => (
-                  <option
-                    key={chain.chainId}
-                    value={chain.chainId}
-                    data-image={chain.picture}
-                  >
-                    {chain.name}
-                  </option>
-                ))}
-              </select> */}
+              
 
               <label htmlFor="chain" className="mb-4">
                 Select Employer to withdraw from
@@ -269,7 +247,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </Modal>
+        </Modal> */}
         <div>
           {accountType === "employee" ? (
             <div className="lg:px-14 px-2">
