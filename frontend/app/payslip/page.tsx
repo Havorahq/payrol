@@ -218,13 +218,13 @@ const Payslip: React.FC = () => {
           </p>
           {payslip && (
             <PDFViewer width="100%" height="400">
-              {/* <PayslipDocument contracts={payslip} /> */}
+              <PayslipDocument contractData={payslip} />
             </PDFViewer>
           )}
           <div className="flex gap-2 mt-4">
             <PDFDownloadLink
               document={<PayslipDocument contractData={payslip as Contract} />}
-              fileName={`${payslip?.name}-payslip.pdf`}
+              fileName={`${payslip?.employeeData?.firstName}'s-payslip.pdf`}
             >
               {({ loading }) =>
                 loading ? (
@@ -374,6 +374,7 @@ const Payslip: React.FC = () => {
             height="36px"
           />
         </div>
+        
         <div className="overflow-x-auto mt-3">
           <table className="min-w-full bg-white rounded-md">
             <thead className="mb-20 py-8">

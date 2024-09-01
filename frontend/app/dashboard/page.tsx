@@ -34,7 +34,7 @@ import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
-import WormholeConnect from '@wormhole-foundation/wormhole-connect';
+import WormholeConnect from "@wormhole-foundation/wormhole-connect";
 
 interface Contract {
   id: number;
@@ -63,10 +63,10 @@ export default function Home() {
   const [userData, setUserData] = useState<UserData>(null);
 
   // for withdrawal
-  const [withdrawalChainId, setWithdrawalChainId] = useState('56')
-  const [withdrawalContract, setWithdrawalContract] = useState<any>(null)
-  const [recipientAddress, setRecipientAddress] = useState('')
-  const [wModalOpen, setWModalOpen] = useState(false)
+  const [withdrawalChainId, setWithdrawalChainId] = useState("56");
+  const [withdrawalContract, setWithdrawalContract] = useState<any>(null);
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [wModalOpen, setWModalOpen] = useState(false);
 
   const { primaryWallet } = useDynamicContext();
 
@@ -150,10 +150,10 @@ export default function Home() {
     });
   };
 
-  const collectIntraChainPayment =async (contractType: any)=>{
+  const collectIntraChainPayment = async (contractType: any) => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
-    console.log(withdrawalContract.hash, 'the .hash')
+    console.log(withdrawalContract.hash, "the .hash");
 
     const { hash, loading, error } = await walletClient.writeContract({
       address: withdrawalContract.hash,
@@ -161,48 +161,44 @@ export default function Home() {
       functionName: "sendPayment",
       chain: bscTestnet || walletClient.chain,
     });
-    if (error) alert("Withdrawal failed")
-    return {hash, loading, error}
-  }
+    if (error) alert("Withdrawal failed");
+    return { hash, loading, error };
+  };
 
-  const requestCrossChainPayment = async (contractType: any)=>{
+  const requestCrossChainPayment = async (contractType: any) => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address:withdrawalContract.hash,
+      address: withdrawalContract.hash,
       abi: fixedAbi,
       functionName: "sendCrossChainPayment",
-      args: [
-        3,
-        recipientAddress,
-        recipientAddress
-      ],
+      args: [3, recipientAddress, recipientAddress],
       chain: bscTestnet || walletClient.chain,
     });
-    if (error) alert("Withdrawal failed")
-    return {hash, loading, error}
-  }
+    if (error) alert("Withdrawal failed");
+    return { hash, loading, error };
+  };
 
-  const handleWithdrawal =async ()=>{
+  const handleWithdrawal = async () => {
     console.log(
-      'handling withdrawal',
+      "handling withdrawal",
       withdrawalContract,
-      withdrawalChainId, 
+      withdrawalChainId,
       recipientAddress
-    )
-    if (withdrawalChainId === '56'){
-      await collectIntraChainPayment(withdrawalContract.contract_type)
-    } else{
-      await requestCrossChainPayment(withdrawalContract.contract_type)
+    );
+    if (withdrawalChainId === "56") {
+      await collectIntraChainPayment(withdrawalContract.contract_type);
+    } else {
+      await requestCrossChainPayment(withdrawalContract.contract_type);
     }
-  }
+  };
 
   return (
     <>
       <Wrapper>
-      <Modal isOpen={wModalOpen} onClose={()=>setWModalOpen(false)}>
-        <WormholeConnect />
-      </Modal>
+        <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
+          <WormholeConnect />
+        </Modal>
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
@@ -240,35 +236,31 @@ export default function Home() {
                 name="chain"
                 id="chain"
                 className="w-full border border-gray-300 p-4 rounded-md mb-6"
-                onChange={(e)=>{
-                  console.log(e.target.value, 'the contract event')
-                 setWithdrawalContract(e.target.value)
+                onChange={(e) => {
+                  console.log(e.target.value, "the contract event");
+                  setWithdrawalContract(e.target.value);
                 }}
               >
                 <option value="">Select an employer</option>
                 {contractData.map((contract: any) => (
-                  <option
-                    key={contract?.hash}
-                    value={contract}
-                  >
+                  <option key={contract?.hash} value={contract}>
                     {`${contract?.employerData?.firstName} ${contract?.employerData?.lastName} (${contract.id}) - $${contract.amount}`}
                   </option>
                 ))}
               </select>
-              {
-                withdrawalChainId !== '56' &&
-                (
-                  <div className="my-4">
-                    <label htmlFor="businessEmail">Wallet Address</label>
-                    <input
-                      placeholder="Enter wallet address"
-                      onChange={(e)=>{setRecipientAddress(e.target.value)}}
-                      className="input"
-                      required
-                    />
-                  </div>
-                )
-              }
+              {withdrawalChainId !== "56" && (
+                <div className="my-4">
+                  <label htmlFor="businessEmail">Wallet Address</label>
+                  <input
+                    placeholder="Enter wallet address"
+                    onChange={(e) => {
+                      setRecipientAddress(e.target.value);
+                    }}
+                    className="input"
+                    required
+                  />
+                </div>
+              )}
               <div className="w-fit" onClick={handleWithdrawal}>
                 <Button primary>Confirm Withdrawal</Button>
               </div>
@@ -277,25 +269,27 @@ export default function Home() {
         </Modal>
         <div>
           {accountType === "employee" ? (
-            <div className="px-14">
-              <div className="flex items-center justify-between p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
+            <div className="lg:px-14 px-2">
+              <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between gap-2 p-4 bg-white mb-4 rounded-md text-gray-600 mt-3">
                 <p className="text-xl font-bold">
                   Total Contract: {contractData?.length}
                 </p>
-                <div>
-                  <Button onClick={() => openModal()} primary>
-                    <BiMoneyWithdraw />
-                    Accept payment
-                  </Button>
-                </div>
-                <div>
-                  <Button onClick={() => setWModalOpen(true)} primary>
-                    <BiMoneyWithdraw />
-                    Cross-chain swap
-                  </Button>
+                <div className="flex items-center gap-2">
+                  <div>
+                    <Button onClick={() => openModal()} primary style="w-fit">
+                      <BiMoneyWithdraw />
+                      Accept payment
+                    </Button>
+                  </div>
+                  <div>
+                    <Button onClick={() => setWModalOpen(true)} style="w-fit">
+                      <BiMoneyWithdraw />
+                      Cross-chain swap
+                    </Button>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-8">
+              <div className="flex lg:flex-row flex-wrap items-center lg:gap-8 gap-2">
                 <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
@@ -346,7 +340,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8 p-8 pb-32 bg-white rounded-lg border h-full shadow">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex lg:flex-row flex-wrap items-center justify-between mb-4">
                   <p className="text-xl font-medium text-[#131414]">
                     All Contracts
                   </p>
@@ -461,11 +455,7 @@ export default function Home() {
                                     status
                                   )}`}
                                 >
-                                  {capitalizeFirst(
-                                    status?.toLowerCase() === "active"
-                                      ? "Completed"
-                                      : status
-                                  )}
+                                  {capitalizeFirst(status)}
                                 </span>
                               </td>
                               <td className="py-2">
