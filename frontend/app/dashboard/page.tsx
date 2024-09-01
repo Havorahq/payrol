@@ -34,7 +34,7 @@ import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
-import WormholeConnect from '@wormhole-foundation/wormhole-connect';
+// import WormholeConnect from '@wormhole-foundation/wormhole-connect';
 
 interface Contract {
   id: number;
@@ -200,9 +200,9 @@ export default function Home() {
   return (
     <>
       <Wrapper>
-      <Modal isOpen={wModalOpen} onClose={()=>setWModalOpen(false)}>
+      {/* <Modal isOpen={wModalOpen} onClose={()=>setWModalOpen(false)}>
         <WormholeConnect />
-      </Modal>
+      </Modal> */}
         <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
