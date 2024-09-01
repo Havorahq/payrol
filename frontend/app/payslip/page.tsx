@@ -418,6 +418,7 @@ const Payslip: React.FC = () => {
                     end_date,
                     status,
                     doc,
+                    hash
                   } = item;
 
                   return (
@@ -462,10 +463,11 @@ const Payslip: React.FC = () => {
                         {userData?.data?.data?.userType !== "employee" && (
                           <div
                             className="bg-black w-fit p-2 px-3 rounded-md"
-                            onClick={() => {
-                              handlePayment(item.id);
-                              setContract(item);
-                              getAllowance(item.hash)
+                            onClick={async () => {
+                              // handlePayment(item.id);
+                              // setContract(item);
+                              console.log(await getAllowance(hash), 'the allowance')
+                              // console.log(hash, 'the hash')
                             }}
                           >
                             <p className="text-white text-xs">
