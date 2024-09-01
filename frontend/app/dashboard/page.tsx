@@ -150,13 +150,13 @@ export default function Home() {
     });
   };
 
-  const collectIntraChainPayment = async (contractType: any) => {
+  const collectIntraChainPayment =async ()=>{
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
-    console.log(withdrawalContract.hash, "the .hash");
+    console.log(withdrawalContract, 'the .hash')
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address: withdrawalContract.hash,
+      address: withdrawalContract,
       abi: fixedAbi,
       functionName: "sendPayment",
       chain: bscTestnet || walletClient.chain,
@@ -165,11 +165,11 @@ export default function Home() {
     return { hash, loading, error };
   };
 
-  const requestCrossChainPayment = async (contractType: any) => {
+  const requestCrossChainPayment = async ()=>{
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address: withdrawalContract.hash,
+      address:withdrawalContract,
       abi: fixedAbi,
       functionName: "sendCrossChainPayment",
       args: [3, recipientAddress, recipientAddress],
@@ -185,11 +185,11 @@ export default function Home() {
       withdrawalContract,
       withdrawalChainId,
       recipientAddress
-    );
-    if (withdrawalChainId === "56") {
-      await collectIntraChainPayment(withdrawalContract.contract_type);
-    } else {
-      await requestCrossChainPayment(withdrawalContract.contract_type);
+    )
+    if (withdrawalChainId === '56'){
+      await collectIntraChainPayment()
+    } else{
+      await requestCrossChainPayment()
     }
   };
 
@@ -233,17 +233,19 @@ export default function Home() {
                 Select Employer to withdraw from
               </label>
               <select
-                name="chain"
-                id="chain"
                 className="w-full border border-gray-300 p-4 rounded-md mb-6"
-                onChange={(e) => {
-                  console.log(e.target.value, "the contract event");
-                  setWithdrawalContract(e.target.value);
+                // onSelect={(e)=>console.log(e, 'the select ob')}
+                onChange={(e)=>{
+                  console.log(e.target.value, 'the contract event')
+                  setWithdrawalContract(e.target.value)
                 }}
               >
                 <option value="">Select an employer</option>
                 {contractData.map((contract: any) => (
-                  <option key={contract?.hash} value={contract}>
+                  <option
+                    key={contract?.hash}
+                    value={contract?.hash}
+                  >
                     {`${contract?.employerData?.firstName} ${contract?.employerData?.lastName} (${contract.id}) - $${contract.amount}`}
                   </option>
                 ))}

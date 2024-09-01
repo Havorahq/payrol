@@ -315,7 +315,9 @@ const Payslip: React.FC = () => {
                     payment ? "bg-[#4A851C]" : "bg-black"
                   } w-fit p-2 px-3 rounded-lg cursor-pointer`}
                   onClick={() => {
-                    allowance > parseUnits(contract?.amount.toString(), 18) ? handleApprovePayment() : handleMakePayment()
+                    console.log(allowance, 'the allowance1', parseUnits(contract?.amount.toString(), 18), contract?.amount)
+                    allowance < parseUnits(contract?.amount.toString(), 18) ? handleApprovePayment() : handleMakePayment()
+                    // console.log(al)
                   }}
                 >
                   <p className="text-white text-sm">
@@ -464,10 +466,10 @@ const Payslip: React.FC = () => {
                         {userData?.data?.data?.userType !== "employee" && (
                           <div
                             className="bg-black w-fit p-2 px-3 rounded-md"
-                            onClick={async () => {
-                              // handlePayment(item.id);
-                              // setContract(item);
-                              console.log(await getAllowance(hash), 'the allowance')
+                            onClick={() => {
+                              handlePayment(item.id);
+                              setContract(item);
+                              console.log(getAllowance(hash), 'the allowance')
                               // console.log(hash, 'the hash')
                             }}
                           >
