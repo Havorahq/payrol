@@ -206,29 +206,7 @@ export default function Home() {
               Withdrawal Funds
             </p>
             <div className="mt-8">
-              {/* <label htmlFor="chain" className="mb-4">
-                Select Chain
-              </label>
-              <select
-                name="chain"
-                id="chain"
-                className="w-full border border-gray-300 p-4 rounded-md mb-6"
-                onChange={(e)=>{
-                  console.log(e.target.value, 'the chain event')
-                  setWithdrawalChainId(e.target.value)
-                }}
-              >
-                <option value="">Select a chain</option>
-                {chains.map((chain) => (
-                  <option
-                    key={chain.chainId}
-                    value={chain.chainId}
-                    data-image={chain.picture}
-                  >
-                    {chain.name}
-                  </option>
-                ))}
-              </select> */}
+              
 
               <label htmlFor="chain" className="mb-4">
                 Select Employer to withdraw from
