@@ -154,7 +154,7 @@ export default function Home() {
     console.log(withdrawalContract.hash, 'the .hash')
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address: '0x2712a73508fa1803021e86c0bffB341cc2E1495b',
+      address: withdrawalContract.hash,
       abi: fixedAbi,
       functionName: "sendPayment",
       chain: bscTestnet || walletClient.chain,
@@ -167,7 +167,7 @@ export default function Home() {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
     const { hash, loading, error } = await walletClient.writeContract({
-      address:'0x2712a73508fa1803021e86c0bffB341cc2E1495b',
+      address:withdrawalContract.hash,
       abi: fixedAbi,
       functionName: "sendCrossChainPayment",
       args: [
