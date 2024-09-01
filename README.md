@@ -8,19 +8,19 @@ Welcome to the Xalari V2! This README provides an overview of the features and f
   
 ## Current Features (Wormhole Integration)
 ### Onboarding Requirement
-- **Metamask and Email (Verified)
+- **Metamask and Email needs to be Verified**
 
 ### Contract Creation Requirement
-- **Only a business or company can create a contract
-- **Email of the employee needs to be  provided when creating the contract
+- **Only a business or company can create a contract**
+- **Email of the employee needs to be  provided when creating the contract**
 
 ### Payment Requirement
-- **Allowance needs to be granted to be able to transfer to the smart contract
-- **The amount (salary of the employee) must be present in wallet in USDT for the transfer transaction to go through.
+- **Allowance needs to be granted to be able to transfer to the smart contract**
+- **The amount (salary of the employee) must be present in wallet in USDT for the transfer transaction to go through.**
 
 ### WORMHOLE INTEGRATION
-- **Cross-chain functionality: The app implements a wormhole cross-chain swap, enabling seamless token transfers across blockchain networks.
-- **User-centric design: Both employers and employees can utilize this feature to convert their tokens into the platform's chain token before and after interaction, ensuring smooth and efficient transactions.
+- **Cross-chain functionality: The app implements a wormhole cross-chain swap, enabling seamless token transfers across blockchain networks.**
+- **User-centric design: Both employers and employees can utilize this feature to convert their tokens into the platform's chain token before and after interaction, ensuring smooth and efficient transactions.**
   
 
 ## Incoming Features
