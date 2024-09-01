@@ -24,7 +24,7 @@ import { TiArrowRight } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { findUser } from "../api/helper-functions";
+import { findUser, updatePayment } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
@@ -34,7 +34,7 @@ import Swal from "sweetalert2";
 const fixedAbi = require("@/lib/contract/fixedabi.json");
 const paygAbi = require("@/lib/contract/paygabi.json");
 import { bscTestnet } from "viem/chains";
-import WormholeConnect from "@wormhole-foundation/wormhole-connect";
+// import WormholeConnect from "@wormhole-foundation/wormhole-connect";
 
 interface Contract {
   id: number;
@@ -191,7 +191,7 @@ export default function Home() {
     } else{
       await requestCrossChainPayment()
     }
-    // await updatePayment(withdrawalContract.id, 'completed')
+    await updatePayment(withdrawalContract.id, 'completed')
   }
 
   return (
@@ -200,7 +200,7 @@ export default function Home() {
         {/* <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
           <WormholeConnect />
         </Modal> */}
-        {/* <Modal isOpen={isOpen} onClose={closeModal}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
           <div className="p-8 text-black">
             <p className="text-3xl text-black font-semibold font-sharp-grotesk">
               Withdrawal Funds
@@ -247,7 +247,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </Modal> */}
+        </Modal>
         <div>
           {accountType === "employee" ? (
             <div className="lg:px-14 px-2">
