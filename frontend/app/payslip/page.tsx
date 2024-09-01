@@ -52,6 +52,7 @@ const Payslip: React.FC = () => {
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
   const [contract, setContract] = useState<any>(null);
+
   const { primaryWallet } = useDynamicContext();
 
   const [search, setSearch] = useState<string>("");
@@ -62,7 +63,7 @@ const Payslip: React.FC = () => {
 
   const [allowance, setAllowance] = useState<any | null>(null);
 
-  const getAllowance = async () => {
+  const getAllowance = async (contract_address: string) => {
     try {
       const walletClient: any =
         await primaryWallet?.connector?.getWalletClient();
@@ -73,19 +74,25 @@ const Payslip: React.FC = () => {
         functionName: "allowance",
         args: [
           primaryWallet?.address,
-          "0x36a8733dfc2862821F8dF5B79C389D477Ed89e24",
+          contract_address,
         ],
       });
 
-      setAllowance(Number(result).toString());
-      return result;
-    } catch (error) {
-      console.error("Error getting allowance:", error);
-      return null;
+    setAllowance(Number(result).toString());
+    if(contract?.amount){
+      console.log(allowance, parseUnits(contract?.amount.toString(), 18),'allowance')
     }
-  };
+    return result;
+  } catch (error) {
+    console.error("Error getting allowance:", error);
+    return null;
+  }
+};
 
-  const grantApproval = async (spenderAddress: string, amount: string) => {
+
+  const grantApproval = async () => {
+    const spenderAddress:string = contract?.hash
+    const amount:string = contract?.amount
     try {
       const walletClient: any =
         await primaryWallet?.connector?.getWalletClient();
@@ -96,8 +103,6 @@ const Payslip: React.FC = () => {
         args: [spenderAddress, amount],
         chain: bscTestnet || walletClient.chain,
       });
-
-      console.log("Approval granted:", result);
       return result;
     } catch (error) {
       console.error("Error granting approval:", error);
@@ -105,12 +110,12 @@ const Payslip: React.FC = () => {
     }
   };
 
-  const collectTokens = async (amount: number) => {
+  const collectTokens = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
-    const amountInWei = parseUnits(amount.toString(), 18);
+    const amountInWei = parseUnits(contract?.amount.toString(), 18);
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: contracts?.hash,
+      address: contract?.hash,
       abi: agreementAbi,
       functionName: "collectTokens",
       args: [TOKEN_CONTRACT_ADDRESS, amountInWei],
@@ -120,11 +125,7 @@ const Payslip: React.FC = () => {
     return hash;
   };
 
-  useEffect(() => {
-    getAllowance();
-  }, [primaryWallet, contracts]);
-
-  const needAllowance = allowance > 2;
+ 
 
   if (!userData) {
     return (
@@ -136,17 +137,10 @@ const Payslip: React.FC = () => {
     );
   }
 
-  // const userType = userData?.data?.data?.userType
-
-  console.log("TT: ", userData);
 
   if (error) {
     return <div>Error: {userData.error}</div>;
   }
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -203,16 +197,13 @@ const Payslip: React.FC = () => {
   };
 
   const handleApprovePayment = async () => {
-    grantApproval("0x36a8733dfc2862821F8dF5B79C389D477Ed89e24", "10");
-    console.log("Approve Payment");
+    grantApproval();
   };
 
   const handleMakePayment = async () => {
-    collectTokens(2000);
-    console.log("Make Payment");
+    collectTokens();
   };
 
-  console.log("Contracts: ", contracts, contract);
 
   return (
     <Wrapper>
@@ -324,10 +315,7 @@ const Payslip: React.FC = () => {
                     payment ? "bg-[#4A851C]" : "bg-black"
                   } w-fit p-2 px-3 rounded-lg cursor-pointer`}
                   onClick={() => {
-                    // needAllowance ? handleApprovePayment() : handleMakePayment()
-                    handleMakePayment();
-                    // setPayment(!payment);
-                    // payment && setComplete(true);
+                    allowance > parseUnits(contract?.amount.toString(), 18) ? handleApprovePayment() : handleMakePayment()
                   }}
                 >
                   <p className="text-white text-sm">
@@ -407,6 +395,7 @@ const Payslip: React.FC = () => {
                   item: {
                     employeeData: any;
                     id: any;
+                    hash: any;
                     contract_type?: any;
                     name?: any;
                     employee_id?: any;
@@ -476,6 +465,7 @@ const Payslip: React.FC = () => {
                             onClick={() => {
                               handlePayment(item.id);
                               setContract(item);
+                              getAllowance(item.hash)
                             }}
                           >
                             <p className="text-white text-xs">

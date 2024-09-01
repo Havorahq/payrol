@@ -14,6 +14,7 @@ import { useWatchContractEvent, useWriteContract } from "wagmi";
 const factoryAbi = require("@/lib/contract/factoryAbi.json");
 import { bscTestnet } from "viem/chains";
 import { createContract } from "@/app/api/helper-functions";
+import { TOKEN_CONTRACT_ADDRESS } from "@/lib/contract/constants";
 
 const ContractDetails: React.FC = () => {
   const { onChange, handleNext, handlePrev, state } =
@@ -44,7 +45,7 @@ const ContractDetails: React.FC = () => {
   // };\
 
   useWatchContractEvent({
-    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
     abi: factoryAbi,
     eventName: "FixedRateAgreementDeployed",
     onLogs(logs) {
@@ -86,7 +87,7 @@ const ContractDetails: React.FC = () => {
   });
 
   useWatchContractEvent({
-    address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+    address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
     abi: factoryAbi,
     eventName: "PayAsYoGoAgreementDeployed",
     onLogs(logs) {
@@ -138,17 +139,29 @@ const ContractDetails: React.FC = () => {
   const deployFixedAgreement = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
+    const {
+      contractType,
+      employeeEmail,
+      endDate,
+      jobDescription,
+      jobTitle,
+      milestoneRates,
+      milestoneTitle,
+      monthlyRate,
+      startDate,
+    } = state;
+
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
-        "johnson", // employer id
-        "jj", // employee id
+        'employerId', // employer id
+        employeeEmail, // employee id
         "0x8810df59BE2F2e585F8085586eB70340f3E7E103", // employer address,
-        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda", // usdt address
-        1000,
+        TOKEN_CONTRACT_ADDRESS, // usdc address
+        monthlyRate,
         ...wormhole_ags,
       ],
       chain: bscTestnet || walletClient.chain,
@@ -162,17 +175,31 @@ const ContractDetails: React.FC = () => {
   const deployPAYGAgreement = async () => {
     const walletClient: any = await primaryWallet?.connector?.getWalletClient();
 
+    const {
+      contractType,
+      employeeEmail,
+      endDate,
+      jobDescription,
+      jobTitle,
+      milestoneRates,
+      milestoneTitle,
+      monthlyRate,
+      startDate,
+    } = state;
+
+
     // Use the walletClient to write data to the smart contract
     const { hash, loading, error } = await walletClient.writeContract({
-      address: "0x2EEa730fdf90665c9FF8F328eA92A862D9Da631F",
+      address: "0x099477F192ee77E5CECEb8e52c11ECA86fDDd378",
       abi: factoryAbi,
       functionName: "createNewFixedRateAgreement",
       args: [
         "employer@employer.com",
         "employee@employee.com",
         "0xE08686958FF334A5422df17FaF05dd989e779FfA",
-        "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda",
-        "state.monthlyRate",
+        TOKEN_CONTRACT_ADDRESS,
+        monthlyRate,
+        ...wormhole_ags,
       ],
     });
     setIsLoading(true);
@@ -196,8 +223,8 @@ const ContractDetails: React.FC = () => {
       } else if (contractType.toLowerCase() === "pay as you go") {
         await deployPAYGAgreement();
       }
-    } catch {
-      console.error("error creating contract");
+    } catch(e) {
+      console.error("error creating contract", e);
       alert("error creating contract");
     }
   };
