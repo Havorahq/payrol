@@ -292,7 +292,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="flex lg:flex-row flex-wrap items-center lg:gap-8 gap-2">
+              <div className="flex lg:flex-row flex-col items-center lg:gap-8 gap-2">
                 <div className="p-8 bg-white rounded-lg text-gray-600 border shadow w-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
