@@ -24,7 +24,7 @@ import { TiArrowRight } from "react-icons/ti";
 import { useRouter } from "next/navigation";
 import Modal from "../components/common/Modal";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { findUser } from "../api/helper-functions";
+import { findUser, updatePayment } from "../api/helper-functions";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { UserData } from "../payslip/page";
 import useContractData from "../hooks/useContractData";
@@ -195,6 +195,7 @@ export default function Home() {
     } else{
       await requestCrossChainPayment()
     }
+    await updatePayment(withdrawalContract.id, 'completed')
   }
 
   return (

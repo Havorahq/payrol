@@ -123,14 +123,36 @@ export const createContract = async (
 
 export const createPayment = async (
   contractId: string,
-  amount: number,
-  paymentDate: string
+  paymentDate: any,
 ) => {
   try {
     const newPayment = {
       contract_id: contractId,
-      amount,
       payment_date: paymentDate,
+      status: 'contract_Funded'
+    };
+    const { data, error } = await supabase
+      .from("payments")
+      .insert([newPayment]);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: "An error occurred" };
+  }
+};
+
+export const updatePayment = async (
+  contractId: string,
+  status: any,
+) => {
+  try {
+    const newPayment = {
+      contract_id: contractId,
+      status
     };
     const { data, error } = await supabase
       .from("payments")
@@ -164,6 +186,25 @@ export const acceptContract = async (
     return { data: null, error: "An error occurred" };
   }
 };
+
+
+
+export const updateContract = async (contractId: string, status:string) => {
+  try {
+    const { data, error } = await supabase
+      .from("contracts")
+      .update({ payment_status: status})
+      .eq("id", contractId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: "An error occurred" };
+  }
+}
 
 export const getCompanyById = async (companyId: string) => {
   try {
