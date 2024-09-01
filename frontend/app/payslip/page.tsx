@@ -39,6 +39,7 @@ import agreementAbi from "@/lib/contract/AgreementAbi.json";
 import { parseUnits } from "viem";
 import { readContract } from "viem/actions";
 import { updateContract,createPayment } from "../api/helper-functions";
+import { BiMoneyWithdraw } from "react-icons/bi";
 export type UserData = {
   data: PostgrestSingleResponse<any> | null;
   error: string | null;
@@ -52,6 +53,8 @@ const Payslip: React.FC = () => {
   const [payment, setPayment] = useState<boolean>(false);
   const [complete, setComplete] = useState<boolean>(false);
   const [contract, setContract] = useState<any>(null);
+  const [wModalOpen, setWModalOpen] = useState(false);
+
 
   const { primaryWallet } = useDynamicContext();
 
@@ -211,6 +214,13 @@ const Payslip: React.FC = () => {
 
   return (
     <Wrapper>
+      <Modal isOpen={wModalOpen} onClose={() => setWModalOpen(false)}>
+          <iframe
+            src="https://wormhole.xalari.com/"
+            height={"600px"}
+            width={"100%"}
+          />
+        </Modal>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="p-6 text-[#131414]">
           <h2 className="text-xl font-bold">
@@ -379,6 +389,11 @@ const Payslip: React.FC = () => {
             onChange={onChange}
             height="36px"
           />
+
+          <Button onClick={() => setWModalOpen(true)} style="w-fit">
+            <BiMoneyWithdraw />
+            Cross-chain swap
+          </Button>
         </div>
         
         <div className="overflow-x-auto mt-3">
